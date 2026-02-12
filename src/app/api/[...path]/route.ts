@@ -1,7 +1,35 @@
 import { NextRequest, NextResponse } from "next/server";
 import { checkRateLimit } from "@/lib/security/rate-limit";
 
-export async function middleware(request: NextRequest) {
+/**
+ * Proxy handler for API requests
+ * Replaces deprecated middleware.ts pattern in Next.js 16
+ * Handles:
+ * - Rate limiting by IP
+ * - CORS headers
+ * - Security headers
+ */
+export async function GET(request: NextRequest) {
+  return handleRequest(request);
+}
+
+export async function POST(request: NextRequest) {
+  return handleRequest(request);
+}
+
+export async function PUT(request: NextRequest) {
+  return handleRequest(request);
+}
+
+export async function DELETE(request: NextRequest) {
+  return handleRequest(request);
+}
+
+export async function PATCH(request: NextRequest) {
+  return handleRequest(request);
+}
+
+async function handleRequest(request: NextRequest): Promise<NextResponse> {
   const { pathname } = request.nextUrl;
 
   // Rate limiting by IP
@@ -35,12 +63,18 @@ export async function middleware(request: NextRequest) {
     );
   }
 
-  // Security headers
+  // Create response with security headers
   const response = NextResponse.next();
 
-  // CORS
-  response.headers.set("Access-Control-Allow-Origin", process.env.NEXT_PUBLIC_APP_URL || "*");
-  response.headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  // CORS headers
+  response.headers.set(
+    "Access-Control-Allow-Origin",
+    process.env.NEXT_PUBLIC_APP_URL || "*"
+  );
+  response.headers.set(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+  );
   response.headers.set(
     "Access-Control-Allow-Headers",
     "Content-Type, Authorization, X-Idempotency-Key"
@@ -57,15 +91,3 @@ export async function middleware(request: NextRequest) {
 
   return response;
 }
-
-export const config = {
-  matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     */
-    "/((?!_next/static|_next/image|favicon.ico).*)",
-  ],
-};
