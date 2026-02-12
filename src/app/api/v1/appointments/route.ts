@@ -128,7 +128,7 @@ export async function POST(request: NextRequest) {
 
     // Check availability (prevent double-booking)
     const startAt = new Date(data.startAt);
-    const durationMin = services.reduce((sum, s) => sum + s.durationMin, 0);
+    const durationMin = services.reduce((sum: number, s: any) => sum + s.durationMin, 0);
     const endAt = new Date(startAt.getTime() + durationMin * 60000);
 
     const conflicts = await db.appointment.findMany({
@@ -160,7 +160,7 @@ export async function POST(request: NextRequest) {
         notes: data.notes,
         idempotencyKey: data.idempotencyKey,
         services: {
-          create: services.map((service) => ({
+          create: services.map((service: any) => ({
             serviceId: service.id,
             priceAtBooking: service.price,
           })),
@@ -175,7 +175,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Send confirmation email
-    const serviceNames = services.map((s) => s.name).join(", ");
+    const serviceNames = services.map((s: any) => s.name).join(", ");
     const confirmEmailSent = await sendEmail({
       to: data.clientEmail,
       subject: "¡Cita Confirmada en Luma Beauty Studio!",

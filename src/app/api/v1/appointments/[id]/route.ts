@@ -6,10 +6,10 @@ import { logAudit } from "@/lib/security/audit";
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const body = await request.json();
     const { reason } = body;
 
@@ -55,7 +55,7 @@ export async function POST(
     });
 
     // Send cancellation email
-    const serviceNames = updated.services.map((s) => s.service.name).join(", ");
+    const serviceNames = updated.services.map((s: any) => s.service.name).join(", ");
     await sendEmail({
       to: updated.client.email,
       subject: "Cita Cancelada - Luma Beauty Studio",

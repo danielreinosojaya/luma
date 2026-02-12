@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
 
     // Calculate amount
     const amount = appointment.services.reduce(
-      (sum, s) => sum + s.priceAtBooking,
+      (sum: number, s: any) => sum + s.priceAtBooking,
       0
     );
 

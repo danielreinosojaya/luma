@@ -20,6 +20,7 @@ export async function GET(request: NextRequest) {
     const staff = await db.staff.findUnique({
       where: { id: staffId },
       include: {
+        user: true,
         schedules: true,
         services: {
           include: {
@@ -41,7 +42,7 @@ export async function GET(request: NextRequest) {
     const dayOfWeek = targetDate.getDay();
 
     // Get staff schedule for that day
-    const schedule = staff.schedules.find((s) => s.dayOfWeek === dayOfWeek);
+    const schedule = staff.schedules.find((s: any) => s.dayOfWeek === dayOfWeek);
 
     if (!schedule || !schedule.isAvailable) {
       return NextResponse.json(
@@ -102,7 +103,7 @@ export async function GET(request: NextRequest) {
 
       // Check if slot conflicts with existing appointments
       const hasConflict = existingAppointments.some(
-        (apt) =>
+        (apt: any) =>
           slotStart < apt.endAt && slotEnd > apt.startAt
       );
 
