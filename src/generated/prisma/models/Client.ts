@@ -42,6 +42,7 @@ export type ClientMinAggregateOutputType = {
   phone: string | null
   notes: string | null
   loyaltyPoints: number | null
+  deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -54,6 +55,7 @@ export type ClientMaxAggregateOutputType = {
   phone: string | null
   notes: string | null
   loyaltyPoints: number | null
+  deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -66,6 +68,7 @@ export type ClientCountAggregateOutputType = {
   phone: number
   notes: number
   loyaltyPoints: number
+  deletedAt: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -88,6 +91,7 @@ export type ClientMinAggregateInputType = {
   phone?: true
   notes?: true
   loyaltyPoints?: true
+  deletedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -100,6 +104,7 @@ export type ClientMaxAggregateInputType = {
   phone?: true
   notes?: true
   loyaltyPoints?: true
+  deletedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -112,6 +117,7 @@ export type ClientCountAggregateInputType = {
   phone?: true
   notes?: true
   loyaltyPoints?: true
+  deletedAt?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -211,6 +217,7 @@ export type ClientGroupByOutputType = {
   phone: string
   notes: string | null
   loyaltyPoints: number
+  deletedAt: Date | null
   createdAt: Date
   updatedAt: Date
   _count: ClientCountAggregateOutputType | null
@@ -246,6 +253,7 @@ export type ClientWhereInput = {
   phone?: Prisma.StringFilter<"Client"> | string
   notes?: Prisma.StringNullableFilter<"Client"> | string | null
   loyaltyPoints?: Prisma.IntFilter<"Client"> | number
+  deletedAt?: Prisma.DateTimeNullableFilter<"Client"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Client"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Client"> | Date | string
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -261,6 +269,7 @@ export type ClientOrderByWithRelationInput = {
   phone?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   loyaltyPoints?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -279,6 +288,7 @@ export type ClientWhereUniqueInput = Prisma.AtLeast<{
   phone?: Prisma.StringFilter<"Client"> | string
   notes?: Prisma.StringNullableFilter<"Client"> | string | null
   loyaltyPoints?: Prisma.IntFilter<"Client"> | number
+  deletedAt?: Prisma.DateTimeNullableFilter<"Client"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Client"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Client"> | Date | string
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -294,6 +304,7 @@ export type ClientOrderByWithAggregationInput = {
   phone?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   loyaltyPoints?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ClientCountOrderByAggregateInput
@@ -314,6 +325,7 @@ export type ClientScalarWhereWithAggregatesInput = {
   phone?: Prisma.StringWithAggregatesFilter<"Client"> | string
   notes?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
   loyaltyPoints?: Prisma.IntWithAggregatesFilter<"Client"> | number
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Client"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Client"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Client"> | Date | string
 }
@@ -325,6 +337,7 @@ export type ClientCreateInput = {
   phone: string
   notes?: string | null
   loyaltyPoints?: number
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user?: Prisma.UserCreateNestedOneWithoutClientInput
@@ -340,6 +353,7 @@ export type ClientUncheckedCreateInput = {
   phone: string
   notes?: string | null
   loyaltyPoints?: number
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClientInput
@@ -353,6 +367,7 @@ export type ClientUpdateInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   loyaltyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneWithoutClientNestedInput
@@ -368,6 +383,7 @@ export type ClientUncheckedUpdateInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   loyaltyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClientNestedInput
@@ -382,6 +398,7 @@ export type ClientCreateManyInput = {
   phone: string
   notes?: string | null
   loyaltyPoints?: number
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -393,6 +410,7 @@ export type ClientUpdateManyMutationInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   loyaltyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -405,6 +423,7 @@ export type ClientUncheckedUpdateManyInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   loyaltyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -422,6 +441,7 @@ export type ClientCountOrderByAggregateInput = {
   phone?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   loyaltyPoints?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -438,6 +458,7 @@ export type ClientMaxOrderByAggregateInput = {
   phone?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   loyaltyPoints?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -450,6 +471,7 @@ export type ClientMinOrderByAggregateInput = {
   phone?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   loyaltyPoints?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -538,6 +560,7 @@ export type ClientCreateWithoutUserInput = {
   phone: string
   notes?: string | null
   loyaltyPoints?: number
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClientInput
@@ -551,6 +574,7 @@ export type ClientUncheckedCreateWithoutUserInput = {
   phone: string
   notes?: string | null
   loyaltyPoints?: number
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClientInput
@@ -580,6 +604,7 @@ export type ClientUpdateWithoutUserInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   loyaltyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appointments?: Prisma.AppointmentUpdateManyWithoutClientNestedInput
@@ -593,6 +618,7 @@ export type ClientUncheckedUpdateWithoutUserInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   loyaltyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClientNestedInput
@@ -606,6 +632,7 @@ export type ClientCreateWithoutAppointmentsInput = {
   phone: string
   notes?: string | null
   loyaltyPoints?: number
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user?: Prisma.UserCreateNestedOneWithoutClientInput
@@ -620,6 +647,7 @@ export type ClientUncheckedCreateWithoutAppointmentsInput = {
   phone: string
   notes?: string | null
   loyaltyPoints?: number
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutClientInput
@@ -648,6 +676,7 @@ export type ClientUpdateWithoutAppointmentsInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   loyaltyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneWithoutClientNestedInput
@@ -662,6 +691,7 @@ export type ClientUncheckedUpdateWithoutAppointmentsInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   loyaltyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutClientNestedInput
@@ -674,6 +704,7 @@ export type ClientCreateWithoutNotificationsInput = {
   phone: string
   notes?: string | null
   loyaltyPoints?: number
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user?: Prisma.UserCreateNestedOneWithoutClientInput
@@ -688,6 +719,7 @@ export type ClientUncheckedCreateWithoutNotificationsInput = {
   phone: string
   notes?: string | null
   loyaltyPoints?: number
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClientInput
@@ -716,6 +748,7 @@ export type ClientUpdateWithoutNotificationsInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   loyaltyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneWithoutClientNestedInput
@@ -730,6 +763,7 @@ export type ClientUncheckedUpdateWithoutNotificationsInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   loyaltyPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClientNestedInput
@@ -783,6 +817,7 @@ export type ClientSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   phone?: boolean
   notes?: boolean
   loyaltyPoints?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.Client$userArgs<ExtArgs>
@@ -799,6 +834,7 @@ export type ClientSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   phone?: boolean
   notes?: boolean
   loyaltyPoints?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.Client$userArgs<ExtArgs>
@@ -812,6 +848,7 @@ export type ClientSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   phone?: boolean
   notes?: boolean
   loyaltyPoints?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.Client$userArgs<ExtArgs>
@@ -825,11 +862,12 @@ export type ClientSelectScalar = {
   phone?: boolean
   notes?: boolean
   loyaltyPoints?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ClientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "name" | "email" | "phone" | "notes" | "loyaltyPoints" | "createdAt" | "updatedAt", ExtArgs["result"]["client"]>
+export type ClientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "name" | "email" | "phone" | "notes" | "loyaltyPoints" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["client"]>
 export type ClientInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.Client$userArgs<ExtArgs>
   appointments?: boolean | Prisma.Client$appointmentsArgs<ExtArgs>
@@ -858,6 +896,7 @@ export type $ClientPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     phone: string
     notes: string | null
     loyaltyPoints: number
+    deletedAt: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["client"]>
@@ -1293,6 +1332,7 @@ export interface ClientFieldRefs {
   readonly phone: Prisma.FieldRef<"Client", 'String'>
   readonly notes: Prisma.FieldRef<"Client", 'String'>
   readonly loyaltyPoints: Prisma.FieldRef<"Client", 'Int'>
+  readonly deletedAt: Prisma.FieldRef<"Client", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Client", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Client", 'DateTime'>
 }

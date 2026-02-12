@@ -55,6 +55,13 @@ enum NotificationType {
   FOLLOWUP
 }
 
+enum NotificationStatus {
+  PENDING
+  SENT
+  FAILED
+  MAX_RETRIES
+}
+
 // ============= AUTH & USERS =============
 
 model User {
@@ -65,6 +72,7 @@ model User {
   name          String?
   role          UserRole  @default(CLIENT)
   active        Boolean   @default(true)
+  deletedAt     DateTime? // Soft delete — null = active
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
@@ -74,6 +82,7 @@ model User {
   sessions      Session[]
   auditLogs     AuditLog[]
 
+  @@index([email, active])
   @@map("user")
 }
 
@@ -85,43 +94,47 @@ model Session {
   createdAt DateTime @default(now())
 
   @@index([userId])
+  @@index([expiresAt])
   @@map("session")
 }
 
 // ============= CLIENT PROFILE =============
 
 model Client {
-  id          String  @id @default(cuid())
-  userId      String? @unique
-  user        User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
-  name        String
-  email       String  @unique
-  phone       String
-  notes       String?
-  loyaltyPoints Int @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id            String    @id @default(cuid())
+  userId        String?   @unique
+  user          User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  name          String
+  email         String    @unique
+  phone         String    // Encrypted at rest via application-level crypto
+  notes         String?
+  loyaltyPoints Int       @default(0)
+  deletedAt     DateTime? // Soft delete
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   // Relations
-  appointments Appointment[]
+  appointments  Appointment[]
   notifications Notification[]
 
   @@index([email])
+  @@index([deletedAt])
   @@map("client")
 }
 
 // ============= STAFF =============
 
 model Staff {
-  id              String  @id @default(cuid())
-  userId          String  @unique
-  user            User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  role            String  // "hairStylist", "nailTechnician", etc.
-  commissionRate  Float   @default(0.15) // 15% default
+  id              String    @id @default(cuid())
+  userId          String    @unique
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role            String    // "hairStylist", "nailTechnician", etc.
+  commissionRate  Float     @default(0.15) // 15% default
   avatarUrl       String?
   notes           String?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  deletedAt       DateTime? // Soft delete
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 
   // Relations
   services        StaffService[]
@@ -129,6 +142,7 @@ model Staff {
   appointments    Appointment[]
   auditLogs       AuditLog[]
 
+  @@index([deletedAt])
   @@map("staff")
 }
 
@@ -165,40 +179,44 @@ model Schedule {
 // ============= SERVICES & COMBOS =============
 
 model Service {
-  id          String  @id @default(cuid())
+  id          String    @id @default(cuid())
   name        String
   description String?
-  category    String  // "HAIR", "NAILS", "BROWS", "LASHES"
-  durationMin Int     // duración en minutos
+  category    String    // "HAIR", "NAILS", "BROWS", "LASHES"
+  durationMin Int       // duración en minutos
   price       Float
-  active      Boolean @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  active      Boolean   @default(true)
+  deletedAt   DateTime? // Soft delete
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   // Relations
-  staffServices  StaffService[]
+  staffServices       StaffService[]
   appointmentServices AppointmentService[]
-  comboServices ComboService[]
+  comboServices       ComboService[]
 
-  @@index([active])
+  @@index([active, category])
+  @@index([deletedAt])
   @@map("service")
 }
 
 model Combo {
-  id          String  @id @default(cuid())
+  id          String    @id @default(cuid())
   name        String
   description String?
   price       Float
-  discountPct Float   @default(0)
-  active      Boolean @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  discountPct Float     @default(0)
+  active      Boolean   @default(true)
+  deletedAt   DateTime? // Soft delete
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   // Relations
-  services    ComboService[]
+  services     ComboService[]
   appointments Appointment[]
 
   @@index([active])
+  @@index([deletedAt])
   @@map("combo")
 }
 
@@ -219,20 +237,20 @@ model ComboService {
 // ============= APPOINTMENTS =============
 
 model Appointment {
-  id              String    @id @default(cuid())
+  id              String            @id @default(cuid())
   clientId        String
-  client          Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  client          Client            @relation(fields: [clientId], references: [id], onDelete: Cascade)
   staffId         String
-  staff           Staff     @relation(fields: [staffId], references: [id])
+  staff           Staff             @relation(fields: [staffId], references: [id])
   comboId         String?
-  combo           Combo?    @relation(fields: [comboId], references: [id], onDelete: SetNull)
+  combo           Combo?            @relation(fields: [comboId], references: [id], onDelete: Restrict)
   startAt         DateTime
   endAt           DateTime
   status          AppointmentStatus @default(PENDING)
   notes           String?
-  idempotencyKey  String    @unique @default(cuid())
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  idempotencyKey  String            @unique @default(cuid())
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
 
   // Relations
   services        AppointmentService[]
@@ -240,21 +258,22 @@ model Appointment {
   notifications   Notification[]
 
   @@index([clientId])
-  @@index([staffId])
+  @@index([staffId, startAt, status]) // Composite: slot conflict checks
   @@index([status])
   @@index([startAt])
   @@index([idempotencyKey])
+  @@index([clientId, status, createdAt]) // Composite: client appointment list
   @@map("appointment")
 }
 
 model AppointmentService {
-  id            String @id @default(cuid())
-  appointmentId String
-  appointment   Appointment @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
-  serviceId     String
-  service       Service @relation(fields: [serviceId], references: [id])
-  priceAtBooking Float // snapshot del precio al momento de booking
-  createdAt     DateTime @default(now())
+  id              String      @id @default(cuid())
+  appointmentId   String
+  appointment     Appointment @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+  serviceId       String
+  service         Service     @relation(fields: [serviceId], references: [id])
+  priceAtBooking  Float       // snapshot del precio al momento de booking
+  createdAt       DateTime    @default(now())
 
   @@unique([appointmentId, serviceId])
   @@index([appointmentId])
@@ -265,46 +284,53 @@ model AppointmentService {
 // ============= PAYMENTS =============
 
 model Payment {
-  id              String  @id @default(cuid())
-  appointmentId   String  @unique
-  appointment     Appointment @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+  id              String        @id @default(cuid())
+  appointmentId   String        @unique
+  appointment     Appointment   @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
   amount          Float
   method          PaymentMethod
   status          PaymentStatus @default(PENDING)
+  confirmedById   String?       // staffId who confirmed cash/transfer
+  confirmedAt     DateTime?     // When confirmed
   notes           String?
-  idempotencyKey  String  @unique @default(cuid())
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  idempotencyKey  String        @unique @default(cuid())
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
 
   @@index([appointmentId])
   @@index([method])
   @@index([status])
   @@index([idempotencyKey])
+  @@index([createdAt, status]) // Composite: finance reports
   @@map("payment")
 }
 
 // ============= NOTIFICATIONS =============
 
 model Notification {
-  id            String  @id @default(cuid())
-  appointmentId String?
-  appointment   Appointment? @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
-  clientId      String
-  client        Client  @relation(fields: [clientId], references: [id], onDelete: Cascade)
-  type          NotificationType
-  channel       NotificationChannel @default(EMAIL)
-  recipientEmail String
-  subject       String?
-  body          String?
-  sentAt        DateTime?
-  status        String  @default("PENDING") // "PENDING", "SENT", "FAILED"
-  errorMessage  String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id              String             @id @default(cuid())
+  appointmentId   String?
+  appointment     Appointment?       @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+  clientId        String
+  client          Client             @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  type            NotificationType
+  channel         NotificationChannel @default(EMAIL)
+  recipientEmail  String
+  subject         String?
+  body            String?
+  sentAt          DateTime?
+  status          NotificationStatus  @default(PENDING)
+  retryCount      Int                 @default(0)
+  maxRetries      Int                 @default(3)
+  nextRetryAt     DateTime?
+  lastErrorCode   String?
+  errorMessage    String?
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
 
   @@index([clientId])
   @@index([appointmentId])
-  @@index([status])
+  @@index([status, nextRetryAt]) // Composite: retry job queue
   @@index([createdAt])
   @@map("notification")
 }
@@ -312,15 +338,15 @@ model Notification {
 // ============= FINANCE & AUDIT =============
 
 model FinanceSummary {
-  id              String @id @default(cuid())
-  periodStart     DateTime
-  periodEnd       DateTime
-  totalRevenue    Float @default(0)
-  totalAppointments Int @default(0)
-  avgTicket       Float @default(0)
-  staffCommissions String? // JSON array de comisiones por staff
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id                String @id @default(cuid())
+  periodStart       DateTime
+  periodEnd         DateTime
+  totalRevenue      Float  @default(0)
+  totalAppointments Int    @default(0)
+  avgTicket         Float  @default(0)
+  staffCommissions  String? // JSON array de comisiones por staff
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 
   @@unique([periodStart, periodEnd])
   @@index([periodStart])
@@ -328,28 +354,29 @@ model FinanceSummary {
 }
 
 model AuditLog {
-  id        String @id @default(cuid())
-  userId    String
-  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id        String   @id @default(cuid())
+  userId    String?  // Nullable: user may be deleted
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
   staffId   String?
-  staff     Staff? @relation(fields: [staffId], references: [id], onDelete: SetNull)
-  action    String // "CREATE", "UPDATE", "DELETE"
-  entity    String // "Client", "Appointment", "Payment", etc.
+  staff     Staff?   @relation(fields: [staffId], references: [id], onDelete: SetNull)
+  action    String   // "CREATE", "UPDATE", "DELETE"
+  entity    String   // "Client", "Appointment", "Payment", etc.
   entityId  String
-  changes   String? // JSON of what changed
+  changes   String?  // JSON of what changed
   ipAddress String?
   createdAt DateTime @default(now())
 
   @@index([userId])
   @@index([createdAt])
+  @@index([entity, entityId]) // Composite: lookup changes for a specific record
   @@map("audit_log")
 }
 
 // ============= IDEMPOTENCY CACHE =============
 
 model IdempotencyKey {
-  key       String @id
-  result    String // JSON response
+  key       String   @id
+  result    String   // JSON response
   expiresAt DateTime
   createdAt DateTime @default(now())
 

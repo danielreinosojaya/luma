@@ -1650,6 +1650,7 @@ export const UserScalarFieldEnum = {
   name: 'name',
   role: 'role',
   active: 'active',
+  deletedAt: 'deletedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1675,6 +1676,7 @@ export const ClientScalarFieldEnum = {
   phone: 'phone',
   notes: 'notes',
   loyaltyPoints: 'loyaltyPoints',
+  deletedAt: 'deletedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1689,6 +1691,7 @@ export const StaffScalarFieldEnum = {
   commissionRate: 'commissionRate',
   avatarUrl: 'avatarUrl',
   notes: 'notes',
+  deletedAt: 'deletedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1728,6 +1731,7 @@ export const ServiceScalarFieldEnum = {
   durationMin: 'durationMin',
   price: 'price',
   active: 'active',
+  deletedAt: 'deletedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1742,6 +1746,7 @@ export const ComboScalarFieldEnum = {
   price: 'price',
   discountPct: 'discountPct',
   active: 'active',
+  deletedAt: 'deletedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1793,6 +1798,8 @@ export const PaymentScalarFieldEnum = {
   amount: 'amount',
   method: 'method',
   status: 'status',
+  confirmedById: 'confirmedById',
+  confirmedAt: 'confirmedAt',
   notes: 'notes',
   idempotencyKey: 'idempotencyKey',
   createdAt: 'createdAt',
@@ -1813,6 +1820,10 @@ export const NotificationScalarFieldEnum = {
   body: 'body',
   sentAt: 'sentAt',
   status: 'status',
+  retryCount: 'retryCount',
+  maxRetries: 'maxRetries',
+  nextRetryAt: 'nextRetryAt',
+  lastErrorCode: 'lastErrorCode',
   errorMessage: 'errorMessage',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -2035,6 +2046,20 @@ export type EnumNotificationChannelFieldRefInput<$PrismaModel> = FieldRefInputTy
  * Reference to a field of type 'NotificationChannel[]'
  */
 export type ListEnumNotificationChannelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationChannel[]'>
+    
+
+
+/**
+ * Reference to a field of type 'NotificationStatus'
+ */
+export type EnumNotificationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'NotificationStatus[]'
+ */
+export type ListEnumNotificationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationStatus[]'>
     
 
 /**

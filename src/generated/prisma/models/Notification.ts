@@ -20,8 +20,20 @@ export type NotificationModel = runtime.Types.Result.DefaultSelection<Prisma.$No
 
 export type AggregateNotification = {
   _count: NotificationCountAggregateOutputType | null
+  _avg: NotificationAvgAggregateOutputType | null
+  _sum: NotificationSumAggregateOutputType | null
   _min: NotificationMinAggregateOutputType | null
   _max: NotificationMaxAggregateOutputType | null
+}
+
+export type NotificationAvgAggregateOutputType = {
+  retryCount: number | null
+  maxRetries: number | null
+}
+
+export type NotificationSumAggregateOutputType = {
+  retryCount: number | null
+  maxRetries: number | null
 }
 
 export type NotificationMinAggregateOutputType = {
@@ -34,7 +46,11 @@ export type NotificationMinAggregateOutputType = {
   subject: string | null
   body: string | null
   sentAt: Date | null
-  status: string | null
+  status: $Enums.NotificationStatus | null
+  retryCount: number | null
+  maxRetries: number | null
+  nextRetryAt: Date | null
+  lastErrorCode: string | null
   errorMessage: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -50,7 +66,11 @@ export type NotificationMaxAggregateOutputType = {
   subject: string | null
   body: string | null
   sentAt: Date | null
-  status: string | null
+  status: $Enums.NotificationStatus | null
+  retryCount: number | null
+  maxRetries: number | null
+  nextRetryAt: Date | null
+  lastErrorCode: string | null
   errorMessage: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -67,12 +87,26 @@ export type NotificationCountAggregateOutputType = {
   body: number
   sentAt: number
   status: number
+  retryCount: number
+  maxRetries: number
+  nextRetryAt: number
+  lastErrorCode: number
   errorMessage: number
   createdAt: number
   updatedAt: number
   _all: number
 }
 
+
+export type NotificationAvgAggregateInputType = {
+  retryCount?: true
+  maxRetries?: true
+}
+
+export type NotificationSumAggregateInputType = {
+  retryCount?: true
+  maxRetries?: true
+}
 
 export type NotificationMinAggregateInputType = {
   id?: true
@@ -85,6 +119,10 @@ export type NotificationMinAggregateInputType = {
   body?: true
   sentAt?: true
   status?: true
+  retryCount?: true
+  maxRetries?: true
+  nextRetryAt?: true
+  lastErrorCode?: true
   errorMessage?: true
   createdAt?: true
   updatedAt?: true
@@ -101,6 +139,10 @@ export type NotificationMaxAggregateInputType = {
   body?: true
   sentAt?: true
   status?: true
+  retryCount?: true
+  maxRetries?: true
+  nextRetryAt?: true
+  lastErrorCode?: true
   errorMessage?: true
   createdAt?: true
   updatedAt?: true
@@ -117,6 +159,10 @@ export type NotificationCountAggregateInputType = {
   body?: true
   sentAt?: true
   status?: true
+  retryCount?: true
+  maxRetries?: true
+  nextRetryAt?: true
+  lastErrorCode?: true
   errorMessage?: true
   createdAt?: true
   updatedAt?: true
@@ -161,6 +207,18 @@ export type NotificationAggregateArgs<ExtArgs extends runtime.Types.Extensions.I
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: NotificationAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: NotificationSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: NotificationMinAggregateInputType
@@ -191,6 +249,8 @@ export type NotificationGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   _count?: NotificationCountAggregateInputType | true
+  _avg?: NotificationAvgAggregateInputType
+  _sum?: NotificationSumAggregateInputType
   _min?: NotificationMinAggregateInputType
   _max?: NotificationMaxAggregateInputType
 }
@@ -205,11 +265,17 @@ export type NotificationGroupByOutputType = {
   subject: string | null
   body: string | null
   sentAt: Date | null
-  status: string
+  status: $Enums.NotificationStatus
+  retryCount: number
+  maxRetries: number
+  nextRetryAt: Date | null
+  lastErrorCode: string | null
   errorMessage: string | null
   createdAt: Date
   updatedAt: Date
   _count: NotificationCountAggregateOutputType | null
+  _avg: NotificationAvgAggregateOutputType | null
+  _sum: NotificationSumAggregateOutputType | null
   _min: NotificationMinAggregateOutputType | null
   _max: NotificationMaxAggregateOutputType | null
 }
@@ -242,7 +308,11 @@ export type NotificationWhereInput = {
   subject?: Prisma.StringNullableFilter<"Notification"> | string | null
   body?: Prisma.StringNullableFilter<"Notification"> | string | null
   sentAt?: Prisma.DateTimeNullableFilter<"Notification"> | Date | string | null
-  status?: Prisma.StringFilter<"Notification"> | string
+  status?: Prisma.EnumNotificationStatusFilter<"Notification"> | $Enums.NotificationStatus
+  retryCount?: Prisma.IntFilter<"Notification"> | number
+  maxRetries?: Prisma.IntFilter<"Notification"> | number
+  nextRetryAt?: Prisma.DateTimeNullableFilter<"Notification"> | Date | string | null
+  lastErrorCode?: Prisma.StringNullableFilter<"Notification"> | string | null
   errorMessage?: Prisma.StringNullableFilter<"Notification"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Notification"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Notification"> | Date | string
@@ -261,6 +331,10 @@ export type NotificationOrderByWithRelationInput = {
   body?: Prisma.SortOrderInput | Prisma.SortOrder
   sentAt?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  retryCount?: Prisma.SortOrder
+  maxRetries?: Prisma.SortOrder
+  nextRetryAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastErrorCode?: Prisma.SortOrderInput | Prisma.SortOrder
   errorMessage?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -281,7 +355,11 @@ export type NotificationWhereUniqueInput = Prisma.AtLeast<{
   subject?: Prisma.StringNullableFilter<"Notification"> | string | null
   body?: Prisma.StringNullableFilter<"Notification"> | string | null
   sentAt?: Prisma.DateTimeNullableFilter<"Notification"> | Date | string | null
-  status?: Prisma.StringFilter<"Notification"> | string
+  status?: Prisma.EnumNotificationStatusFilter<"Notification"> | $Enums.NotificationStatus
+  retryCount?: Prisma.IntFilter<"Notification"> | number
+  maxRetries?: Prisma.IntFilter<"Notification"> | number
+  nextRetryAt?: Prisma.DateTimeNullableFilter<"Notification"> | Date | string | null
+  lastErrorCode?: Prisma.StringNullableFilter<"Notification"> | string | null
   errorMessage?: Prisma.StringNullableFilter<"Notification"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Notification"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Notification"> | Date | string
@@ -300,12 +378,18 @@ export type NotificationOrderByWithAggregationInput = {
   body?: Prisma.SortOrderInput | Prisma.SortOrder
   sentAt?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  retryCount?: Prisma.SortOrder
+  maxRetries?: Prisma.SortOrder
+  nextRetryAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastErrorCode?: Prisma.SortOrderInput | Prisma.SortOrder
   errorMessage?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.NotificationCountOrderByAggregateInput
+  _avg?: Prisma.NotificationAvgOrderByAggregateInput
   _max?: Prisma.NotificationMaxOrderByAggregateInput
   _min?: Prisma.NotificationMinOrderByAggregateInput
+  _sum?: Prisma.NotificationSumOrderByAggregateInput
 }
 
 export type NotificationScalarWhereWithAggregatesInput = {
@@ -321,7 +405,11 @@ export type NotificationScalarWhereWithAggregatesInput = {
   subject?: Prisma.StringNullableWithAggregatesFilter<"Notification"> | string | null
   body?: Prisma.StringNullableWithAggregatesFilter<"Notification"> | string | null
   sentAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Notification"> | Date | string | null
-  status?: Prisma.StringWithAggregatesFilter<"Notification"> | string
+  status?: Prisma.EnumNotificationStatusWithAggregatesFilter<"Notification"> | $Enums.NotificationStatus
+  retryCount?: Prisma.IntWithAggregatesFilter<"Notification"> | number
+  maxRetries?: Prisma.IntWithAggregatesFilter<"Notification"> | number
+  nextRetryAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Notification"> | Date | string | null
+  lastErrorCode?: Prisma.StringNullableWithAggregatesFilter<"Notification"> | string | null
   errorMessage?: Prisma.StringNullableWithAggregatesFilter<"Notification"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Notification"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Notification"> | Date | string
@@ -335,7 +423,11 @@ export type NotificationCreateInput = {
   subject?: string | null
   body?: string | null
   sentAt?: Date | string | null
-  status?: string
+  status?: $Enums.NotificationStatus
+  retryCount?: number
+  maxRetries?: number
+  nextRetryAt?: Date | string | null
+  lastErrorCode?: string | null
   errorMessage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -353,7 +445,11 @@ export type NotificationUncheckedCreateInput = {
   subject?: string | null
   body?: string | null
   sentAt?: Date | string | null
-  status?: string
+  status?: $Enums.NotificationStatus
+  retryCount?: number
+  maxRetries?: number
+  nextRetryAt?: Date | string | null
+  lastErrorCode?: string | null
   errorMessage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -367,7 +463,11 @@ export type NotificationUpdateInput = {
   subject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   body?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumNotificationStatusFieldUpdateOperationsInput | $Enums.NotificationStatus
+  retryCount?: Prisma.IntFieldUpdateOperationsInput | number
+  maxRetries?: Prisma.IntFieldUpdateOperationsInput | number
+  nextRetryAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastErrorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -385,7 +485,11 @@ export type NotificationUncheckedUpdateInput = {
   subject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   body?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumNotificationStatusFieldUpdateOperationsInput | $Enums.NotificationStatus
+  retryCount?: Prisma.IntFieldUpdateOperationsInput | number
+  maxRetries?: Prisma.IntFieldUpdateOperationsInput | number
+  nextRetryAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastErrorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -401,7 +505,11 @@ export type NotificationCreateManyInput = {
   subject?: string | null
   body?: string | null
   sentAt?: Date | string | null
-  status?: string
+  status?: $Enums.NotificationStatus
+  retryCount?: number
+  maxRetries?: number
+  nextRetryAt?: Date | string | null
+  lastErrorCode?: string | null
   errorMessage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -415,7 +523,11 @@ export type NotificationUpdateManyMutationInput = {
   subject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   body?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumNotificationStatusFieldUpdateOperationsInput | $Enums.NotificationStatus
+  retryCount?: Prisma.IntFieldUpdateOperationsInput | number
+  maxRetries?: Prisma.IntFieldUpdateOperationsInput | number
+  nextRetryAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastErrorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -431,7 +543,11 @@ export type NotificationUncheckedUpdateManyInput = {
   subject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   body?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumNotificationStatusFieldUpdateOperationsInput | $Enums.NotificationStatus
+  retryCount?: Prisma.IntFieldUpdateOperationsInput | number
+  maxRetries?: Prisma.IntFieldUpdateOperationsInput | number
+  nextRetryAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastErrorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -458,9 +574,18 @@ export type NotificationCountOrderByAggregateInput = {
   body?: Prisma.SortOrder
   sentAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  retryCount?: Prisma.SortOrder
+  maxRetries?: Prisma.SortOrder
+  nextRetryAt?: Prisma.SortOrder
+  lastErrorCode?: Prisma.SortOrder
   errorMessage?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type NotificationAvgOrderByAggregateInput = {
+  retryCount?: Prisma.SortOrder
+  maxRetries?: Prisma.SortOrder
 }
 
 export type NotificationMaxOrderByAggregateInput = {
@@ -474,6 +599,10 @@ export type NotificationMaxOrderByAggregateInput = {
   body?: Prisma.SortOrder
   sentAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  retryCount?: Prisma.SortOrder
+  maxRetries?: Prisma.SortOrder
+  nextRetryAt?: Prisma.SortOrder
+  lastErrorCode?: Prisma.SortOrder
   errorMessage?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -490,9 +619,18 @@ export type NotificationMinOrderByAggregateInput = {
   body?: Prisma.SortOrder
   sentAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  retryCount?: Prisma.SortOrder
+  maxRetries?: Prisma.SortOrder
+  nextRetryAt?: Prisma.SortOrder
+  lastErrorCode?: Prisma.SortOrder
   errorMessage?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type NotificationSumOrderByAggregateInput = {
+  retryCount?: Prisma.SortOrder
+  maxRetries?: Prisma.SortOrder
 }
 
 export type NotificationCreateNestedManyWithoutClientInput = {
@@ -587,6 +725,10 @@ export type EnumNotificationChannelFieldUpdateOperationsInput = {
   set?: $Enums.NotificationChannel
 }
 
+export type EnumNotificationStatusFieldUpdateOperationsInput = {
+  set?: $Enums.NotificationStatus
+}
+
 export type NotificationCreateWithoutClientInput = {
   id?: string
   type: $Enums.NotificationType
@@ -595,7 +737,11 @@ export type NotificationCreateWithoutClientInput = {
   subject?: string | null
   body?: string | null
   sentAt?: Date | string | null
-  status?: string
+  status?: $Enums.NotificationStatus
+  retryCount?: number
+  maxRetries?: number
+  nextRetryAt?: Date | string | null
+  lastErrorCode?: string | null
   errorMessage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -611,7 +757,11 @@ export type NotificationUncheckedCreateWithoutClientInput = {
   subject?: string | null
   body?: string | null
   sentAt?: Date | string | null
-  status?: string
+  status?: $Enums.NotificationStatus
+  retryCount?: number
+  maxRetries?: number
+  nextRetryAt?: Date | string | null
+  lastErrorCode?: string | null
   errorMessage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -656,7 +806,11 @@ export type NotificationScalarWhereInput = {
   subject?: Prisma.StringNullableFilter<"Notification"> | string | null
   body?: Prisma.StringNullableFilter<"Notification"> | string | null
   sentAt?: Prisma.DateTimeNullableFilter<"Notification"> | Date | string | null
-  status?: Prisma.StringFilter<"Notification"> | string
+  status?: Prisma.EnumNotificationStatusFilter<"Notification"> | $Enums.NotificationStatus
+  retryCount?: Prisma.IntFilter<"Notification"> | number
+  maxRetries?: Prisma.IntFilter<"Notification"> | number
+  nextRetryAt?: Prisma.DateTimeNullableFilter<"Notification"> | Date | string | null
+  lastErrorCode?: Prisma.StringNullableFilter<"Notification"> | string | null
   errorMessage?: Prisma.StringNullableFilter<"Notification"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Notification"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Notification"> | Date | string
@@ -670,7 +824,11 @@ export type NotificationCreateWithoutAppointmentInput = {
   subject?: string | null
   body?: string | null
   sentAt?: Date | string | null
-  status?: string
+  status?: $Enums.NotificationStatus
+  retryCount?: number
+  maxRetries?: number
+  nextRetryAt?: Date | string | null
+  lastErrorCode?: string | null
   errorMessage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -686,7 +844,11 @@ export type NotificationUncheckedCreateWithoutAppointmentInput = {
   subject?: string | null
   body?: string | null
   sentAt?: Date | string | null
-  status?: string
+  status?: $Enums.NotificationStatus
+  retryCount?: number
+  maxRetries?: number
+  nextRetryAt?: Date | string | null
+  lastErrorCode?: string | null
   errorMessage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -727,7 +889,11 @@ export type NotificationCreateManyClientInput = {
   subject?: string | null
   body?: string | null
   sentAt?: Date | string | null
-  status?: string
+  status?: $Enums.NotificationStatus
+  retryCount?: number
+  maxRetries?: number
+  nextRetryAt?: Date | string | null
+  lastErrorCode?: string | null
   errorMessage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -741,7 +907,11 @@ export type NotificationUpdateWithoutClientInput = {
   subject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   body?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumNotificationStatusFieldUpdateOperationsInput | $Enums.NotificationStatus
+  retryCount?: Prisma.IntFieldUpdateOperationsInput | number
+  maxRetries?: Prisma.IntFieldUpdateOperationsInput | number
+  nextRetryAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastErrorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -757,7 +927,11 @@ export type NotificationUncheckedUpdateWithoutClientInput = {
   subject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   body?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumNotificationStatusFieldUpdateOperationsInput | $Enums.NotificationStatus
+  retryCount?: Prisma.IntFieldUpdateOperationsInput | number
+  maxRetries?: Prisma.IntFieldUpdateOperationsInput | number
+  nextRetryAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastErrorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -772,7 +946,11 @@ export type NotificationUncheckedUpdateManyWithoutClientInput = {
   subject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   body?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumNotificationStatusFieldUpdateOperationsInput | $Enums.NotificationStatus
+  retryCount?: Prisma.IntFieldUpdateOperationsInput | number
+  maxRetries?: Prisma.IntFieldUpdateOperationsInput | number
+  nextRetryAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastErrorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -787,7 +965,11 @@ export type NotificationCreateManyAppointmentInput = {
   subject?: string | null
   body?: string | null
   sentAt?: Date | string | null
-  status?: string
+  status?: $Enums.NotificationStatus
+  retryCount?: number
+  maxRetries?: number
+  nextRetryAt?: Date | string | null
+  lastErrorCode?: string | null
   errorMessage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -801,7 +983,11 @@ export type NotificationUpdateWithoutAppointmentInput = {
   subject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   body?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumNotificationStatusFieldUpdateOperationsInput | $Enums.NotificationStatus
+  retryCount?: Prisma.IntFieldUpdateOperationsInput | number
+  maxRetries?: Prisma.IntFieldUpdateOperationsInput | number
+  nextRetryAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastErrorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -817,7 +1003,11 @@ export type NotificationUncheckedUpdateWithoutAppointmentInput = {
   subject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   body?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumNotificationStatusFieldUpdateOperationsInput | $Enums.NotificationStatus
+  retryCount?: Prisma.IntFieldUpdateOperationsInput | number
+  maxRetries?: Prisma.IntFieldUpdateOperationsInput | number
+  nextRetryAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastErrorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -832,7 +1022,11 @@ export type NotificationUncheckedUpdateManyWithoutAppointmentInput = {
   subject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   body?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumNotificationStatusFieldUpdateOperationsInput | $Enums.NotificationStatus
+  retryCount?: Prisma.IntFieldUpdateOperationsInput | number
+  maxRetries?: Prisma.IntFieldUpdateOperationsInput | number
+  nextRetryAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastErrorCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -851,6 +1045,10 @@ export type NotificationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   body?: boolean
   sentAt?: boolean
   status?: boolean
+  retryCount?: boolean
+  maxRetries?: boolean
+  nextRetryAt?: boolean
+  lastErrorCode?: boolean
   errorMessage?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -869,6 +1067,10 @@ export type NotificationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   body?: boolean
   sentAt?: boolean
   status?: boolean
+  retryCount?: boolean
+  maxRetries?: boolean
+  nextRetryAt?: boolean
+  lastErrorCode?: boolean
   errorMessage?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -887,6 +1089,10 @@ export type NotificationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   body?: boolean
   sentAt?: boolean
   status?: boolean
+  retryCount?: boolean
+  maxRetries?: boolean
+  nextRetryAt?: boolean
+  lastErrorCode?: boolean
   errorMessage?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -905,12 +1111,16 @@ export type NotificationSelectScalar = {
   body?: boolean
   sentAt?: boolean
   status?: boolean
+  retryCount?: boolean
+  maxRetries?: boolean
+  nextRetryAt?: boolean
+  lastErrorCode?: boolean
   errorMessage?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type NotificationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "appointmentId" | "clientId" | "type" | "channel" | "recipientEmail" | "subject" | "body" | "sentAt" | "status" | "errorMessage" | "createdAt" | "updatedAt", ExtArgs["result"]["notification"]>
+export type NotificationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "appointmentId" | "clientId" | "type" | "channel" | "recipientEmail" | "subject" | "body" | "sentAt" | "status" | "retryCount" | "maxRetries" | "nextRetryAt" | "lastErrorCode" | "errorMessage" | "createdAt" | "updatedAt", ExtArgs["result"]["notification"]>
 export type NotificationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   appointment?: boolean | Prisma.Notification$appointmentArgs<ExtArgs>
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
@@ -940,7 +1150,11 @@ export type $NotificationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     subject: string | null
     body: string | null
     sentAt: Date | null
-    status: string
+    status: $Enums.NotificationStatus
+    retryCount: number
+    maxRetries: number
+    nextRetryAt: Date | null
+    lastErrorCode: string | null
     errorMessage: string | null
     createdAt: Date
     updatedAt: Date
@@ -1378,7 +1592,11 @@ export interface NotificationFieldRefs {
   readonly subject: Prisma.FieldRef<"Notification", 'String'>
   readonly body: Prisma.FieldRef<"Notification", 'String'>
   readonly sentAt: Prisma.FieldRef<"Notification", 'DateTime'>
-  readonly status: Prisma.FieldRef<"Notification", 'String'>
+  readonly status: Prisma.FieldRef<"Notification", 'NotificationStatus'>
+  readonly retryCount: Prisma.FieldRef<"Notification", 'Int'>
+  readonly maxRetries: Prisma.FieldRef<"Notification", 'Int'>
+  readonly nextRetryAt: Prisma.FieldRef<"Notification", 'DateTime'>
+  readonly lastErrorCode: Prisma.FieldRef<"Notification", 'String'>
   readonly errorMessage: Prisma.FieldRef<"Notification", 'String'>
   readonly createdAt: Prisma.FieldRef<"Notification", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Notification", 'DateTime'>

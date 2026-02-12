@@ -1,4 +1,4 @@
-import { PrismaClient } from "@/generated/prisma";
+import { PrismaClient } from "@/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
 
@@ -25,12 +25,27 @@ function createPrismaClient(): PrismaClient {
     });
   }
 
-  // Direct PostgreSQL via Driver Adapter
+  // Direct PostgreSQL via Driver Adapter — with production-safe pool config
   if (
     databaseUrl.startsWith("postgresql://") ||
     databaseUrl.startsWith("postgres://")
   ) {
-    const pool = new Pool({ connectionString: databaseUrl });
+    const pool = new Pool({
+      connectionString: databaseUrl,
+      // Production pool limits
+      max: parseInt(process.env.DB_POOL_MAX || "20", 10),
+      idleTimeoutMillis: 30_000,
+      connectionTimeoutMillis: 5_000,
+      // Keep-alive to prevent idle connection drops behind load balancers
+      keepAlive: true,
+      keepAliveInitialDelayMillis: 10_000,
+    });
+
+    // Graceful pool error handling (prevents unhandled rejections)
+    pool.on("error", (err) => {
+      console.error("Unexpected PG pool error:", err);
+    });
+
     const adapter = new PrismaPg(pool);
 
     return new PrismaClient({
@@ -72,4 +87,4 @@ export const db = new Proxy({} as PrismaClient, {
   },
 });
 
-export type { PrismaClient } from "@/generated/prisma";
+export type { PrismaClient } from "@/generated/prisma/client";

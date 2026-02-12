@@ -41,6 +41,7 @@ export type StaffMinAggregateOutputType = {
   commissionRate: number | null
   avatarUrl: string | null
   notes: string | null
+  deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -52,6 +53,7 @@ export type StaffMaxAggregateOutputType = {
   commissionRate: number | null
   avatarUrl: string | null
   notes: string | null
+  deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -63,6 +65,7 @@ export type StaffCountAggregateOutputType = {
   commissionRate: number
   avatarUrl: number
   notes: number
+  deletedAt: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -84,6 +87,7 @@ export type StaffMinAggregateInputType = {
   commissionRate?: true
   avatarUrl?: true
   notes?: true
+  deletedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -95,6 +99,7 @@ export type StaffMaxAggregateInputType = {
   commissionRate?: true
   avatarUrl?: true
   notes?: true
+  deletedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -106,6 +111,7 @@ export type StaffCountAggregateInputType = {
   commissionRate?: true
   avatarUrl?: true
   notes?: true
+  deletedAt?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -204,6 +210,7 @@ export type StaffGroupByOutputType = {
   commissionRate: number
   avatarUrl: string | null
   notes: string | null
+  deletedAt: Date | null
   createdAt: Date
   updatedAt: Date
   _count: StaffCountAggregateOutputType | null
@@ -238,6 +245,7 @@ export type StaffWhereInput = {
   commissionRate?: Prisma.FloatFilter<"Staff"> | number
   avatarUrl?: Prisma.StringNullableFilter<"Staff"> | string | null
   notes?: Prisma.StringNullableFilter<"Staff"> | string | null
+  deletedAt?: Prisma.DateTimeNullableFilter<"Staff"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -254,6 +262,7 @@ export type StaffOrderByWithRelationInput = {
   commissionRate?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -273,6 +282,7 @@ export type StaffWhereUniqueInput = Prisma.AtLeast<{
   commissionRate?: Prisma.FloatFilter<"Staff"> | number
   avatarUrl?: Prisma.StringNullableFilter<"Staff"> | string | null
   notes?: Prisma.StringNullableFilter<"Staff"> | string | null
+  deletedAt?: Prisma.DateTimeNullableFilter<"Staff"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -289,6 +299,7 @@ export type StaffOrderByWithAggregationInput = {
   commissionRate?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.StaffCountOrderByAggregateInput
@@ -308,6 +319,7 @@ export type StaffScalarWhereWithAggregatesInput = {
   commissionRate?: Prisma.FloatWithAggregatesFilter<"Staff"> | number
   avatarUrl?: Prisma.StringNullableWithAggregatesFilter<"Staff"> | string | null
   notes?: Prisma.StringNullableWithAggregatesFilter<"Staff"> | string | null
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Staff"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Staff"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Staff"> | Date | string
 }
@@ -318,6 +330,7 @@ export type StaffCreateInput = {
   commissionRate?: number
   avatarUrl?: string | null
   notes?: string | null
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutStaffInput
@@ -334,6 +347,7 @@ export type StaffUncheckedCreateInput = {
   commissionRate?: number
   avatarUrl?: string | null
   notes?: string | null
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   services?: Prisma.StaffServiceUncheckedCreateNestedManyWithoutStaffInput
@@ -348,6 +362,7 @@ export type StaffUpdateInput = {
   commissionRate?: Prisma.FloatFieldUpdateOperationsInput | number
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutStaffNestedInput
@@ -364,6 +379,7 @@ export type StaffUncheckedUpdateInput = {
   commissionRate?: Prisma.FloatFieldUpdateOperationsInput | number
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   services?: Prisma.StaffServiceUncheckedUpdateManyWithoutStaffNestedInput
@@ -379,6 +395,7 @@ export type StaffCreateManyInput = {
   commissionRate?: number
   avatarUrl?: string | null
   notes?: string | null
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -389,6 +406,7 @@ export type StaffUpdateManyMutationInput = {
   commissionRate?: Prisma.FloatFieldUpdateOperationsInput | number
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -400,6 +418,7 @@ export type StaffUncheckedUpdateManyInput = {
   commissionRate?: Prisma.FloatFieldUpdateOperationsInput | number
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -416,6 +435,7 @@ export type StaffCountOrderByAggregateInput = {
   commissionRate?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -431,6 +451,7 @@ export type StaffMaxOrderByAggregateInput = {
   commissionRate?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -442,6 +463,7 @@ export type StaffMinOrderByAggregateInput = {
   commissionRate?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -559,6 +581,7 @@ export type StaffCreateWithoutUserInput = {
   commissionRate?: number
   avatarUrl?: string | null
   notes?: string | null
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   services?: Prisma.StaffServiceCreateNestedManyWithoutStaffInput
@@ -573,6 +596,7 @@ export type StaffUncheckedCreateWithoutUserInput = {
   commissionRate?: number
   avatarUrl?: string | null
   notes?: string | null
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   services?: Prisma.StaffServiceUncheckedCreateNestedManyWithoutStaffInput
@@ -603,6 +627,7 @@ export type StaffUpdateWithoutUserInput = {
   commissionRate?: Prisma.FloatFieldUpdateOperationsInput | number
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   services?: Prisma.StaffServiceUpdateManyWithoutStaffNestedInput
@@ -617,6 +642,7 @@ export type StaffUncheckedUpdateWithoutUserInput = {
   commissionRate?: Prisma.FloatFieldUpdateOperationsInput | number
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   services?: Prisma.StaffServiceUncheckedUpdateManyWithoutStaffNestedInput
@@ -631,6 +657,7 @@ export type StaffCreateWithoutServicesInput = {
   commissionRate?: number
   avatarUrl?: string | null
   notes?: string | null
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutStaffInput
@@ -646,6 +673,7 @@ export type StaffUncheckedCreateWithoutServicesInput = {
   commissionRate?: number
   avatarUrl?: string | null
   notes?: string | null
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   schedules?: Prisma.ScheduleUncheckedCreateNestedManyWithoutStaffInput
@@ -675,6 +703,7 @@ export type StaffUpdateWithoutServicesInput = {
   commissionRate?: Prisma.FloatFieldUpdateOperationsInput | number
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutStaffNestedInput
@@ -690,6 +719,7 @@ export type StaffUncheckedUpdateWithoutServicesInput = {
   commissionRate?: Prisma.FloatFieldUpdateOperationsInput | number
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   schedules?: Prisma.ScheduleUncheckedUpdateManyWithoutStaffNestedInput
@@ -703,6 +733,7 @@ export type StaffCreateWithoutSchedulesInput = {
   commissionRate?: number
   avatarUrl?: string | null
   notes?: string | null
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutStaffInput
@@ -718,6 +749,7 @@ export type StaffUncheckedCreateWithoutSchedulesInput = {
   commissionRate?: number
   avatarUrl?: string | null
   notes?: string | null
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   services?: Prisma.StaffServiceUncheckedCreateNestedManyWithoutStaffInput
@@ -747,6 +779,7 @@ export type StaffUpdateWithoutSchedulesInput = {
   commissionRate?: Prisma.FloatFieldUpdateOperationsInput | number
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutStaffNestedInput
@@ -762,6 +795,7 @@ export type StaffUncheckedUpdateWithoutSchedulesInput = {
   commissionRate?: Prisma.FloatFieldUpdateOperationsInput | number
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   services?: Prisma.StaffServiceUncheckedUpdateManyWithoutStaffNestedInput
@@ -775,6 +809,7 @@ export type StaffCreateWithoutAppointmentsInput = {
   commissionRate?: number
   avatarUrl?: string | null
   notes?: string | null
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutStaffInput
@@ -790,6 +825,7 @@ export type StaffUncheckedCreateWithoutAppointmentsInput = {
   commissionRate?: number
   avatarUrl?: string | null
   notes?: string | null
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   services?: Prisma.StaffServiceUncheckedCreateNestedManyWithoutStaffInput
@@ -819,6 +855,7 @@ export type StaffUpdateWithoutAppointmentsInput = {
   commissionRate?: Prisma.FloatFieldUpdateOperationsInput | number
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutStaffNestedInput
@@ -834,6 +871,7 @@ export type StaffUncheckedUpdateWithoutAppointmentsInput = {
   commissionRate?: Prisma.FloatFieldUpdateOperationsInput | number
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   services?: Prisma.StaffServiceUncheckedUpdateManyWithoutStaffNestedInput
@@ -847,6 +885,7 @@ export type StaffCreateWithoutAuditLogsInput = {
   commissionRate?: number
   avatarUrl?: string | null
   notes?: string | null
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutStaffInput
@@ -862,6 +901,7 @@ export type StaffUncheckedCreateWithoutAuditLogsInput = {
   commissionRate?: number
   avatarUrl?: string | null
   notes?: string | null
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   services?: Prisma.StaffServiceUncheckedCreateNestedManyWithoutStaffInput
@@ -891,6 +931,7 @@ export type StaffUpdateWithoutAuditLogsInput = {
   commissionRate?: Prisma.FloatFieldUpdateOperationsInput | number
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutStaffNestedInput
@@ -906,6 +947,7 @@ export type StaffUncheckedUpdateWithoutAuditLogsInput = {
   commissionRate?: Prisma.FloatFieldUpdateOperationsInput | number
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   services?: Prisma.StaffServiceUncheckedUpdateManyWithoutStaffNestedInput
@@ -978,6 +1020,7 @@ export type StaffSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   commissionRate?: boolean
   avatarUrl?: boolean
   notes?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -995,6 +1038,7 @@ export type StaffSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   commissionRate?: boolean
   avatarUrl?: boolean
   notes?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1007,6 +1051,7 @@ export type StaffSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   commissionRate?: boolean
   avatarUrl?: boolean
   notes?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1019,11 +1064,12 @@ export type StaffSelectScalar = {
   commissionRate?: boolean
   avatarUrl?: boolean
   notes?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type StaffOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "role" | "commissionRate" | "avatarUrl" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["staff"]>
+export type StaffOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "role" | "commissionRate" | "avatarUrl" | "notes" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["staff"]>
 export type StaffInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   services?: boolean | Prisma.Staff$servicesArgs<ExtArgs>
@@ -1055,6 +1101,7 @@ export type $StaffPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     commissionRate: number
     avatarUrl: string | null
     notes: string | null
+    deletedAt: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["staff"]>
@@ -1491,6 +1538,7 @@ export interface StaffFieldRefs {
   readonly commissionRate: Prisma.FieldRef<"Staff", 'Float'>
   readonly avatarUrl: Prisma.FieldRef<"Staff", 'String'>
   readonly notes: Prisma.FieldRef<"Staff", 'String'>
+  readonly deletedAt: Prisma.FieldRef<"Staff", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Staff", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Staff", 'DateTime'>
 }

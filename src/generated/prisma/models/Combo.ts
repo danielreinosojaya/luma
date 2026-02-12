@@ -43,6 +43,7 @@ export type ComboMinAggregateOutputType = {
   price: number | null
   discountPct: number | null
   active: boolean | null
+  deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -54,6 +55,7 @@ export type ComboMaxAggregateOutputType = {
   price: number | null
   discountPct: number | null
   active: boolean | null
+  deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -65,6 +67,7 @@ export type ComboCountAggregateOutputType = {
   price: number
   discountPct: number
   active: number
+  deletedAt: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -88,6 +91,7 @@ export type ComboMinAggregateInputType = {
   price?: true
   discountPct?: true
   active?: true
+  deletedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -99,6 +103,7 @@ export type ComboMaxAggregateInputType = {
   price?: true
   discountPct?: true
   active?: true
+  deletedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -110,6 +115,7 @@ export type ComboCountAggregateInputType = {
   price?: true
   discountPct?: true
   active?: true
+  deletedAt?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -208,6 +214,7 @@ export type ComboGroupByOutputType = {
   price: number
   discountPct: number
   active: boolean
+  deletedAt: Date | null
   createdAt: Date
   updatedAt: Date
   _count: ComboCountAggregateOutputType | null
@@ -242,6 +249,7 @@ export type ComboWhereInput = {
   price?: Prisma.FloatFilter<"Combo"> | number
   discountPct?: Prisma.FloatFilter<"Combo"> | number
   active?: Prisma.BoolFilter<"Combo"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Combo"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Combo"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Combo"> | Date | string
   services?: Prisma.ComboServiceListRelationFilter
@@ -255,6 +263,7 @@ export type ComboOrderByWithRelationInput = {
   price?: Prisma.SortOrder
   discountPct?: Prisma.SortOrder
   active?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   services?: Prisma.ComboServiceOrderByRelationAggregateInput
@@ -271,6 +280,7 @@ export type ComboWhereUniqueInput = Prisma.AtLeast<{
   price?: Prisma.FloatFilter<"Combo"> | number
   discountPct?: Prisma.FloatFilter<"Combo"> | number
   active?: Prisma.BoolFilter<"Combo"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Combo"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Combo"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Combo"> | Date | string
   services?: Prisma.ComboServiceListRelationFilter
@@ -284,6 +294,7 @@ export type ComboOrderByWithAggregationInput = {
   price?: Prisma.SortOrder
   discountPct?: Prisma.SortOrder
   active?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ComboCountOrderByAggregateInput
@@ -303,6 +314,7 @@ export type ComboScalarWhereWithAggregatesInput = {
   price?: Prisma.FloatWithAggregatesFilter<"Combo"> | number
   discountPct?: Prisma.FloatWithAggregatesFilter<"Combo"> | number
   active?: Prisma.BoolWithAggregatesFilter<"Combo"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Combo"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Combo"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Combo"> | Date | string
 }
@@ -314,6 +326,7 @@ export type ComboCreateInput = {
   price: number
   discountPct?: number
   active?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   services?: Prisma.ComboServiceCreateNestedManyWithoutComboInput
@@ -327,6 +340,7 @@ export type ComboUncheckedCreateInput = {
   price: number
   discountPct?: number
   active?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   services?: Prisma.ComboServiceUncheckedCreateNestedManyWithoutComboInput
@@ -340,6 +354,7 @@ export type ComboUpdateInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   services?: Prisma.ComboServiceUpdateManyWithoutComboNestedInput
@@ -353,6 +368,7 @@ export type ComboUncheckedUpdateInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   services?: Prisma.ComboServiceUncheckedUpdateManyWithoutComboNestedInput
@@ -366,6 +382,7 @@ export type ComboCreateManyInput = {
   price: number
   discountPct?: number
   active?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -377,6 +394,7 @@ export type ComboUpdateManyMutationInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -388,6 +406,7 @@ export type ComboUncheckedUpdateManyInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -399,6 +418,7 @@ export type ComboCountOrderByAggregateInput = {
   price?: Prisma.SortOrder
   discountPct?: Prisma.SortOrder
   active?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -415,6 +435,7 @@ export type ComboMaxOrderByAggregateInput = {
   price?: Prisma.SortOrder
   discountPct?: Prisma.SortOrder
   active?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -426,6 +447,7 @@ export type ComboMinOrderByAggregateInput = {
   price?: Prisma.SortOrder
   discountPct?: Prisma.SortOrder
   active?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -482,6 +504,7 @@ export type ComboCreateWithoutServicesInput = {
   price: number
   discountPct?: number
   active?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   appointments?: Prisma.AppointmentCreateNestedManyWithoutComboInput
@@ -494,6 +517,7 @@ export type ComboUncheckedCreateWithoutServicesInput = {
   price: number
   discountPct?: number
   active?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutComboInput
@@ -522,6 +546,7 @@ export type ComboUpdateWithoutServicesInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appointments?: Prisma.AppointmentUpdateManyWithoutComboNestedInput
@@ -534,6 +559,7 @@ export type ComboUncheckedUpdateWithoutServicesInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutComboNestedInput
@@ -546,6 +572,7 @@ export type ComboCreateWithoutAppointmentsInput = {
   price: number
   discountPct?: number
   active?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   services?: Prisma.ComboServiceCreateNestedManyWithoutComboInput
@@ -558,6 +585,7 @@ export type ComboUncheckedCreateWithoutAppointmentsInput = {
   price: number
   discountPct?: number
   active?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   services?: Prisma.ComboServiceUncheckedCreateNestedManyWithoutComboInput
@@ -586,6 +614,7 @@ export type ComboUpdateWithoutAppointmentsInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   services?: Prisma.ComboServiceUpdateManyWithoutComboNestedInput
@@ -598,6 +627,7 @@ export type ComboUncheckedUpdateWithoutAppointmentsInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   discountPct?: Prisma.FloatFieldUpdateOperationsInput | number
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   services?: Prisma.ComboServiceUncheckedUpdateManyWithoutComboNestedInput
@@ -650,6 +680,7 @@ export type ComboSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   price?: boolean
   discountPct?: boolean
   active?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   services?: boolean | Prisma.Combo$servicesArgs<ExtArgs>
@@ -664,6 +695,7 @@ export type ComboSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   price?: boolean
   discountPct?: boolean
   active?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["combo"]>
@@ -675,6 +707,7 @@ export type ComboSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   price?: boolean
   discountPct?: boolean
   active?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["combo"]>
@@ -686,11 +719,12 @@ export type ComboSelectScalar = {
   price?: boolean
   discountPct?: boolean
   active?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ComboOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "price" | "discountPct" | "active" | "createdAt" | "updatedAt", ExtArgs["result"]["combo"]>
+export type ComboOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "price" | "discountPct" | "active" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["combo"]>
 export type ComboInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   services?: boolean | Prisma.Combo$servicesArgs<ExtArgs>
   appointments?: boolean | Prisma.Combo$appointmentsArgs<ExtArgs>
@@ -712,6 +746,7 @@ export type $ComboPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     price: number
     discountPct: number
     active: boolean
+    deletedAt: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["combo"]>
@@ -1145,6 +1180,7 @@ export interface ComboFieldRefs {
   readonly price: Prisma.FieldRef<"Combo", 'Float'>
   readonly discountPct: Prisma.FieldRef<"Combo", 'Float'>
   readonly active: Prisma.FieldRef<"Combo", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"Combo", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Combo", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Combo", 'DateTime'>
 }
