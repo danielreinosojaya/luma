@@ -42,6 +42,7 @@ export default function ServicesPage() {
   useEffect(() => {
     if (!authChecked) return;
     if (!isAuth) {
+      setLoading(false);
       router.push("/admin/login");
       return;
     }
@@ -68,7 +69,7 @@ export default function ServicesPage() {
     };
 
     fetchServices();
-  }, []);
+  }, [authChecked, isAuth, router]);
 
   if (loading) {
     return (

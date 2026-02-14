@@ -32,6 +32,7 @@ export default function StaffPage() {
   useEffect(() => {
     if (!authChecked) return;
     if (!isAuth) {
+      setLoading(false);
       router.push("/admin/login");
       return;
     }
@@ -58,7 +59,7 @@ export default function StaffPage() {
     };
 
     fetchStaff();
-  }, []);
+  }, [authChecked, isAuth, router]);
 
   if (loading) {
     return (

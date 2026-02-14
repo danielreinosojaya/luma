@@ -38,6 +38,7 @@ export default function AppointmentsPage() {
   useEffect(() => {
     if (!authChecked) return;
     if (!isAuth) {
+      setLoading(false);
       router.push("/admin/login");
       return;
     }
@@ -85,7 +86,7 @@ export default function AppointmentsPage() {
     };
 
     fetchAppointments();
-  }, []);
+  }, [authChecked, isAuth, router]);
 
   if (loading) {
     return (
