@@ -152,7 +152,7 @@
 ### Database Performance
 - [ ] Usar `select` en Prisma para traer solo campos necesarios
 - [ ] Implementar **pagination** en listas
-- [ ] Considerar **connection pooling** (Prisma Accelerate)
+- [x] **Connection pooling** implementado (Pool nativo en `PrismaPg` adapter)
 
 ---
 

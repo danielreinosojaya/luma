@@ -17,47 +17,29 @@ function createPrismaClient(): PrismaClient {
     );
   }
 
-  // Prisma Accelerate
-  if (databaseUrl?.startsWith("prisma+postgres://")) {
-    return new PrismaClient({
-      accelerateUrl: databaseUrl,
-      log: runtimeLogs as any,
-    });
-  }
+  // PostgreSQL via Driver Adapter with production-safe pool config
+  const pool = new Pool({
+    connectionString: databaseUrl,
+    // Production pool limits
+    max: parseInt(process.env.DB_POOL_MAX || "20", 10),
+    idleTimeoutMillis: 30_000,
+    connectionTimeoutMillis: 5_000,
+    // Keep-alive to prevent idle connection drops behind load balancers
+    keepAlive: true,
+    keepAliveInitialDelayMillis: 10_000,
+  });
 
-  // Direct PostgreSQL via Driver Adapter — with production-safe pool config
-  if (
-    databaseUrl.startsWith("postgresql://") ||
-    databaseUrl.startsWith("postgres://")
-  ) {
-    const pool = new Pool({
-      connectionString: databaseUrl,
-      // Production pool limits
-      max: parseInt(process.env.DB_POOL_MAX || "20", 10),
-      idleTimeoutMillis: 30_000,
-      connectionTimeoutMillis: 5_000,
-      // Keep-alive to prevent idle connection drops behind load balancers
-      keepAlive: true,
-      keepAliveInitialDelayMillis: 10_000,
-    });
+  // Graceful pool error handling (prevents unhandled rejections)
+  pool.on("error", (err) => {
+    console.error("Unexpected PG pool error:", err);
+  });
 
-    // Graceful pool error handling (prevents unhandled rejections)
-    pool.on("error", (err) => {
-      console.error("Unexpected PG pool error:", err);
-    });
-
-    const adapter = new PrismaPg(pool);
-
-    return new PrismaClient({
-      adapter,
-      log: runtimeLogs as any,
-    });
-  }
+  const adapter = new PrismaPg(pool);
 
   return new PrismaClient({
-    accelerateUrl: databaseUrl,
+    adapter,
     log: runtimeLogs as any,
-  } as any);
+  });
 }
 
 let prismaClient: PrismaClient | undefined = globalForPrisma.prisma;

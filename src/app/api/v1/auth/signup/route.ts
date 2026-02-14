@@ -100,7 +100,11 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
-    console.error("POST /api/v1/auth/signup error:", error);
+    console.error("POST /api/v1/auth/signup error:", {
+      message: error instanceof Error ? error.message : "Unknown error",
+      stack: error instanceof Error ? error.stack : undefined,
+      body: error,
+    });
     return NextResponse.json(
       apiError("An unexpected error occurred", "INTERNAL_ERROR"),
       { status: 500 }
