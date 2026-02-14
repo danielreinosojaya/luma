@@ -28,10 +28,19 @@ type RawStaff = {
   user: { name: string | null; email: string };
 };
 
+type UserData = {
+  id: string;
+  email: string;
+  role: "ADMIN" | "STAFF" | "CLIENT";
+  name: string | null;
+};
+
 export default function AdminPage() {
   const router = useRouter();
   const [authChecked, setAuthChecked] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [user, setUser] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [appointments, setAppointments] = useState<AdminAppointment[]>([]);
@@ -43,8 +52,21 @@ export default function AdminPage() {
   // Check authentication on mount
   useEffect(() => {
     const token = typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
-    if (token) {
-      setIsAuth(true);
+    const userData = typeof window !== "undefined" ? localStorage.getItem("user") : null;
+    
+    if (token && userData) {
+      try {
+        const parsed: UserData = JSON.parse(userData);
+        setUser(parsed);
+        setIsAuth(true);
+        
+        // Only allow ADMIN role
+        if (parsed.role === "ADMIN") {
+          setIsAdmin(true);
+        }
+      } catch (e) {
+        console.error("Failed to parse user data:", e);
+      }
     }
     setAuthChecked(true);
   }, []);
@@ -222,16 +244,16 @@ export default function AdminPage() {
   }, []);
 
   useEffect(() => {
-    if (authChecked && isAuth) {
+    if (authChecked && isAuth && isAdmin) {
       fetchData();
       // Refresh every 30 seconds
       const interval = setInterval(fetchData, 30000);
       return () => clearInterval(interval);
     }
-  }, [authChecked, isAuth, fetchData]);
+  }, [authChecked, isAuth, isAdmin, fetchData]);
 
-  // Not authenticated
-  if (!isAuth) {
+  // Not authenticated or wrong role
+  if (!isAuth || (authChecked && !isAdmin)) {
     return (
       <div className="min-h-screen bg-background px-4 py-6 sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-md flex-col items-center justify-center gap-6 py-20">
@@ -240,17 +262,19 @@ export default function AdminPage() {
               <AlertCircle className="mx-auto size-12 text-foreground/60" />
               <div>
                 <h2 className="text-2xl font-semibold text-foreground mb-2">
-                  Authentication Required
+                  {isAuth ? "Access Denied" : "Authentication Required"}
                 </h2>
                 <p className="text-foreground/70">
-                  You need to be logged in to access the admin panel.
+                  {isAuth 
+                    ? "Admin access required. Your role is: " + user?.role
+                    : "You need to be logged in to access the admin panel."}
                 </p>
               </div>
               <Button
                 onClick={() => router.push("/")}
                 className="w-full"
               >
-                Go to Login
+                {isAuth ? "Go Back to Home" : "Go to Login"}
               </Button>
             </CardContent>
           </Card>

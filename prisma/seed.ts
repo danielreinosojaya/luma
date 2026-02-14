@@ -143,6 +143,23 @@ async function main() {
 
   console.log(`✅ ${services.length} servicios creados`);
 
+  // ============= ADMIN =============
+  console.log("🔐 Creando usuario ADMIN...");
+
+  const adminUser = await db.user.upsert({
+    where: { email: "admin@luma.ec" },
+    update: {},
+    create: {
+      email: "admin@luma.ec",
+      passwordHash: "$2a$12$K2iyT9FZs0DQ3IccSGx.O.0mCOezNeonNgiMjNy3QjlFGgBXcFxKK", // password123
+      name: "Admin Luma",
+      role: "ADMIN",
+      active: true,
+    },
+  });
+
+  console.log(`✅ Usuario ADMIN creado: ${adminUser.email}`);
+
   // ============= STAFF =============
   console.log("👥 Creando staff...");
 
