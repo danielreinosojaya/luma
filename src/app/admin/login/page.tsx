@@ -30,7 +30,7 @@ export default function AdminLoginPage() {
       const data = await res.json();
 
       if (!data.success) {
-        setError(data.error || "Invalid credentials");
+        setError(data.error || "Credenciales inválidas");
         setLoading(false);
         return;
       }
@@ -39,7 +39,7 @@ export default function AdminLoginPage() {
 
       // Check if user is ADMIN
       if (user.role !== "ADMIN") {
-        setError(`Access denied. Your role is ${user.role}. Admin access required.`);
+        setError(`Acceso denegado. Tu rol es ${user.role}. Se requiere acceso de administrador.`);
         setLoading(false);
         return;
       }
@@ -64,9 +64,9 @@ export default function AdminLoginPage() {
         <div className="text-center space-y-2">
           <div className="flex items-center justify-center gap-2">
             <Lock className="size-6 text-foreground" />
-            <h1 className="font-display text-3xl text-foreground">Admin Portal</h1>
+            <h1 className="font-display text-3xl text-foreground">Portal Admin</h1>
           </div>
-          <Badge variant="outline">Luma OS - Enterprise Access</Badge>
+          <Badge variant="outline">Luma OS - Acceso Empresarial</Badge>
         </div>
 
         {/* Login Card */}
@@ -76,7 +76,7 @@ export default function AdminLoginPage() {
               {/* Email Input */}
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-foreground">
-                  Admin Email
+                  Correo Admin
                 </label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-foreground/50" />
@@ -95,7 +95,7 @@ export default function AdminLoginPage() {
               {/* Password Input */}
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-foreground">
-                  Password
+                  Contraseña
                 </label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-foreground/50" />
@@ -126,7 +126,7 @@ export default function AdminLoginPage() {
                 fullWidth
                 className="h-11 font-medium"
               >
-                {loading ? "Signing in..." : "Sign In"}
+                {loading ? "Iniciando sesión..." : "Ingresar"}
               </Button>
             </form>
 
@@ -136,16 +136,16 @@ export default function AdminLoginPage() {
                 <div className="w-full border-t border-border"></div>
               </div>
               <div className="relative flex justify-center text-xs">
-                <span className="bg-card px-2 text-foreground/60">Demo Credentials</span>
+                <span className="bg-card px-2 text-foreground/60">Credenciales de Demostración</span>
               </div>
             </div>
 
             {/* Demo Credentials */}
             <div className="rounded-xl bg-foreground/5 p-3 space-y-2 text-xs">
-              <p className="font-medium text-foreground">Testing Admin Account:</p>
+              <p className="font-medium text-foreground">Cuenta Admin de Prueba:</p>
               <div className="space-y-1 text-foreground/70 font-mono">
                 <p>Email: <span className="text-foreground">admin@luma.ec</span></p>
-                <p>Password: <span className="text-foreground">password123</span></p>
+                <p>Contraseña: <span className="text-foreground">password123</span></p>
               </div>
             </div>
 
@@ -156,14 +156,14 @@ export default function AdminLoginPage() {
               onClick={() => router.push("/")}
               disabled={loading}
             >
-              Back to Client Portal
+              Volver al Portal de Clientes
             </Button>
           </CardContent>
         </Card>
 
         {/* Footer */}
         <p className="text-xs text-foreground/50 text-center max-w-xs">
-          This is a secure admin area. Unauthorized access is prohibited. Contact support if you need assistance.
+          Esta es un área segura de administrador. El acceso no autorizado está prohibido. Contacta con soporte si necesitas ayuda.
         </p>
       </div>
     </div>

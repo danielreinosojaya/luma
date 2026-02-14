@@ -63,10 +63,17 @@ export default function AdminPage() {
         // Only allow ADMIN role
         if (parsed.role === "ADMIN") {
           setIsAdmin(true);
+        } else {
+          // Not ADMIN role, redirect to login
+          setIsAuth(false);
         }
       } catch (e) {
         console.error("Failed to parse user data:", e);
+        setIsAuth(false);
       }
+    } else {
+      // No token, not authenticated
+      setIsAuth(false);
     }
     setAuthChecked(true);
   }, []);
@@ -157,33 +164,33 @@ export default function AdminPage() {
 
       const newMetrics: AdminMetric[] = [
         {
-          title: "Today Revenue",
+          title: "Ingresos Hoy",
           value: `$${totalRevenue.toFixed(2)}`,
-          delta: `+${Math.round(Math.random() * 20)}% vs yesterday`,
+          delta: `+${Math.round(Math.random() * 20)}% vs ayer`,
           trend: Math.random() > 0.5 ? "up" : "down",
           icon: DollarSign,
         },
         {
-          title: "Booked Appointments",
+          title: "Citas Reservadas",
           value: confirmedCount.toString(),
-          delta: `+${todayAppointments.length - confirmedCount} pending`,
+          delta: `+${todayAppointments.length - confirmedCount} pendientes`,
           trend: "up",
           icon: CalendarCheck2,
         },
         {
-          title: "Team Utilization",
+          title: "Utilización del Equipo",
           value: `${staffUtilization}%`,
           delta:
             staffUtilization > 80
-              ? "High demand today"
-              : "Normal load",
+              ? "Alta demanda hoy"
+              : "Carga normal",
           trend: staffUtilization > 75 ? "up" : "down",
           icon: Users,
         },
         {
-          title: "Active Staff",
+          title: "Personal Activo",
           value: (staffRes.data?.length || 0).toString(),
-          delta: `${(staffRes.data?.length || 0)} available`,
+          delta: `${(staffRes.data?.length || 0)} disponibles`,
           trend: "up",
           icon: TrendingUp,
         },
@@ -196,8 +203,8 @@ export default function AdminPage() {
         .slice(0, 4)
         .map((apt, idx) => ({
           id: `ACT-${idx + 1}`,
-          title: apt.status === "confirmed" ? "Appointment confirmed" : "New booking",
-          detail: `${apt.client} booked ${apt.service} with ${apt.staff}`,
+          title: apt.status === "confirmed" ? "Cita confirmada" : "Nueva reserva",
+          detail: `${apt.client} reservó ${apt.service} con ${apt.staff}`,
           time: `${Math.random() > 0.5 ? Math.floor(Math.random() * 60) : Math.floor(Math.random() * 24) + 1}${Math.random() > 0.5 ? "m" : "h"} ago`,
           type: "booking" as const,
         }));
@@ -210,8 +217,8 @@ export default function AdminPage() {
       if (staffUtilization > 80) {
         newAlerts.push({
           id: "AL-1",
-          title: "High demand window",
-          detail: `${staffUtilization}% team utilization. Consider opening overflow slots.`,
+          title: "Alta demanda",
+          detail: `${staffUtilization}% de utilización. Considera abrir más espacios.`,
           severity: "warning",
         });
       }
@@ -219,8 +226,8 @@ export default function AdminPage() {
       if (todayAppointments.length > 10) {
         newAlerts.push({
           id: "AL-2",
-          title: "Peak scheduling day",
-          detail: `${todayAppointments.length} appointments booked today.`,
+          title: "Día de máxima ocupación",
+          detail: `${todayAppointments.length} citas reservadas hoy.`,
           severity: "info",
         });
       }
@@ -228,15 +235,15 @@ export default function AdminPage() {
       setAlerts(newAlerts.length > 0 ? newAlerts : [
         {
           id: "AL-DEFAULT",
-          title: "System healthy",
-          detail: "All metrics within normal range.",
+          title: "Sistema saludable",
+          detail: "Todas las métricas en rango normal.",
           severity: "info",
         }
       ]);
     } catch (err) {
       console.error("Error fetching admin data:", err);
       setError(
-        err instanceof Error ? err.message : "Failed to load dashboard data"
+        err instanceof Error ? err.message : "Error al cargar los datos del panel"
       );
     } finally {
       setLoading(false);
@@ -282,13 +289,13 @@ export default function AdminPage() {
         <Card className="rounded-2xl border-border bg-card">
           <CardContent className="flex flex-col items-center justify-center gap-3 py-12 text-center">
             <AlertCircle className="size-8 text-foreground/60" />
-            <p className="text-foreground/80">Error loading dashboard</p>
+            <p className="text-foreground/80">Error al cargar el panel</p>
             <p className="text-sm text-foreground/60">{error}</p>
             <button
               onClick={() => fetchData()}
               className="mt-2 rounded-lg bg-foreground/10 px-4 py-2 text-sm text-foreground hover:bg-foreground/15 transition-colors"
             >
-              Retry
+              Reintentar
             </button>
           </CardContent>
         </Card>

@@ -6,11 +6,11 @@ import { Button } from "@/components/ui/button";
 import { Glass } from "@/components/ui/glass";
 
 const navigation = [
-  { label: "Dashboard", icon: LayoutDashboard, href: "/admin" },
-  { label: "Appointments", icon: CalendarCheck, href: "/admin/appointments" },
-  { label: "Staff", icon: Users, href: "/admin/staff" },
-  { label: "Services", icon: Scissors, href: "/admin/services" },
-  { label: "Settings", icon: Settings, href: "/admin/settings" },
+  { label: "Panel", icon: LayoutDashboard, href: "/admin" },
+  { label: "Citas", icon: CalendarCheck, href: "/admin/appointments" },
+  { label: "Personal", icon: Users, href: "/admin/staff" },
+  { label: "Servicios", icon: Scissors, href: "/admin/services" },
+  { label: "Configuraci\u00f3n", icon: Settings, href: "/admin/settings" },
 ];
 
 export function AdminShell({ children }: { children: React.ReactNode }) {
@@ -34,7 +34,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
                 <p className="text-xs uppercase tracking-wide text-foreground/60">Luma OS</p>
                 <h1 className="font-display text-xl text-foreground">Admin</h1>
               </div>
-              <Badge variant="outline">Enterprise</Badge>
+              <Badge variant="outline">Empresarial</Badge>
             </div>
 
             <nav className="space-y-2">
@@ -66,7 +66,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
                 className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm text-foreground/70 hover:bg-red-500/10 hover:text-red-600 transition-all duration-200"
               >
                 <LogOut className="size-4" />
-                Sign Out
+                Cerrar Sesi\u00f3n
               </button>
             </div>
           </Glass>
@@ -75,17 +75,17 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
         <main className="space-y-6">
           <header className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-card p-4">
             <div>
-              <p className="text-xs uppercase tracking-wide text-foreground/60">Operations Center</p>
+              <p className="text-xs uppercase tracking-wide text-foreground/60">Centro de Operaciones</p>
               <h2 className="text-2xl font-semibold text-foreground">
-                {navigation.find((n) => n.href === pathname)?.label || "Admin Panel"}
+                {navigation.find((n) => n.href === pathname)?.label || "Panel Admin"}
               </h2>
             </div>
             <div className="flex items-center gap-2">
               <Button variant="outline" size="sm" className="gap-2">
                 <Bell className="size-4" />
-                Alerts
+                Alertas
               </Button>
-              <Button size="sm">Create Booking</Button>
+              <Button size="sm">Crear Reserva</Button>
             </div>
           </header>
 
