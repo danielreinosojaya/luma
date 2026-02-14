@@ -1,5 +1,5 @@
 import { SignJWT, jwtVerify, type JWTPayload } from "jose";
-import type { UserRole } from "@/generated/prisma/enums";
+import type { UserRole } from "@/generated/prisma";
 
 // ============= TYPES =============
 

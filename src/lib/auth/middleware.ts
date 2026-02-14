@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { verifyAccessToken, type TokenPayload } from "@/lib/auth/jwt";
 import { db } from "@/lib/db";
 import { apiError } from "@/lib/api/response";
-import type { UserRole } from "@/generated/prisma/enums";
+import type { UserRole } from "@/generated/prisma";
 
 // ============= TYPES =============
 

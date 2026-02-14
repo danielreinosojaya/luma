@@ -12,12 +12,6 @@ export default defineConfig({
     path: "prisma/migrations",
     seed: "tsx ./prisma/seed.ts",
   },
-  generator: {
-    name: "client",
-    provider: "prisma-client-js",
-    output: "src/generated/prisma",
-    engineType: "node",
-  },
   datasource: {
     url: process.env["DATABASE_URL"],
   },
