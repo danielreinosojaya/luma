@@ -151,7 +151,7 @@ async function main() {
     update: {},
     create: {
       email: "admin@luma.ec",
-      passwordHash: "$2a$12$K2iyT9FZs0DQ3IccSGx.O.0mCOezNeonNgiMjNy3QjlFGgBXcFxKK", // password123
+      passwordHash: "$2b$12$Am9Enn9hKjvltMYBId4ms./0fCvMgw1wQ/QiOEEyOp0XVbIqNjZ6u", // password123
       name: "Admin Luma",
       role: "ADMIN",
       active: true,
@@ -171,7 +171,7 @@ async function main() {
       create: {
         email: "valentina.peluquería@luma.ec",
         passwordHash:
-          "$2a$12$K2iyT9FZs0DQ3IccSGx.O.0mCOezNeonNgiMjNy3QjlFGgBXcFxKK", // password123
+          "$2b$12$Am9Enn9hKjvltMYBId4ms./0fCvMgw1wQ/QiOEEyOp0XVbIqNjZ6u", // password123
         name: "Valentina",
         role: "STAFF",
         active: true,
@@ -183,7 +183,7 @@ async function main() {
       create: {
         email: "catalina.nails@luma.ec",
         passwordHash:
-          "$2a$12$K2iyT9FZs0DQ3IccSGx.O.0mCOezNeonNgiMjNy3QjlFGgBXcFxKK", // password123
+          "$2b$12$Am9Enn9hKjvltMYBId4ms./0fCvMgw1wQ/QiOEEyOp0XVbIqNjZ6u", // password123
         name: "Catalina",
         role: "STAFF",
         active: true,
@@ -195,7 +195,7 @@ async function main() {
       create: {
         email: "maria.especialista@luma.ec",
         passwordHash:
-          "$2a$12$K2iyT9FZs0DQ3IccSGx.O.0mCOezNeonNgiMjNy3QjlFGgBXcFxKK", // password123
+          "$2b$12$Am9Enn9hKjvltMYBId4ms./0fCvMgw1wQ/QiOEEyOp0XVbIqNjZ6u", // password123
         name: "María",
         role: "STAFF",
         active: true,
