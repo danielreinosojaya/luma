@@ -14,7 +14,7 @@ export default function SettingsPage() {
   useEffect(() => {
     const token = typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
     if (!token) {
-      router.push("/");
+      router.push("/admin/login");
     }
   }, [router]);
 

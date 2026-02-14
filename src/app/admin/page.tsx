@@ -253,31 +253,12 @@ export default function AdminPage() {
   }, [authChecked, isAuth, isAdmin, fetchData]);
 
   // Not authenticated or wrong role
-  if (!isAuth || (authChecked && !isAdmin)) {
+  if (authChecked && (!isAuth || !isAdmin)) {
+    router.push("/admin/login");
     return (
-      <div className="min-h-screen bg-background px-4 py-6 sm:px-6 lg:px-8">
-        <div className="mx-auto flex max-w-md flex-col items-center justify-center gap-6 py-20">
-          <Card className="rounded-2xl border-border bg-card w-full">
-            <CardContent className="space-y-6 p-6 text-center">
-              <AlertCircle className="mx-auto size-12 text-foreground/60" />
-              <div>
-                <h2 className="text-2xl font-semibold text-foreground mb-2">
-                  {isAuth ? "Access Denied" : "Authentication Required"}
-                </h2>
-                <p className="text-foreground/70">
-                  {isAuth 
-                    ? "Admin access required. Your role is: " + user?.role
-                    : "You need to be logged in to access the admin panel."}
-                </p>
-              </div>
-              <Button
-                onClick={() => router.push("/")}
-                className="w-full"
-              >
-                {isAuth ? "Go Back to Home" : "Go to Login"}
-              </Button>
-            </CardContent>
-          </Card>
+      <div className="flex h-screen items-center justify-center">
+        <div className="animate-spin">
+          <div className="size-8 border-4 border-foreground/20 border-t-foreground rounded-full"></div>
         </div>
       </div>
     );

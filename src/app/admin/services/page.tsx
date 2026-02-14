@@ -42,7 +42,7 @@ export default function ServicesPage() {
   useEffect(() => {
     if (!authChecked) return;
     if (!isAuth) {
-      router.push("/");
+      router.push("/admin/login");
       return;
     }
 

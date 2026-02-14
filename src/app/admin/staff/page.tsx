@@ -32,7 +32,7 @@ export default function StaffPage() {
   useEffect(() => {
     if (!authChecked) return;
     if (!isAuth) {
-      router.push("/");
+      router.push("/admin/login");
       return;
     }
 

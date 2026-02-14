@@ -1,6 +1,6 @@
-import { Bell, CalendarCheck, LayoutDashboard, Scissors, Settings, Users } from "lucide-react";
+import { Bell, CalendarCheck, LayoutDashboard, Scissors, Settings, Users, LogOut } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Glass } from "@/components/ui/glass";
@@ -15,6 +15,14 @@ const navigation = [
 
 export function AdminShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("user");
+    router.push("/admin/login");
+  };
 
   return (
     <div className="min-h-screen bg-background px-4 py-6 sm:px-6 lg:px-8">
@@ -51,6 +59,16 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
                 );
               })}
             </nav>
+
+            <div className="mt-6 border-t border-border pt-4">
+              <button
+                onClick={handleLogout}
+                className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm text-foreground/70 hover:bg-red-500/10 hover:text-red-600 transition-all duration-200"
+              >
+                <LogOut className="size-4" />
+                Sign Out
+              </button>
+            </div>
           </Glass>
         </aside>
 

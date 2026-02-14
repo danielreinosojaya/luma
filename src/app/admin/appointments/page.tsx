@@ -38,7 +38,7 @@ export default function AppointmentsPage() {
   useEffect(() => {
     if (!authChecked) return;
     if (!isAuth) {
-      router.push("/");
+      router.push("/admin/login");
       return;
     }
 
