@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import { CalendarCheck2, DollarSign, TrendingUp, Users, AlertCircle, Loader2 } from "lucide-react";
 import { ActivityFeed } from "@/components/admin/activity-feed";
 import { AdminShell } from "@/components/admin/admin-shell";
@@ -9,6 +10,7 @@ import { KpiCard } from "@/components/admin/kpi-card";
 import { OperationsPanel } from "@/components/admin/operations-panel";
 import { AdminActivity, AdminAlert, AdminAppointment, AdminMetric } from "@/components/admin/types";
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 type RawAppointment = {
   id: string;
@@ -27,6 +29,9 @@ type RawStaff = {
 };
 
 export default function AdminPage() {
+  const router = useRouter();
+  const [authChecked, setAuthChecked] = useState(false);
+  const [isAuth, setIsAuth] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [appointments, setAppointments] = useState<AdminAppointment[]>([]);
@@ -35,15 +40,38 @@ export default function AdminPage() {
   const [alerts, setAlerts] = useState<AdminAlert[]>([]);
   const [staff, setStaff] = useState<RawStaff[]>([]);
 
+  // Check authentication on mount
+  useEffect(() => {
+    const token = typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+    if (token) {
+      setIsAuth(true);
+    }
+    setAuthChecked(true);
+  }, []);
+
   const fetchData = useCallback(async () => {
+    const token = typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+    if (!token) {
+      setLoading(false);
+      return;
+    }
+
     try {
       setLoading(true);
       setError(null);
 
       // Fetch appointments and staff in parallel
       const [appointmentsRes, staffRes] = await Promise.all([
-        fetch("/api/v1/appointments?limit=50&page=1").then((r) => r.json()),
-        fetch("/api/v1/staff").then((r) => r.json()),
+        fetch("/api/v1/appointments?limit=50&page=1", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }).then((r) => r.json()),
+        fetch("/api/v1/staff", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }).then((r) => r.json()),
       ]);
 
       if (!appointmentsRes.success || !staffRes.success) {
@@ -194,32 +222,44 @@ export default function AdminPage() {
   }, []);
 
   useEffect(() => {
-    fetchData();
-    // Refresh every 30 seconds
-    const interval = setInterval(fetchData, 30000);
-    return () => clearInterval(interval);
-  }, [fetchData]);
+    if (authChecked && isAuth) {
+      fetchData();
+      // Refresh every 30 seconds
+      const interval = setInterval(fetchData, 30000);
+      return () => clearInterval(interval);
+    }
+  }, [authChecked, isAuth, fetchData]);
 
-  if (error) {
+  // Not authenticated
+  if (!isAuth) {
     return (
-      <AdminShell>
-        <Card className="rounded-2xl border-border bg-card">
-          <CardContent className="flex flex-col items-center justify-center gap-3 py-12 text-center">
-            <AlertCircle className="size-8 text-foreground/60" />
-            <p className="text-foreground/80">Error loading dashboard</p>
-            <p className="text-sm text-foreground/60">{error}</p>
-            <button
-              onClick={fetchData}
-              className="mt-2 rounded-lg bg-foreground/10 px-4 py-2 text-sm text-foreground hover:bg-foreground/15 transition-colors"
-            >
-              Retry
-            </button>
-          </CardContent>
-        </Card>
-      </AdminShell>
+      <div className="min-h-screen bg-background px-4 py-6 sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-md flex-col items-center justify-center gap-6 py-20">
+          <Card className="rounded-2xl border-border bg-card w-full">
+            <CardContent className="space-y-6 p-6 text-center">
+              <AlertCircle className="mx-auto size-12 text-foreground/60" />
+              <div>
+                <h2 className="text-2xl font-semibold text-foreground mb-2">
+                  Authentication Required
+                </h2>
+                <p className="text-foreground/70">
+                  You need to be logged in to access the admin panel.
+                </p>
+              </div>
+              <Button
+                onClick={() => router.push("/")}
+                className="w-full"
+              >
+                Go to Login
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
     );
   }
 
+  // Authenticated but loading
   if (loading) {
     return (
       <AdminShell>
@@ -230,6 +270,28 @@ export default function AdminPage() {
     );
   }
 
+  // Error state
+  if (error) {
+    return (
+      <AdminShell>
+        <Card className="rounded-2xl border-border bg-card">
+          <CardContent className="flex flex-col items-center justify-center gap-3 py-12 text-center">
+            <AlertCircle className="size-8 text-foreground/60" />
+            <p className="text-foreground/80">Error loading dashboard</p>
+            <p className="text-sm text-foreground/60">{error}</p>
+            <button
+              onClick={() => fetchData()}
+              className="mt-2 rounded-lg bg-foreground/10 px-4 py-2 text-sm text-foreground hover:bg-foreground/15 transition-colors"
+            >
+              Retry
+            </button>
+          </CardContent>
+        </Card>
+      </AdminShell>
+    );
+  }
+
+  // Authenticated and loaded
   return (
     <AdminShell>
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">

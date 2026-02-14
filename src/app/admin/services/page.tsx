@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { AlertCircle, Loader2 } from "lucide-react";
 import { AdminShell } from "@/components/admin/admin-shell";
 import { Card, CardContent } from "@/components/ui/card";
@@ -23,15 +24,37 @@ const categoryColor: Record<string, "success" | "warning" | "secondary"> = {
 };
 
 export default function ServicesPage() {
+  const router = useRouter();
+  const [authChecked, setAuthChecked] = useState(false);
+  const [isAuth, setIsAuth] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [services, setServices] = useState<Service[]>([]);
 
   useEffect(() => {
+    const token = typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+    if (token) {
+      setIsAuth(true);
+    }
+    setAuthChecked(true);
+  }, []);
+
+  useEffect(() => {
+    if (!authChecked) return;
+    if (!isAuth) {
+      router.push("/");
+      return;
+    }
+
     const fetchServices = async () => {
+      const token = localStorage.getItem("accessToken");
       try {
         setLoading(true);
-        const res = await fetch("/api/v1/services");
+        const res = await fetch("/api/v1/services", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const data = await res.json();
 
         if (!data.success) throw new Error("Failed to fetch services");

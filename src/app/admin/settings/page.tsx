@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { AdminShell } from "@/components/admin/admin-shell";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -7,6 +9,15 @@ import { Input } from "@/components/ui/input";
 import { Bell, Lock, User } from "lucide-react";
 
 export default function SettingsPage() {
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+    if (!token) {
+      router.push("/");
+    }
+  }, [router]);
+
   return (
     <AdminShell>
       <div className="space-y-6">

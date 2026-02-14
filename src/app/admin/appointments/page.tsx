@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { AlertCircle, Loader2 } from "lucide-react";
 import { AdminShell } from "@/components/admin/admin-shell";
 import { AppointmentsTable } from "@/components/admin/appointments-table";
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { AdminAppointment } from "@/components/admin/types";
 
 type RawAppointment = {
@@ -18,15 +20,37 @@ type RawAppointment = {
 };
 
 export default function AppointmentsPage() {
+  const router = useRouter();
+  const [authChecked, setAuthChecked] = useState(false);
+  const [isAuth, setIsAuth] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [appointments, setAppointments] = useState<AdminAppointment[]>([]);
 
   useEffect(() => {
+    const token = typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+    if (token) {
+      setIsAuth(true);
+    }
+    setAuthChecked(true);
+  }, []);
+
+  useEffect(() => {
+    if (!authChecked) return;
+    if (!isAuth) {
+      router.push("/");
+      return;
+    }
+
     const fetchAppointments = async () => {
+      const token = localStorage.getItem("accessToken");
       try {
         setLoading(true);
-        const res = await fetch("/api/v1/appointments?limit=100&page=1");
+        const res = await fetch("/api/v1/appointments?limit=100&page=1", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const data = await res.json();
 
         if (!data.success) throw new Error("Failed to fetch appointments");
