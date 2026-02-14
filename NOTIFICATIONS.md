@@ -14,32 +14,44 @@ Este sistema simula el envío de correos de notificación para el negocio sin ne
 
 ## 🚀 Cómo Usar
 
-### Opción 1: Script de Node.js (Recomendado para Testing Local)
+### ✅ RECOMENDADO: Generar muestras HTML locales
 
-Ejecuta el script que envía todos los tipos de correos:
+Este es el método más rápido y no requiere conexión a servidores:
 
 ```bash
-npx tsx scripts/send-test-emails.ts
+npx tsx scripts/generate-email-samples.ts
 ```
 
 **Qué hace:**
-- Envía 7 correos de prueba (uno por cada tipo de notificación)
-- Usa Ethereal Email (servicio gratuito de testing)
-- Genera URLs para ver la previsualización en el navegador
-- No requiere configuración de dominio ni DNS
+- Genera 7 archivos HTML (uno por cada tipo de notificación)
+- Los guarda en `email-samples/`
+- Se abre en navegador para verlos directamente
+- Sin dependencias de SMTP ni conexión a internet
+- Instantáneo
 
 **Salida esperada:**
 ```
-✅ APPOINTMENT_CONFIRMED
-   📧 ID de Correo: <xyz@ethereal.email>
-   🔗 URL de Previsualización: https://ethereal.email/messages/...
+✅ Confirmación de Cita
+   📄 Archivo: email-samples/appointment_confirmed.html
+   
+✅ Recordatorio de Cita
+   📄 Archivo: email-samples/appointment_reminder.html
+   
+[... 5 correos más ...]
 
-✅ APPOINTMENT_REMINDER
-   📧 ID de Correo: <abc@ethereal.email>
-   🔗 URL de Previsualización: https://ethereal.email/messages/...
-
-[... más correos ...]
+✨ Todos los archivos HTML están listos para revisar visualmente.
 ```
+
+**Ver los correos:**
+```bash
+# Abre el navegador con un correo
+open email-samples/appointment_confirmed.html
+
+# O abre la carpeta completa en VS Code
+code email-samples/
+```
+
+---
 
 ### Opción 2: Endpoint API (Para Testing con Frontend)
 
@@ -75,108 +87,128 @@ const response = await fetch('/api/v1/notifications/test-email', {
 });
 
 const data = await response.json();
-console.log('Preview URL:', data.previewUrl); // Abre en navegador
+console.log('Message ID:', data.messageId);
 ```
 
-### Opción 3: Cliente CLI con Selección Interactiva
+---
+
+### ❌ NO RECOMENDADO: Script Ethereal (requiere conexión SMTP)
 
 ```bash
-npx tsx scripts/send-test-email-interactive.ts
+npx tsx scripts/send-test-emails.ts
 ```
 
-Luego selecciona el tipo de notificación e ingresa el correo destinatario.
+**Nota:** Este script intenta conectarse a servidores SMTP externos (Ethereal Email). Si tienes problemas de conexión, usa el método 1 (generar HTML locales).
+
+---
 
 ## 💡 Información Técnica
 
 ### Cómo Funciona
 
-1. **Ethereal Email**: Servicio gratuito de Nodemailer para testing
-   - No envía correos reales, solo genera URLs de previsualización
-   - Perfecto para desarrollo sin configurar DNS/SMTP real
+#### Método 1: Archivos HTML locales (RECOMENDADO)
+- Genera archivos HTML puros con estilos incrustados
+- Se puede abrir en navegador sin conexión
+- Perfecto para revisar diseño y contenido
+- Sin dependencias externas
 
-2. **Templates HTML**: Cada notificación tiene su propio template con:
-   - Estilos personalizados del negocio (colores Luma)
-   - Información contextual realista
-   - Botones de acción
-   - Footer con contacto
+#### Método 2: API Endpoint
+- Usa Ethereal Email (servicio gratuito de Nodemailer)
+- Genera URLs de previsualización
+- Requiere conexión a internet
+- Útil si necesitas URLs shareable
 
-3. **En Producción**:
-   - Cambiar a Brevo (ya está en `src/lib/email/brevo.ts`)
-   - Usar credenciales reales de API
-   - Enviar correos a direcciones verdaderas
-   - Registrar dominio y configurar SPF/DKIM
+#### Método 3: En Producción
+- Cambiar a Brevo (ya está en `src/lib/email/brevo.ts`)
+- Usar credenciales reales de API
+- Enviar correos a direcciones verdaderas
+- Registrar dominio y configurar SPF/DKIM
 
-## 📝 Ejemplo de Uso Completo
+## 📝 Diseño de Correos
 
-### Local Development
-```bash
-# 1. Instala dependencias (si no las tienes)
-npm install
+### Características
+- ✅ Responsive design (se ve bien en móvil)
+- ✅ Colores corporativos de Luma (dorado #C4956F)
+- ✅ Información contextual realista
+- ✅ Botones de acción
+- ✅ Footer con contacto
+- ✅ HTML válido con estilos incrustados
 
-# 2. Ejecuta el script de testing
-npx tsx scripts/send-test-emails.ts
-
-# 3. Abre los URLs en el navegador para ver las previsualizaciones
-# Verás algo como:
-# https://ethereal.email/messages/CmH...
-
-# 4. Si quieres probar desde la API, inicia el servidor
-npm run dev
-
-# 5. En otra terminal, llama al endpoint
-curl -X POST http://localhost:3000/api/v1/notifications/test-email ...
-```
-
-## 🔧 Configuración Personalizada
-
-### Cambiar Destinatario
-
-En `scripts/send-test-emails.ts`, línea ~167:
-```typescript
-const recipientEmail = "danielreinosojaya@gmail.com"; // ← Cambia aquí
-```
-
-### Agregar Más Notificaciones
-
-1. Agrega el tipo en `type NotificationType = ...`
-2. Crea el template en `getEmailTemplate()`
-3. Ejecuta el script para probarlo
-
-## 📧 Datos de Ejemplo
-
-Los correos incluyen datos realistas del negocio:
+### Datos de Ejemplo
 - **Servicios**: Blow & Glow, Luma Queen, Iconic Nails, etc.
 - **Personal**: Valentina, Catalina, María
 - **Precios**: Según tarifa actual
 - **Ubicación**: Quito, Ecuador
 - **Horarios**: Lunes-Viernes 9 AM - 6 PM, Sábados 9 AM - 5 PM
 
-## 🛠️ Troubleshooting
+## 📊 Estructura de Carpetas
 
-### Error: "Cannot find module 'nodemailer'"
-```bash
-npm install nodemailer
+```
+luma/
+├── scripts/
+│   ├── generate-email-samples.ts    ← ✅ Script recomendado
+│   ├── send-test-emails.ts          ← Script SMTP (requiere conexión)
+│   └── send-test-email-interactive.ts
+├── email-samples/                    ← 📄 Archivos HTML generados
+│   ├── appointment_confirmed.html
+│   ├── appointment_reminder.html
+│   ├── appointment_cancelled.html
+│   ├── appointment_rescheduled.html
+│   ├── staff_update.html
+│   ├── promotion.html
+│   └── password_reset.html
+└── src/app/api/v1/notifications/
+    └── test-email/
+        └── route.ts                  ← Endpoint API
 ```
 
-### Ethereal no funciona
-- Verifica conexión a internet
-- Los URLs expiran en 48 horas
-- Crea una nueva cuenta Ethereal si es necesario
+## 🔧 Personalización
+
+### Cambiar Destinatario
+
+En `scripts/generate-email-samples.ts` o en el endpoint API.
+
+### Cambiar Branding
+
+Busca por "Luma Beauty Studio" en los scripts para cambiar:
+- Nombre del negocio
+- Colores corporativos
+- URLs de enlaces
+- Contacto
+
+### Agregar Más Notificaciones
+
+1. En `type NotificationType = ...` agrega el nuevo tipo
+2. En `templates: Record<>` agrega el HTML del nuevo correo
+3. Ejecuta el script
+
+## 🛠️ Troubleshooting
+
+### Error: "Cannot find module"
+```bash
+npm install
+```
+
+### Los archivos HTML no se generan
+- Verifica permisos de escritura: `ls -la email-samples/`
+- Intenta crear el directorio manualmente: `mkdir email-samples`
 
 ### Endpoint API no responde
 ```bash
 # Verifica que el servidor esté corriendo
 npm run dev
 
-# Verifica que la ruta esté correcta
-# POST /api/v1/notifications/test-email
+# Prueba el endpoint
+curl http://localhost:3000/api/v1/notifications/test-email
 ```
 
-## 📚 Referencias
+## 📚 Próximos Pasos
 
-- [Nodemailer Ethereal](https://ethereal.email/)
-- [Brevo API](https://brevo.com/) (para producción)
-- [Email Best Practices](https://sendgrid.com/en-us/blog/email-best-practices)
+1. ✅ Revisar visualmente los correos
+2. 📧 Integrar con base de datos (guardar historial)
+3. 🔄 Configurar cron jobs para envíos automáticos
+4. 📊 Agregar analytics (abiertos, clicks, etc.)
+5. 🌐 Implementar en producción con credenciales reales
 
 ---
 

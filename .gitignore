@@ -18,7 +18,8 @@ build/
 .env.test.local
 .env.production.local
 
-# IDE
+# Email samples (generated locally)
+email-samples/# IDE
 .vscode/
 .idea/
 *.swp
