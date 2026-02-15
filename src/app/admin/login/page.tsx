@@ -66,7 +66,7 @@ export default function AdminLoginPage() {
             <Lock className="size-6 text-foreground" />
             <h1 className="font-display text-3xl text-foreground">Portal Admin</h1>
           </div>
-          <Badge variant="outline">Luma OS - Acceso Empresarial</Badge>
+          <Badge variant="secondary">Luma OS - Acceso Empresarial</Badge>
         </div>
 
         {/* Login Card */}
@@ -150,14 +150,13 @@ export default function AdminLoginPage() {
             </div>
 
             {/* Back to Home */}
-            <Button
-              variant="outline"
-              fullWidth
+            <button
+              className="btn btn-outline-primary w-100"
               onClick={() => router.push("/")}
               disabled={loading}
             >
               Volver al Portal de Clientes
-            </Button>
+            </button>
           </CardContent>
         </Card>
 

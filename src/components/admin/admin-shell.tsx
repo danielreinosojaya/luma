@@ -1,16 +1,15 @@
-import { Bell, CalendarCheck, LayoutDashboard, Scissors, Settings, Users, LogOut } from "lucide-react";
+import { Bell, CalendarCheck, LayoutDashboard, Scissors, Settings, Users, LogOut, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Glass } from "@/components/ui/glass";
 
 const navigation = [
-  { label: "Panel", icon: LayoutDashboard, href: "/admin" },
-  { label: "Citas", icon: CalendarCheck, href: "/admin/appointments" },
-  { label: "Personal", icon: Users, href: "/admin/staff" },
-  { label: "Servicios", icon: Scissors, href: "/admin/services" },
-  { label: "Configuraci\u00f3n", icon: Settings, href: "/admin/settings" },
+  { label: "Panel", icon: LayoutDashboard, href: "/admin", badge: null },
+  { label: "Citas", icon: CalendarCheck, href: "/admin/appointments", badge: null },
+  { label: "Personal", icon: Users, href: "/admin/staff", badge: null },
+  { label: "Servicios", icon: Scissors, href: "/admin/services", badge: null },
+  { label: "Configuración", icon: Settings, href: "/admin/settings", badge: null },
 ];
 
 export function AdminShell({ children }: { children: React.ReactNode }) {
@@ -25,73 +24,104 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div className="min-h-screen bg-background px-4 py-6 sm:px-6 lg:px-8">
-      <div className="mx-auto grid w-full max-w-7xl gap-6 lg:grid-cols-[260px_1fr]">
-        <aside className="space-y-4">
-          <Glass className="rounded-2xl border-border bg-card p-4" blur="sm">
-            <div className="mb-6 flex items-center justify-between">
-              <div>
-                <p className="text-xs uppercase tracking-wide text-foreground/60">Luma OS</p>
-                <h1 className="font-display text-xl text-foreground">Admin</h1>
-              </div>
-              <Badge variant="outline">Empresarial</Badge>
+    <div className="d-flex min-vh-100">
+      {/* Sidebar Navigation */}
+      <aside className="bg-dark text-white d-flex flex-column" style={{ width: "280px", minHeight: "100vh", overflowY: "auto" }}>
+        {/* Brand */}
+        <div className="p-4 border-bottom border-secondary">
+          <div className="d-flex align-items-center gap-2">
+            <div className="gradient-primary p-2 rounded-2" style={{ width: "40px", height: "40px" }}>
+              <span className="text-white fw-bold">✨</span>
             </div>
-
-            <nav className="space-y-2">
-              {navigation.map((item) => {
-                const Icon = item.icon;
-                const isActive = pathname === item.href || (item.href === "/admin" && pathname === "/admin");
-
-                return (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    className={[
-                      "flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm transition-all duration-200",
-                      isActive
-                        ? "bg-foreground/10 text-foreground font-medium"
-                        : "text-foreground/70 hover:bg-foreground/5 hover:text-foreground",
-                    ].join(" ")}
-                  >
-                    <Icon className="size-4" />
-                    {item.label}
-                  </Link>
-                );
-              })}
-            </nav>
-
-            <div className="mt-6 border-t border-border pt-4">
-              <button
-                onClick={handleLogout}
-                className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm text-foreground/70 hover:bg-red-500/10 hover:text-red-600 transition-all duration-200"
-              >
-                <LogOut className="size-4" />
-                Cerrar Sesi\u00f3n
-              </button>
-            </div>
-          </Glass>
-        </aside>
-
-        <main className="space-y-6">
-          <header className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-card p-4">
             <div>
-              <p className="text-xs uppercase tracking-wide text-foreground/60">Centro de Operaciones</p>
-              <h2 className="text-2xl font-semibold text-foreground">
-                {navigation.find((n) => n.href === pathname)?.label || "Panel Admin"}
-              </h2>
+              <p className="text-muted small mb-0">LUMA</p>
+              <h5 className="mb-0 fw-bold">Admin Panel</h5>
             </div>
-            <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm" className="gap-2">
-                <Bell className="size-4" />
-                Alertas
-              </Button>
-              <Button size="sm">Crear Reserva</Button>
-            </div>
-          </header>
+          </div>
+        </div>
 
+        {/* Navigation Menu */}
+        <nav className="flex-grow-1 p-3">
+          <ul className="list-unstyled">
+            {navigation.map((item) => {
+              const Icon = item.icon;
+              const isActive = pathname === item.href;
+
+              return (
+                <li key={item.label} className="mb-1">
+                  <Link
+                    href={item.href}
+                    className={`d-flex align-items-center gap-2 px-3 py-3 rounded-2 text-decoration-none transition-all ${
+                      isActive
+                        ? "bg-primary text-white"
+                        : "text-muted hover:bg-secondary text-reset"
+                    }`}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <Icon size={20} />
+                    <span className="flex-grow-1">{item.label}</span>
+                    {item.badge && (
+                      <Badge variant="danger">{item.badge}</Badge>
+                    )}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+
+        {/* Logout Button */}
+        <div className="p-3 border-top border-secondary">
+          <button
+            onClick={handleLogout}
+            className="w-100 btn btn-outline-danger btn-sm d-flex align-items-center justify-content-center gap-2"
+          >
+            <LogOut size={18} />
+            Cerrar Sesión
+          </button>
+        </div>
+      </aside>
+
+      {/* Main Content */}
+      <main className="flex-grow-1 bg-light" style={{ overflow: "auto" }}>
+        {/* Top Header */}
+        <header className="bg-white border-bottom border-light shadow-sm p-4 sticky-top">
+          <div className="d-flex align-items-center justify-content-between">
+            <div>
+              <p className="text-muted small text-uppercase tracking-wide mb-0">Centro de Operaciones</p>
+              <h1 className="h2 fw-bold mb-0">
+                {navigation.find((n) => n.href === pathname)?.label || "Panel Admin"}
+              </h1>
+            </div>
+            <div className="d-flex align-items-center gap-3">
+              <button className="btn btn-light position-relative">
+                <Bell size={20} />
+                <span className="position-absolute top-0 end-0 translate-middle badge rounded-pill bg-danger">
+                  3
+                </span>
+              </button>
+              <div className="d-flex align-items-center gap-2 ps-3 border-start border-light">
+                <div>
+                  <p className="fw-bold small mb-0">Admin</p>
+                  <p className="text-muted small mb-0">online</p>
+                </div>
+                <img 
+                  src="https://api.dicebear.com/7.x/avataaars/svg?seed=admin" 
+                  alt="Avatar"
+                  className="rounded-circle"
+                  width="40"
+                  height="40"
+                />
+              </div>
+            </div>
+          </div>
+        </header>
+
+        {/* Content Area */}
+        <div className="p-4">
           {children}
-        </main>
-      </div>
+        </div>
+      </main>
     </div>
   );
 }

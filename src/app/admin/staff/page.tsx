@@ -122,7 +122,7 @@ export default function StaffPage() {
                     </td>
                     <td className="px-5 py-3">
                       <Badge
-                        variant={member.user.active ? "success" : "destructive"}
+                        variant={member.user.active ? "success" : "danger"}
                       >
                         {member.user.active ? "Active" : "Inactive"}
                       </Badge>

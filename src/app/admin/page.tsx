@@ -263,9 +263,9 @@ export default function AdminPage() {
   if (authChecked && (!isAuth || !isAdmin)) {
     router.push("/admin/login");
     return (
-      <div className="flex h-screen items-center justify-center">
-        <div className="animate-spin">
-          <div className="size-8 border-4 border-foreground/20 border-t-foreground rounded-full"></div>
+      <div className="d-flex h-100 align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Cargando...</span>
         </div>
       </div>
     );
@@ -275,8 +275,10 @@ export default function AdminPage() {
   if (loading) {
     return (
       <AdminShell>
-        <div className="flex h-64 items-center justify-center">
-          <Loader2 className="size-8 animate-spin text-foreground/60" />
+        <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "400px" }}>
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">Cargando...</span>
+          </div>
         </div>
       </AdminShell>
     );
@@ -286,14 +288,14 @@ export default function AdminPage() {
   if (error) {
     return (
       <AdminShell>
-        <Card className="rounded-2xl border-border bg-card">
-          <CardContent className="flex flex-col items-center justify-center gap-3 py-12 text-center">
-            <AlertCircle className="size-8 text-foreground/60" />
-            <p className="text-foreground/80">Error al cargar el panel</p>
-            <p className="text-sm text-foreground/60">{error}</p>
+        <Card className="card card-enterprise">
+          <CardContent className="d-flex flex-column align-items-center justify-content-center gap-3 py-12 text-center">
+            <AlertCircle size={32} className="text-muted mb-3" />
+            <p className="fw-500">Error al cargar el panel</p>
+            <p className="text-muted small">{error}</p>
             <button
               onClick={() => fetchData()}
-              className="mt-2 rounded-lg bg-foreground/10 px-4 py-2 text-sm text-foreground hover:bg-foreground/15 transition-colors"
+              className="mt-3 btn btn-primary btn-sm"
             >
               Reintentar
             </button>
@@ -306,17 +308,27 @@ export default function AdminPage() {
   // Authenticated and loaded
   return (
     <AdminShell>
-      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {metrics.map((metric) => (
-          <KpiCard key={metric.title} metric={metric} />
-        ))}
+      {/* KPI Cards Grid */}
+      <section className="mb-5">
+        <div className="row g-3 g-lg-4">
+          {metrics.map((metric) => (
+            <div key={metric.title} className="col-12 col-sm-6 col-lg-3">
+              <KpiCard metric={metric} />
+            </div>
+          ))}
+        </div>
       </section>
 
-      <section className="grid gap-6 xl:grid-cols-[1.4fr_1fr]">
-        <AppointmentsTable appointments={appointments} />
-        <div className="space-y-6">
-          <OperationsPanel alerts={alerts} />
-          <ActivityFeed activities={activities} />
+      {/* Main Content Grid */}
+      <section className="row g-4 g-lg-5">
+        <div className="col-12 col-xl-8">
+          <AppointmentsTable appointments={appointments} />
+        </div>
+        <div className="col-12 col-xl-4">
+          <div className="d-flex flex-column gap-4">
+            <OperationsPanel alerts={alerts} />
+            <ActivityFeed activities={activities} />
+          </div>
         </div>
       </section>
     </AdminShell>

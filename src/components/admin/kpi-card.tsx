@@ -9,17 +9,17 @@ export function KpiCard({ metric }: { metric: AdminMetric }) {
   const Icon = metric.icon;
 
   return (
-    <Card className="rounded-2xl border-border bg-card">
-      <CardContent className="space-y-4 p-5">
-        <div className="flex items-center justify-between">
-          <p className="text-sm text-foreground/70">{metric.title}</p>
-          <Icon className="size-4 text-foreground/60" />
+    <Card className="card card-enterprise rounded-3 h-100">
+      <CardContent className="p-4">
+        <div className="d-flex align-items-center justify-content-between mb-3">
+          <p className="text-muted small mb-0">{metric.title}</p>
+          <Icon className="text-muted" size={20} />
         </div>
 
-        <div className="space-y-2">
-          <p className="text-2xl font-semibold text-foreground">{metric.value}</p>
-          <Badge variant={DeltaVariant} className="gap-1">
-            <TrendIcon className="size-3.5" />
+        <div>
+          <p className="h3 fw-bold mb-2 text-dark">{metric.value}</p>
+          <Badge variant={DeltaVariant} className="d-inline-flex align-items-center gap-1">
+            <TrendIcon size={14} />
             {metric.delta}
           </Badge>
         </div>

@@ -2,10 +2,10 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { AdminAppointment } from "./types";
 
-const statusVariant: Record<AdminAppointment["status"], "success" | "warning" | "secondary"> = {
+const statusVariant: Record<AdminAppointment["status"], "success" | "warning" | "info"> = {
   confirmed: "success",
   pending: "warning",
-  in_progress: "secondary",
+  in_progress: "info",
 };
 
 const statusLabel: Record<AdminAppointment["status"], string> = {
@@ -16,33 +16,35 @@ const statusLabel: Record<AdminAppointment["status"], string> = {
 
 export function AppointmentsTable({ appointments }: { appointments: AdminAppointment[] }) {
   return (
-    <Card className="rounded-2xl border-border bg-card">
+    <Card className="card card-enterprise">
       <CardContent className="p-0">
-        <div className="border-b border-border px-5 py-4">
-          <h3 className="text-lg font-semibold text-foreground">Citas de Hoy</h3>
-          <p className="text-sm text-foreground/60">Cola en vivo con asignaci\u00f3n de equipo y estado actual.</p>
+        <div className="border-bottom p-4">
+          <h3 className="fw-bold mb-2">Citas de Hoy</h3>
+          <p className="small text-muted mb-0">Cola en vivo con asignación de equipo y estado actual.</p>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[640px] text-sm">
+        <div className="table-responsive">
+          <table className="table-enterprise table mb-0">
             <thead>
-              <tr className="border-b border-border text-left text-foreground/60">
-                <th className="px-5 py-3 font-medium">Cliente</th>
-                <th className="px-5 py-3 font-medium">Servicio</th>
-                <th className="px-5 py-3 font-medium">Personal</th>
-                <th className="px-5 py-3 font-medium">Hora</th>
-                <th className="px-5 py-3 font-medium">Estado</th>
+              <tr>
+                <th>Cliente</th>
+                <th>Servicio</th>
+                <th>Personal</th>
+                <th>Hora</th>
+                <th>Estado</th>
               </tr>
             </thead>
             <tbody>
               {appointments.map((appointment) => (
-                <tr key={appointment.id} className="border-b border-border/70 last:border-0">
-                  <td className="px-5 py-3 text-foreground">{appointment.client}</td>
-                  <td className="px-5 py-3 text-foreground/80">{appointment.service}</td>
-                  <td className="px-5 py-3 text-foreground/80">{appointment.staff}</td>
-                  <td className="px-5 py-3 text-foreground/80">{appointment.startTime}</td>
-                  <td className="px-5 py-3">
-                    <Badge variant={statusVariant[appointment.status]}>{statusLabel[appointment.status]}</Badge>
+                <tr key={appointment.id}>
+                  <td className="fw-500">{appointment.client}</td>
+                  <td>{appointment.service}</td>
+                  <td>{appointment.staff}</td>
+                  <td>{appointment.startTime}</td>
+                  <td>
+                    <Badge variant={statusVariant[appointment.status]}>
+                      {statusLabel[appointment.status]}
+                    </Badge>
                   </td>
                 </tr>
               ))}

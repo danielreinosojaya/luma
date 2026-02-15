@@ -139,7 +139,7 @@ export default function ServicesPage() {
                     </td>
                     <td className="px-5 py-3">
                       <Badge
-                        variant={service.active ? "success" : "destructive"}
+                        variant={service.active ? "success" : "danger"}
                       >
                         {service.active ? "Active" : "Inactive"}
                       </Badge>

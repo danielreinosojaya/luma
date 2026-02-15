@@ -14,8 +14,8 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Luma Beauty Studio",
-  description: "Luxury beauty booking experience",
+  title: "Luma Beauty Studio - Premium Beauty Services",
+  description: "Experience luxury beauty booking with Luma Beauty Studio. Professional beauty services at your convenience.",
 };
 
 export default function RootLayout({
@@ -25,7 +25,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={`${inter.variable} ${playfair.variable} antialiased`}>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#7C3AED" />
+      </head>
+      <body className={`${inter.variable} ${playfair.variable} antialiased`} data-bs-theme="light">
         <AppThemeProvider>{children}</AppThemeProvider>
       </body>
     </html>

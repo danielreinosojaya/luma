@@ -4,12 +4,12 @@ export function Card({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("rounded-none border border-[#E8DDD4] bg-white shadow-[0_2px_8px_rgba(202,181,167,0.08)]", className)} {...props} />;
+  return <div className={cn("card card-enterprise border-1", className)} {...props} />;
 }
 
 export function CardContent({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("p-6", className)} {...props} />;
+  return <div className={cn("card-body p-4 p-md-5", className)} {...props} />;
 }
