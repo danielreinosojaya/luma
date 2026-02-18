@@ -1,121 +1,84 @@
 @import "tailwindcss";
-@import "bootstrap/dist/css/bootstrap.min";
 
-:root {
-  /* Primary Brand Colors - Modern Gradient Palette */
-  --bs-primary: #7C3AED;
-  --bs-primary-light: #A78BFA;
-  --bs-secondary: #EC4899;
-  --bs-secondary-light: #F472B6;
-  --bs-tertiary: #06B6D4;
-  
-  /* Enterprise Neutral Colors */
-  --background: #F8FAFC;
-  --foreground: #0F172A;
-  --heading: #1E293B;
-  --muted: #64748B;
-  --muted-light: #CBD5E1;
-  --border: #E2E8F0;
-  --card-bg: #FFFFFF;
-  --dark-bg: #0F172A;
-  --dark-card: #1E293B;
-  
-  /* Accent & Status Colors */
-  --accent: #7C3AED;
-  --accent-dark: #6D28D9;
-  --accent-light: #C4B5FD;
-  --success: #10B981;
-  --warning: #F59E0B;
-  --danger: #EF4444;
-  --info: #06B6D4;
-  
-  /* Shadow Tokens - Enterprise Depth */
-  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
-  --shadow: 0 4px 6px rgba(15, 23, 42, 0.1), 0 2px 4px rgba(15, 23, 42, 0.06);
-  --shadow-md: 0 10px 15px rgba(15, 23, 42, 0.1), 0 4px 6px rgba(15, 23, 42, 0.05);
-  --shadow-lg: 0 20px 25px rgba(15, 23, 42, 0.15), 0 10px 10px rgba(15, 23, 42, 0.05);
-  --shadow-xl: 0 25px 50px rgba(15, 23, 42, 0.25);
-  
-  /* Spacing */
-  --spacing-unit: 0.25rem;
-  
-  /* Border Radius */
-  --radius-sm: 0.375rem;
-  --radius: 0.5rem;
-  --radius-md: 0.75rem;
-  --radius-lg: 1rem;
-  --radius-xl: 1.5rem;
-  --radius-2xl: 2rem;
+/* ============================================================
+   LUMA PREMIUM - MAISON STYLE GLOBALS
+   Diseño minimalista premium estilo Awwwards
+   ============================================================ */
+
+/* ---- Tipografía Base ---- */
+.font-display {
+  font-family: var(--font-display), 'Georgia', serif;
 }
 
-/* Bootstrap Theme Customization */
-$primary: #7C3AED;
-$secondary: #EC4899;
-$success: #10B981;
-$danger: #EF4444;
-$warning: #F59E0B;
-$info: #06B6D4;
-$light: #F8FAFC;
-$dark: #0F172A;
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
-  --font-display: var(--font-playfair);
+.font-body {
+  font-family: var(--font-body), 'Arial', sans-serif;
 }
 
-/* Base Styles */
+/* ---- Hero Title (Gigante Cinematográfico) ---- */
+.hero-title {
+  font-size: clamp(4rem, 12vw, 14rem);
+  line-height: 0.9;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+
+/* ---- Smooth Scrolling ---- */
 html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* ---- Body Base ---- */
 body {
   min-height: 100vh;
-  background: linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 50%, #F3E8FF 100%);
-  color: var(--foreground);
-  font-family: var(--font-inter), "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  background: #f7f5f2;
+  color: #1e1919;
+  font-family: var(--font-body), 'Arial', sans-serif;
   font-size: 1rem;
   line-height: 1.6;
-  letter-spacing: 0.3px;
+  margin: 0;
+  padding: 0;
 }
 
-.font-display {
-  font-family: var(--font-playfair), "Georgia", serif;
-  font-weight: 600;
-  letter-spacing: -0.5px;
+/* ---- Selection Color ---- */
+::selection {
+  background-color: #61525a;
+  color: #f7f5f2;
 }
 
-/* Typography Enhancements */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-display);
-  color: var(--heading);
-  font-weight: 600;
+/* ---- Custom Scrollbar ---- */
+::-webkit-scrollbar {
+  width: 6px;
 }
 
-h1 { font-size: 2.5rem; line-height: 1.1; letter-spacing: -0.02em; }
-h2 { font-size: 2rem; line-height: 1.2; letter-spacing: -0.015em; }
-h3 { font-size: 1.5rem; line-height: 1.3; }
-h4 { font-size: 1.25rem; line-height: 1.4; }
-h5 { font-size: 1.125rem; line-height: 1.5; }
-h6 { font-size: 1rem; line-height: 1.6; }
-
-p {
-  color: var(--muted);
-  margin-bottom: 1rem;
+::-webkit-scrollbar-track {
+  background: #f7f5f2;
 }
 
-a {
-  color: var(--accent);
-  text-decoration: none;
-  transition: color 0.2s ease;
+::-webkit-scrollbar-thumb {
+  background: #61525a;
+  border-radius: 3px;
 }
 
-a:hover {
-  color: var(--accent-dark);
-  text-decoration: underline;
+::-webkit-scrollbar-thumb:hover {
+  background: #4a3d44;
+}
+
+/* ---- Grain Texture Overlay (Opcional) ---- */
+.grain-overlay::before {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.4;
 }
 
 /* Enterprise Animation Keyframes */
@@ -277,7 +240,7 @@ a:hover {
 
 .card-hover:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(124, 58, 237, 0.15);
+  box-shadow: 0 20px 40px rgba(2, 27, 24, 0.15);
 }
 
 .btn-hover {
@@ -306,16 +269,17 @@ a:hover {
 /* Card Styles */
 .card-enterprise {
   border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  border-radius: 16px;
   background: var(--card-bg);
-  box-shadow: var(--shadow);
+  box-shadow: 0 8px 24px rgba(2, 27, 24, 0.06);
   overflow: hidden;
   transition: all 0.3s ease;
 }
 
 .card-enterprise:hover {
   border-color: var(--accent-light);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 12px 36px rgba(2, 27, 24, 0.12);
+  transform: translateY(-2px);
 }
 
 .card-gradient {
@@ -333,94 +297,142 @@ a:hover {
 .btn-enterprise {
   position: relative;
   overflow: hidden;
-  border-radius: var(--radius-md);
+  border-radius: 12px;
   font-weight: 600;
   letter-spacing: 0.5px;
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   border: none;
+  padding: 0.875rem 1.5rem;
 }
 
 .btn-primary-enterprise {
-  background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%);
+  background: linear-gradient(135deg, #021b18 0%, #051616 100%);
   color: white;
-  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+  box-shadow: 0 6px 20px rgba(2, 27, 24, 0.25);
 }
 
 .btn-primary-enterprise:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(2, 27, 24, 0.35);
 }
 
 .btn-secondary-enterprise {
-  background: linear-gradient(135deg, #EC4899 0%, #DB2777 100%);
+  background: linear-gradient(135deg, #64636a 0%, #4a4851 100%);
   color: white;
-  box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+  box-shadow: 0 6px 20px rgba(100, 99, 106, 0.25);
 }
 
 .btn-secondary-enterprise:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(236, 72, 153, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(100, 99, 106, 0.35);
 }
 
 .btn-outline-enterprise {
   border: 2px solid var(--accent);
   color: var(--accent);
   background: transparent;
+  box-shadow: 0 4px 12px rgba(2, 27, 24, 0.1);
 }
 
 .btn-outline-enterprise:hover {
   background: var(--accent);
   color: white;
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(2, 27, 24, 0.2);
 }
 
 /* Badge & Label Styles */
 .badge-enterprise {
-  border-radius: var(--radius);
+  border-radius: 8px;
   font-weight: 600;
-  font-size: 0.75rem;
-  padding: 0.375rem 0.75rem;
+  font-size: 0.8rem;
+  padding: 0.5rem 0.875rem;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.badge {
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding: 0.5rem 0.875rem;
   letter-spacing: 0.5px;
 }
 
 .badge-primary {
-  background: rgba(124, 58, 237, 0.15);
-  color: #7C3AED;
-  border: 1px solid rgba(124, 58, 237, 0.3);
+  background: rgba(2, 27, 24, 0.12);
+  color: #021b18;
+  border: 1px solid rgba(2, 27, 24, 0.2);
 }
 
 .badge-success {
-  background: rgba(16, 185, 129, 0.15);
-  color: #10B981;
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  background: rgba(100, 99, 106, 0.12);
+  color: #64636a;
+  border: 1px solid rgba(100, 99, 106, 0.2);
 }
 
 .badge-warning {
-  background: rgba(245, 158, 11, 0.15);
-  color: #F59E0B;
-  border: 1px solid rgba(245, 158, 11, 0.3);
+  background: rgba(182, 173, 165, 0.15);
+  color: #b6ada5;
+  border: 1px solid rgba(182, 173, 165, 0.3);
 }
 
 .badge-danger {
-  background: rgba(239, 68, 68, 0.15);
-  color: #EF4444;
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  background: rgba(2, 27, 24, 0.12);
+  color: #021b18;
+  border: 1px solid rgba(2, 27, 24, 0.2);
+}
+
+.badge-info {
+  background: rgba(100, 99, 106, 0.12);
+  color: #64636a;
+  border: 1px solid rgba(100, 99, 106, 0.2);
 }
 
 /* Input & Form Styles */
 .form-control-enterprise {
   border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  padding: 0.875rem 1.5rem;
   font-size: 1rem;
   transition: all 0.3s ease;
   background: white;
+  box-shadow: 0 2px 8px rgba(2, 27, 24, 0.04);
 }
 
 .form-control-enterprise:focus {
-  background: #F0F4FF;
+  background: #f5f0e8;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+  box-shadow: 0 4px 16px rgba(2, 27, 24, 0.1);
+  outline: none;
+}
+
+.form-control {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.875rem 1.5rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  background: #f5f0e8;
+  border-color: var(--accent);
+  box-shadow: 0 4px 16px rgba(2, 27, 24, 0.1);
+}
+
+.input-group-text {
+  background: white !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 12px !important;
+  transition: all 0.3s ease;
+}
+
+.input-group-text:focus-within {
+  border-color: var(--accent) !important;
+  box-shadow: 0 4px 16px rgba(2, 27, 24, 0.1);
 }
 
 /* Grid & Layout */
@@ -488,37 +500,37 @@ a:hover {
 
 /* Gradient Utilities */
 .gradient-primary {
-  background: linear-gradient(135deg, #7C3AED 0%, #A78BFA 100%);
+  background: linear-gradient(135deg, #021b18 0%, #051616 100%);
 }
 
 .gradient-secondary {
-  background: linear-gradient(135deg, #EC4899 0%, #F472B6 100%);
+  background: linear-gradient(135deg, #64636a 0%, #4a4851 100%);
 }
 
 .gradient-tertiary {
-  background: linear-gradient(135deg, #06B6D4 0%, #22D3EE 100%);
+  background: linear-gradient(135deg, #b6ada5 0%, #9a8f86 100%);
 }
 
 .gradient-success {
-  background: linear-gradient(135deg, #10B981 0%, #34D399 100%);
+  background: linear-gradient(135deg, #64636a 0%, #4a4851 100%);
 }
 
 .gradient-premium {
-  background: linear-gradient(135deg, #7C3AED 0%, #EC4899 50%, #06B6D4 100%);
+  background: linear-gradient(135deg, #021b18 0%, #64636a 50%, #b6ada5 100%);
   background-size: 200% 200%;
   animation: gradient-shift 8s ease infinite;
 }
 
 /* Text Gradients */
 .text-gradient {
-  background: linear-gradient(135deg, #7C3AED 0%, #EC4899 100%);
+  background: linear-gradient(135deg, #021b18 0%, #64636a 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .text-gradient-secondary {
-  background: linear-gradient(135deg, #EC4899 0%, #06B6D4 100%);
+  background: linear-gradient(135deg, #64636a 0%, #b6ada5 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -531,28 +543,37 @@ a:hover {
 }
 
 .table-enterprise thead {
-  background: #F8FAFC;
+  background: #f5f0e8;
   border-bottom: 2px solid var(--border);
 }
 
 .table-enterprise thead th {
-  padding: 1rem;
+  padding: 1.5rem 1.25rem;
   text-align: left;
   font-weight: 600;
   color: var(--heading);
   text-transform: uppercase;
-  font-size: 0.875rem;
-  letter-spacing: 0.5px;
+  font-size: 0.85rem;
+  letter-spacing: 0.6px;
 }
 
 .table-enterprise tbody td {
-  padding: 1rem;
+  padding: 1.25rem;
   border-bottom: 1px solid var(--border);
   color: var(--foreground);
+  font-size: 0.95rem;
+}
+
+.table-enterprise tbody tr {
+  transition: all 0.2s ease;
 }
 
 .table-enterprise tbody tr:hover {
-  background: #F8FAFC;
+  background: #f9f8f7;
+}
+
+.table-enterprise tbody tr:last-child td {
+  border-bottom: none;
 }
 
 /* Modal & Overlay */
@@ -569,7 +590,7 @@ a:hover {
 
 /* Loading & Skeleton */
 .skeleton {
-  background: linear-gradient(90deg, #E2E8F0 25%, #F1F5F9 50%, #E2E8F0 75%);
+  background: linear-gradient(90deg, #d4cfc5 25%, #e3dcd2 50%, #d4cfc5 75%);
   background-size: 200% 100%;
   animation: shimmer 2s infinite;
 }

@@ -1,16 +1,8 @@
-"use client";
+'use client';
 
-import { useEffect, useState, useCallback } from "react";
-import { useRouter } from "next/navigation";
-import { CalendarCheck2, DollarSign, TrendingUp, Users, AlertCircle, Loader2 } from "lucide-react";
-import { ActivityFeed } from "@/components/admin/activity-feed";
-import { AdminShell } from "@/components/admin/admin-shell";
-import { AppointmentsTable } from "@/components/admin/appointments-table";
-import { KpiCard } from "@/components/admin/kpi-card";
-import { OperationsPanel } from "@/components/admin/operations-panel";
-import { AdminActivity, AdminAlert, AdminAppointment, AdminMetric } from "@/components/admin/types";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { useEffect, useState, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
+import { CalendarCheck2, DollarSign, TrendingUp, Users, AlertCircle, Loader2, LogOut } from 'lucide-react';
 
 type RawAppointment = {
   id: string;
@@ -31,28 +23,28 @@ type RawStaff = {
 type UserData = {
   id: string;
   email: string;
-  role: "ADMIN" | "STAFF" | "CLIENT";
+  role: 'ADMIN' | 'STAFF' | 'CLIENT';
   name: string | null;
 };
 
 export default function AdminPage() {
   const router = useRouter();
+  const [isMounted, setIsMounted] = useState(false);
   const [authChecked, setAuthChecked] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [user, setUser] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [appointments, setAppointments] = useState<AdminAppointment[]>([]);
-  const [activities, setActivities] = useState<AdminActivity[]>([]);
-  const [metrics, setMetrics] = useState<AdminMetric[]>([]);
-  const [alerts, setAlerts] = useState<AdminAlert[]>([]);
+  const [appointments, setAppointments] = useState<any[]>([]);
   const [staff, setStaff] = useState<RawStaff[]>([]);
+  const [metrics, setMetrics] = useState<any[]>([]);
 
   // Check authentication on mount
   useEffect(() => {
-    const token = typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
-    const userData = typeof window !== "undefined" ? localStorage.getItem("user") : null;
+    setIsMounted(true);
+    const token = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null;
+    const userData = typeof window !== 'undefined' ? localStorage.getItem('user') : null;
     
     if (token && userData) {
       try {
@@ -60,26 +52,23 @@ export default function AdminPage() {
         setUser(parsed);
         setIsAuth(true);
         
-        // Only allow ADMIN role
-        if (parsed.role === "ADMIN") {
+        if (parsed.role === 'ADMIN') {
           setIsAdmin(true);
         } else {
-          // Not ADMIN role, redirect to login
           setIsAuth(false);
         }
       } catch (e) {
-        console.error("Failed to parse user data:", e);
+        console.error('Failed to parse user data:', e);
         setIsAuth(false);
       }
     } else {
-      // No token, not authenticated
       setIsAuth(false);
     }
     setAuthChecked(true);
   }, []);
 
   const fetchData = useCallback(async () => {
-    const token = typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+    const token = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null;
     if (!token) {
       setLoading(false);
       return;
@@ -89,14 +78,13 @@ export default function AdminPage() {
       setLoading(true);
       setError(null);
 
-      // Fetch appointments and staff in parallel
       const [appointmentsRes, staffRes] = await Promise.all([
-        fetch("/api/v1/appointments?limit=50&page=1", {
+        fetch('/api/v1/appointments?limit=50&page=1', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }).then((r) => r.json()),
-        fetch("/api/v1/staff", {
+        fetch('/api/v1/staff', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -104,36 +92,26 @@ export default function AdminPage() {
       ]);
 
       if (!appointmentsRes.success || !staffRes.success) {
-        throw new Error("Failed to fetch data");
+        throw new Error('Failed to fetch data');
       }
 
       setStaff(staffRes.data || []);
 
-      // Transform appointments to admin format
       const rawAppointments: RawAppointment[] = appointmentsRes.data?.items || [];
       const transformedAppointments = rawAppointments.map((apt) => ({
         id: apt.id,
-        client: apt.client?.name || "Unknown Client",
-        service:
-          apt.services
-            ?.map((s) => s.service.name)
-            .join(", ") || "Unknown Service",
-        staff: apt.staff?.user?.name || "Unknown Staff",
-        startTime: new Date(apt.startAt).toLocaleTimeString("es-EC", {
-          hour: "2-digit",
-          minute: "2-digit",
+        client: apt.client?.name || 'Cliente Desconocido',
+        service: apt.services?.map((s) => s.service.name).join(', ') || 'Servicio Desconocido',
+        staff: apt.staff?.user?.name || 'Personal Desconocido',
+        time: new Date(apt.startAt).toLocaleTimeString('es-EC', {
+          hour: '2-digit',
+          minute: '2-digit',
         }),
-        status:
-          apt.status === "CONFIRMED"
-            ? ("confirmed" as const)
-            : apt.status === "PENDING"
-              ? ("pending" as const)
-              : ("in_progress" as const),
+        status: apt.status === 'CONFIRMED' ? 'confirmed' : apt.status === 'PENDING' ? 'pending' : 'in_progress',
       }));
 
       setAppointments(transformedAppointments);
 
-      // Calculate metrics from appointments
       const today = new Date();
       today.setHours(0, 0, 0, 0);
 
@@ -142,110 +120,48 @@ export default function AdminPage() {
       );
 
       const totalRevenue = todayAppointments.reduce((sum, apt) => {
-        return (
-          sum +
-          (apt.services?.reduce((s, srv) => s + (srv.service.price || 0), 0) || 0)
-        );
+        return sum + (apt.services?.reduce((s, srv) => s + (srv.service.price || 0), 0) || 0);
       }, 0);
 
       const confirmedCount = todayAppointments.filter(
-        (apt) => apt.status === "CONFIRMED"
+        (apt) => apt.status === 'CONFIRMED'
       ).length;
 
-      const staffUtilization =
-        staffRes.data && staffRes.data.length > 0
-          ? Math.min(
-              100,
-              Math.round(
-                (todayAppointments.length / (staffRes.data.length * 8)) * 100
-              )
-            )
-          : 0;
+      const staffUtilization = staffRes.data && staffRes.data.length > 0
+        ? Math.min(100, Math.round((todayAppointments.length / (staffRes.data.length * 8)) * 100))
+        : 0;
 
-      const newMetrics: AdminMetric[] = [
+      setMetrics([
         {
-          title: "Ingresos Hoy",
+          title: 'Ingresos Hoy',
           value: `$${totalRevenue.toFixed(2)}`,
-          delta: `+${Math.round(Math.random() * 20)}% vs ayer`,
-          trend: Math.random() > 0.5 ? "up" : "down",
           icon: DollarSign,
+          color: 'bg-blue-100 text-blue-600',
         },
         {
-          title: "Citas Reservadas",
+          title: 'Citas Reservadas',
           value: confirmedCount.toString(),
-          delta: `+${todayAppointments.length - confirmedCount} pendientes`,
-          trend: "up",
           icon: CalendarCheck2,
+          color: 'bg-green-100 text-green-600',
         },
         {
-          title: "Utilización del Equipo",
+          title: 'Utilización',
           value: `${staffUtilization}%`,
-          delta:
-            staffUtilization > 80
-              ? "Alta demanda hoy"
-              : "Carga normal",
-          trend: staffUtilization > 75 ? "up" : "down",
-          icon: Users,
-        },
-        {
-          title: "Personal Activo",
-          value: (staffRes.data?.length || 0).toString(),
-          delta: `${(staffRes.data?.length || 0)} disponibles`,
-          trend: "up",
           icon: TrendingUp,
+          color: 'bg-purple-100 text-purple-600',
         },
-      ];
-
-      setMetrics(newMetrics);
-
-      // Build activities from recent appointments
-      const recentActivities: AdminActivity[] = transformedAppointments
-        .slice(0, 4)
-        .map((apt, idx) => ({
-          id: `ACT-${idx + 1}`,
-          title: apt.status === "confirmed" ? "Cita confirmada" : "Nueva reserva",
-          detail: `${apt.client} reservó ${apt.service} con ${apt.staff}`,
-          time: `${Math.random() > 0.5 ? Math.floor(Math.random() * 60) : Math.floor(Math.random() * 24) + 1}${Math.random() > 0.5 ? "m" : "h"} ago`,
-          type: "booking" as const,
-        }));
-
-      setActivities(recentActivities);
-
-      // Set alerts based on utilization
-      const newAlerts: AdminAlert[] = [];
-
-      if (staffUtilization > 80) {
-        newAlerts.push({
-          id: "AL-1",
-          title: "Alta demanda",
-          detail: `${staffUtilization}% de utilización. Considera abrir más espacios.`,
-          severity: "warning",
-        });
-      }
-
-      if (todayAppointments.length > 10) {
-        newAlerts.push({
-          id: "AL-2",
-          title: "Día de máxima ocupación",
-          detail: `${todayAppointments.length} citas reservadas hoy.`,
-          severity: "info",
-        });
-      }
-
-      setAlerts(newAlerts.length > 0 ? newAlerts : [
         {
-          id: "AL-DEFAULT",
-          title: "Sistema saludable",
-          detail: "Todas las métricas en rango normal.",
-          severity: "info",
-        }
+          title: 'Personal Activo',
+          value: (staffRes.data?.length || 0).toString(),
+          icon: Users,
+          color: 'bg-orange-100 text-orange-600',
+        },
       ]);
+
+      setLoading(false);
     } catch (err) {
-      console.error("Error fetching admin data:", err);
-      setError(
-        err instanceof Error ? err.message : "Error al cargar los datos del panel"
-      );
-    } finally {
+      console.error('Error fetching admin data:', err);
+      setError(err instanceof Error ? err.message : 'Error al cargar los datos del panel');
       setLoading(false);
     }
   }, []);
@@ -253,84 +169,161 @@ export default function AdminPage() {
   useEffect(() => {
     if (authChecked && isAuth && isAdmin) {
       fetchData();
-      // Refresh every 30 seconds
       const interval = setInterval(fetchData, 30000);
       return () => clearInterval(interval);
     }
   }, [authChecked, isAuth, isAdmin, fetchData]);
 
-  // Not authenticated or wrong role
-  if (authChecked && (!isAuth || !isAdmin)) {
-    router.push("/admin/login");
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('user');
+    router.push('/admin/login');
+  };
+
+  // Show loading while checking auth and before mounted
+  if (!isMounted || !authChecked) {
     return (
-      <div className="d-flex h-100 align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
-        <div className="spinner-border text-primary" role="status">
-          <span className="visually-hidden">Cargando...</span>
-        </div>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <Loader2 className="size-8 animate-spin text-gray-400" />
       </div>
     );
   }
 
-  // Authenticated but loading
-  if (loading) {
-    return (
-      <AdminShell>
-        <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "400px" }}>
-          <div className="spinner-border text-primary" role="status">
-            <span className="visually-hidden">Cargando...</span>
-          </div>
-        </div>
-      </AdminShell>
-    );
+  // Redirect if not authenticated or not admin
+  if (!isAuth || !isAdmin) {
+    if (isMounted) {
+      router.push('/admin/login');
+    }
+    return null;
   }
 
-  // Error state
-  if (error) {
-    return (
-      <AdminShell>
-        <Card className="card card-enterprise">
-          <CardContent className="d-flex flex-column align-items-center justify-content-center gap-3 py-12 text-center">
-            <AlertCircle size={32} className="text-muted mb-3" />
-            <p className="fw-500">Error al cargar el panel</p>
-            <p className="text-muted small">{error}</p>
-            <button
-              onClick={() => fetchData()}
-              className="mt-3 btn btn-primary btn-sm"
-            >
-              Reintentar
-            </button>
-          </CardContent>
-        </Card>
-      </AdminShell>
-    );
-  }
-
-  // Authenticated and loaded
   return (
-    <AdminShell>
-      {/* KPI Cards Grid */}
-      <section className="mb-5">
-        <div className="row g-3 g-lg-4">
-          {metrics.map((metric) => (
-            <div key={metric.title} className="col-12 col-sm-6 col-lg-3">
-              <KpiCard metric={metric} />
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <div className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div>
+            <h1 className="font-serif text-3xl text-black">LUMIÈRE</h1>
+            <p className="text-xs text-gray-500 tracking-widest mt-1">PANEL ADMINISTRATIVO</p>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="text-right">
+              <p className="text-sm font-medium text-gray-900">{user?.name || user?.email}</p>
+              <p className="text-xs text-gray-500">Administrador</p>
             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Main Content Grid */}
-      <section className="row g-4 g-lg-5">
-        <div className="col-12 col-xl-8">
-          <AppointmentsTable appointments={appointments} />
-        </div>
-        <div className="col-12 col-xl-4">
-          <div className="d-flex flex-column gap-4">
-            <OperationsPanel alerts={alerts} />
-            <ActivityFeed activities={activities} />
+            <button
+              onClick={handleLogout}
+              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              title="Cerrar sesión"
+            >
+              <LogOut size={20} className="text-gray-600" />
+            </button>
           </div>
         </div>
-      </section>
-    </AdminShell>
+      </div>
+
+      {/* Navigation */}
+      <div className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex gap-8">
+            <a href="/admin" className="py-3 px-0 text-sm font-medium text-black border-b-2 border-black">Dashboard</a>
+            <a href="/admin/appointments" className="py-3 px-0 text-sm text-gray-600 hover:text-black transition-colors border-b-2 border-transparent">Citas</a>
+            <a href="/admin/services" className="py-3 px-0 text-sm text-gray-600 hover:text-black transition-colors border-b-2 border-transparent">Servicios</a>
+            <a href="/admin/staff" className="py-3 px-0 text-sm text-gray-600 hover:text-black transition-colors border-b-2 border-transparent">Personal</a>
+            <a href="/admin/settings" className="py-3 px-0 text-sm text-gray-600 hover:text-black transition-colors border-b-2 border-transparent">Configuración</a>
+          </div>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="max-w-7xl mx-auto px-6 py-12">
+        {error && (
+          <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 flex gap-3">
+            <AlertCircle className="size-5 text-red-600 shrink-0 mt-0.5" />
+            <div>
+              <p className="text-sm font-medium text-red-900">Error al cargar datos</p>
+              <p className="text-sm text-red-700 mt-1">{error}</p>
+              <button
+                onClick={() => fetchData()}
+                className="mt-3 text-sm text-red-600 hover:text-red-700 font-medium"
+              >
+                Reintentar
+              </button>
+            </div>
+          </div>
+        )}
+
+        {loading ? (
+          <div className="flex justify-center items-center py-20">
+            <Loader2 className="size-8 animate-spin text-gray-400" />
+          </div>
+        ) : (
+          <>
+            {/* Metrics Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+              {metrics.map((metric) => (
+                <div key={metric.title} className="rounded-lg border border-gray-200 bg-white p-6">
+                  <div className={`w-12 h-12 rounded-lg ${metric.color} flex items-center justify-center mb-4`}>
+                    <metric.icon size={24} />
+                  </div>
+                  <p className="text-sm text-gray-600 mb-1">{metric.title}</p>
+                  <p className="text-3xl font-serif font-bold text-black">{metric.value}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Appointments Table */}
+            <div className="rounded-lg border border-gray-200 bg-white overflow-hidden">
+              <div className="px-6 py-4 border-b border-gray-200">
+                <h2 className="text-lg font-serif font-bold text-black">Citas de Hoy</h2>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-gray-200 bg-gray-50">
+                      <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Cliente</th>
+                      <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Servicio</th>
+                      <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Personal</th>
+                      <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Hora</th>
+                      <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Estado</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {appointments.length > 0 ? (
+                      appointments.map((apt) => (
+                        <tr key={apt.id} className="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                          <td className="px-6 py-4 text-sm text-gray-900">{apt.client}</td>
+                          <td className="px-6 py-4 text-sm text-gray-600">{apt.service}</td>
+                          <td className="px-6 py-4 text-sm text-gray-600">{apt.staff}</td>
+                          <td className="px-6 py-4 text-sm text-gray-600">{apt.time}</td>
+                          <td className="px-6 py-4 text-sm">
+                            <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
+                              apt.status === 'confirmed'
+                                ? 'bg-green-100 text-green-700'
+                                : apt.status === 'pending'
+                                ? 'bg-yellow-100 text-yellow-700'
+                                : 'bg-blue-100 text-blue-700'
+                            }`}>
+                              {apt.status === 'confirmed' ? 'Confirmada' : apt.status === 'pending' ? 'Pendiente' : 'En Curso'}
+                            </span>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan={5} className="px-6 py-8 text-center text-gray-500">
+                          No hay citas para hoy
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
   );
 }

@@ -1,21 +1,24 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Space_Grotesk, Cormorant_Garamond } from "next/font/google";
 import { AppThemeProvider } from "@/components/providers/theme-provider";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-body",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+const cormorant = Cormorant_Garamond({
+  variable: "--font-display",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
-  title: "Luma Beauty Studio - Premium Beauty Services",
-  description: "Experience luxury beauty booking with Luma Beauty Studio. Professional beauty services at your convenience.",
+  title: "LUMA - Premium Beauty Experience",
+  description: "La experiencia de belleza más elegante y moderna. Servicios premium con profesionales certificados.",
 };
 
 export default function RootLayout({
@@ -27,9 +30,9 @@ export default function RootLayout({
     <html lang="es">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#7C3AED" />
+        <meta name="theme-color" content="#1e1919" />
       </head>
-      <body className={`${inter.variable} ${playfair.variable} antialiased`} data-bs-theme="light">
+      <body className={`${spaceGrotesk.variable} ${cormorant.variable} antialiased`}>
         <AppThemeProvider>{children}</AppThemeProvider>
       </body>
     </html>
