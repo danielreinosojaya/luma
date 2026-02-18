@@ -48,11 +48,11 @@ export default function StaffPage() {
         });
         const data = await res.json();
 
-        if (!data.success) throw new Error("Failed to fetch staff");
+        if (!data.success) throw new Error("Error al obtener personal");
 
         setStaff(data.data || []);
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Error loading staff");
+        setError(err instanceof Error ? err.message : "Error cargando personal");
       } finally {
         setLoading(false);
       }
@@ -102,7 +102,7 @@ export default function StaffPage() {
                   <th className="px-5 py-3 font-medium">Name</th>
                   <th className="px-5 py-3 font-medium">Email</th>
                   <th className="px-5 py-3 font-medium">Specialties</th>
-                  <th className="px-5 py-3 font-medium">Status</th>
+                  <th className="px-5 py-3 font-medium">Estado</th>
                 </tr>
               </thead>
               <tbody>
@@ -124,7 +124,7 @@ export default function StaffPage() {
                       <Badge
                         variant={member.user.active ? "success" : "danger"}
                       >
-                        {member.user.active ? "Active" : "Inactive"}
+                        {member.user.active ? "Activo" : "Inactivo"}
                       </Badge>
                     </td>
                   </tr>

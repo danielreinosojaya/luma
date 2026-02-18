@@ -1,4 +1,4 @@
-# 📧 Sistema de Notificaciones por Correo - Luma Beauty Studio
+# 📧 Sistema de Notificaciones por Correo - Luma
 
 Este sistema simula el envío de correos de notificación para el negocio sin necesidad de configurar dominio ni DNS.
 
@@ -170,7 +170,7 @@ En `scripts/generate-email-samples.ts` o en el endpoint API.
 
 ### Cambiar Branding
 
-Busca por "Luma Beauty Studio" en los scripts para cambiar:
+Busca por "Luma" en los scripts para cambiar:
 - Nombre del negocio
 - Colores corporativos
 - URLs de enlaces

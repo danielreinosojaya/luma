@@ -39,7 +39,7 @@ export const GET = withAuth(async (request: AuthenticatedRequest) => {
     if (request.auth.role === "CLIENT") {
       if (!request.auth.clientId) {
         return NextResponse.json(
-          apiError("Client profile not found", "NOT_FOUND"),
+          apiError("Perfil de cliente no encontrado", "NOT_FOUND"),
           { status: 404 }
         );
       }
@@ -47,7 +47,7 @@ export const GET = withAuth(async (request: AuthenticatedRequest) => {
     } else if (request.auth.role === "STAFF") {
       if (!request.auth.staffId) {
         return NextResponse.json(
-          apiError("Staff profile not found", "NOT_FOUND"),
+          apiError("Perfil del personal no encontrado", "NOT_FOUND"),
           { status: 404 }
         );
       }
@@ -93,7 +93,7 @@ export const GET = withAuth(async (request: AuthenticatedRequest) => {
   } catch (error) {
     console.error("GET /api/v1/appointments error:", error);
     return NextResponse.json(
-      apiError("An unexpected error occurred", "INTERNAL_ERROR"),
+      apiError("Ocurrió un error inesperado", "INTERNAL_ERROR"),
       { status: 500 }
     );
   }
@@ -102,7 +102,7 @@ export const GET = withAuth(async (request: AuthenticatedRequest) => {
 // ============= POST /api/v1/appointments =============
 // Auth: Required
 // RBAC: ADMIN, STAFF, CLIENT
-// Protection: Rate limit, idempotency, atomic transaction, conflict check
+// Protección: límite de tarifa, idempotencia, transacción atómica, verificación de conflicto
 
 export const POST = withAuth(async (request: AuthenticatedRequest) => {
   try {
@@ -115,7 +115,7 @@ export const POST = withAuth(async (request: AuthenticatedRequest) => {
     );
     if (!rlOk) {
       return NextResponse.json(
-        apiError("Too many booking requests. Try again in a minute.", "RATE_LIMIT_EXCEEDED"),
+        apiError("Demasiadas solicitudes de reserva. Intenta de nuevo en un minuto.", "RATE_LIMIT_EXCEEDED"),
         { status: 429, headers: { "Retry-After": "60" } }
       );
     }
@@ -133,11 +133,11 @@ export const POST = withAuth(async (request: AuthenticatedRequest) => {
 
     const data = parsed.data as CreateAppointmentInput;
 
-    // Business rule: cannot book in the past
+    // Regla de negocio: no se puede reservar en el pasado
     const startAt = new Date(data.startAt);
     if (startAt <= new Date()) {
       return NextResponse.json(
-        apiError("Cannot book appointments in the past", "VALIDATION_ERROR"),
+        apiError("No se pueden reservar citas en el pasado", "VALIDATION_ERROR"),
         { status: 400 }
       );
     }
@@ -149,7 +149,7 @@ export const POST = withAuth(async (request: AuthenticatedRequest) => {
     }
 
     // ===== ATOMIC TRANSACTION =====
-    // All-or-nothing: client upsert, conflict check, appointment + services created together
+    // Todo o nada: cliente upsert, verificación de conflicto, cita + servicios creados juntos
     const appointment = await db.$transaction(async (tx: any) => {
       // 1. Upsert client
       let client = await tx.client.findUnique({
@@ -173,7 +173,7 @@ export const POST = withAuth(async (request: AuthenticatedRequest) => {
       });
 
       if (!staff || !staff.user.active) {
-        throw new AppointmentError("Staff member not found or inactive", "NOT_FOUND", 404);
+        throw new AppointmentError("Personal no encontrado o inactivo", "NOT_FOUND", 404);
       }
 
       // 3. Verify all services exist and are active
@@ -182,14 +182,14 @@ export const POST = withAuth(async (request: AuthenticatedRequest) => {
       });
 
       if (services.length !== data.serviceIds.length) {
-        throw new AppointmentError("One or more services not found or inactive", "NOT_FOUND", 404);
+        throw new AppointmentError("Uno o más servicios no encontrados o inactivos", "NOT_FOUND", 404);
       }
 
       // 4. Calculate end time from service durations
       const durationMin = services.reduce((sum: number, s: any) => sum + s.durationMin, 0);
       const endAt = new Date(startAt.getTime() + durationMin * 60000);
 
-      // 5. Check for conflicting appointments (race-condition safe inside transaction)
+      // 5. Verificar citas conflictivas (seguro contra condiciones de carrera dentro de la transacción)
       const conflicts = await tx.appointment.findMany({
         where: {
           staffId: data.staffId,
@@ -200,7 +200,7 @@ export const POST = withAuth(async (request: AuthenticatedRequest) => {
       });
 
       if (conflicts.length > 0) {
-        throw new AppointmentError("Time slot not available", "CONFLICT", 409);
+        throw new AppointmentError("Horario no disponible", "CONFLICT", 409);
       }
 
       // 6. Create appointment with services atomically
@@ -255,7 +255,7 @@ export const POST = withAuth(async (request: AuthenticatedRequest) => {
 
     sendEmail({
       to: data.clientEmail,
-      subject: "¡Cita Confirmada en Luma Beauty Studio!",
+      subject: "¡Cita Confirmada en Luma!",
       html: emailTemplates.appointmentConfirmation(
         data.clientName,
         serviceNames,

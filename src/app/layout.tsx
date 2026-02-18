@@ -17,7 +17,7 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "LUMA - Premium Beauty Experience",
+  title: "LUMA - Experiencia Premium de Belleza",
   description: "La experiencia de belleza más elegante y moderna. Servicios premium con profesionales certificados.",
 };
 

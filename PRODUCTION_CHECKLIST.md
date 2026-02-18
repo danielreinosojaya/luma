@@ -1,4 +1,4 @@
-# 🚀 Checklist Producción - Luma Beauty Studio
+# 🚀 Checklist Producción - Luma
 
 ## 1. 🔒 Seguridad & Configuración
 

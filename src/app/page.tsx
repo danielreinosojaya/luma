@@ -12,35 +12,35 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Navigation */}
+      {/* Navegación */}
       <Navigation mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
 
-      {/* Hero */}
+      {/* Héroe */}
       <Hero />
 
-      {/* Services */}
+      {/* Servicios */}
       <Services />
 
-      {/* Stylists */}
+      {/* Estilistas */}
       <Stylists />
 
-      {/* Testimonials */}
+      {/* Testimonios */}
       <Testimonials />
 
-      {/* Gallery */}
+      {/* Galería */}
       <Gallery />
 
-      {/* Booking */}
+      {/* Reserva */}
       <Booking />
 
-      {/* Footer */}
+      {/* Pie de página */}
       <Footer />
     </div>
   );
 }
 
 // ============================================================
-// NAVIGATION
+// NAVEGACIÓN
 // ============================================================
 function Navigation({ mobileMenuOpen, setMobileMenuOpen }: any) {
   return (
@@ -48,15 +48,15 @@ function Navigation({ mobileMenuOpen, setMobileMenuOpen }: any) {
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="border-2 border-black px-3 py-1">
-            <span className="font-serif text-xl tracking-wider">LUMIÈRE</span>
+            <span className="font-serif text-xl tracking-wider">LUMA</span>
           </div>
         </div>
 
         <div className="hidden md:flex items-center gap-8 text-sm">
-          <a href="#services" className="hover:opacity-60 transition-opacity">Services</a>
-          <a href="#stylists" className="hover:opacity-60 transition-opacity">Stylists</a>
-          <a href="#gallery" className="hover:opacity-60 transition-opacity">Gallery</a>
-          <a href="#booking" className="hover:opacity-60 transition-opacity">Book</a>
+          <a href="#servicios" className="hover:opacity-60 transition-opacity">Servicios</a>
+          <a href="#estilistas" className="hover:opacity-60 transition-opacity">Estilistas</a>
+          <a href="#galeria" className="hover:opacity-60 transition-opacity">Galería</a>
+          <a href="#reservar" className="hover:opacity-60 transition-opacity">Reservar</a>
         </div>
 
         <div className="hidden md:flex items-center gap-4">
@@ -67,11 +67,11 @@ function Navigation({ mobileMenuOpen, setMobileMenuOpen }: any) {
             <User size={20} />
           </button>
           <button className="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800 transition-colors text-sm font-medium">
-            Book Now
+            Reservar Ahora
           </button>
         </div>
 
-        {/* Mobile Menu Button */}
+        {/* Botón de Menú Móvil */}
         <button 
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           className="md:hidden p-2"
@@ -80,16 +80,16 @@ function Navigation({ mobileMenuOpen, setMobileMenuOpen }: any) {
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Menú Móvil */}
       {mobileMenuOpen && (
         <div className="md:hidden border-t border-gray-200 bg-white">
           <div className="px-6 py-4 space-y-4">
-            <a href="#services" className="block text-sm hover:opacity-60">Services</a>
-            <a href="#stylists" className="block text-sm hover:opacity-60">Stylists</a>
-            <a href="#gallery" className="block text-sm hover:opacity-60">Gallery</a>
-            <a href="#booking" className="block text-sm hover:opacity-60">Book</a>
+            <a href="#servicios" className="block text-sm hover:opacity-60">Servicios</a>
+            <a href="#estilistas" className="block text-sm hover:opacity-60">Estilistas</a>
+            <a href="#galeria" className="block text-sm hover:opacity-60">Galería</a>
+            <a href="#reservar" className="block text-sm hover:opacity-60">Reservar</a>
             <button className="w-full bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800 transition-colors text-sm">
-              Book Now
+              Reservar Ahora
             </button>
           </div>
         </div>
@@ -99,7 +99,7 @@ function Navigation({ mobileMenuOpen, setMobileMenuOpen }: any) {
 }
 
 // ============================================================
-// HERO SECTION
+// SECCIÓN HÉROE
 // ============================================================
 function Hero() {
   return (
@@ -107,26 +107,25 @@ function Hero() {
       <div className="max-w-7xl mx-auto">
         <div className="text-xs text-gray-500 mb-12 flex items-center gap-2">
           <div className="h-px w-8 bg-gray-400" />
-          EST. 2024
+          DESDE 2024
         </div>
-
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <h1 className="text-7xl md:text-8xl font-serif leading-none mb-6">
               Redefine<br />
-              <span className="italic text-rose-300">Your</span> Beauty
+              <span className="italic text-rose-300">Tu</span> Belleza
             </h1>
 
             <p className="text-gray-600 text-lg mb-8 max-w-md leading-relaxed">
-              Experience the art of hair and nail care in a sanctuary designed for modern elegance. Where style meets substance.
+              Experimenta el arte del cuidado del cabello y uñas en un santuario diseñado para la elegancia moderna. Donde el estilo se encuentra con la sustancia.
             </p>
 
             <div className="flex flex-wrap gap-4 mb-12">
               <button className="bg-black text-white px-8 py-4 rounded-full hover:bg-gray-800 transition-all hover:scale-105 font-medium">
-                Book Appointment
+                Reservar Cita
               </button>
               <button className="border-2 border-black px-8 py-4 rounded-full hover:bg-black hover:text-white transition-all flex items-center gap-2 group font-medium">
-                View Services
+                Ver Servicios
                 <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
@@ -134,11 +133,11 @@ function Hero() {
             <div className="flex items-center gap-12">
               <div>
                 <div className="text-4xl font-serif mb-1">5k+</div>
-                <div className="text-sm text-gray-500">Happy Clients</div>
+                <div className="text-sm text-gray-500">Clientes Felices</div>
               </div>
               <div>
                 <div className="text-4xl font-serif mb-1">4.9</div>
-                <div className="text-sm text-gray-500">Rating</div>
+                <div className="text-sm text-gray-500">Calificación</div>
               </div>
               <div className="flex -space-x-3">
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pink-300 to-rose-400 border-2 border-white" />
@@ -165,8 +164,8 @@ function Hero() {
                 <Scissors size={20} className="text-gray-700" />
               </div>
               <div>
-                <div className="text-xs text-gray-500">Stylist Available</div>
-                <div className="font-semibold">Book Sarah</div>
+                <div className="text-xs text-gray-500">Estilista Disponible</div>
+                <div className="font-semibold">Reservar con Sarah</div>
               </div>
             </div>
 
@@ -174,8 +173,8 @@ function Hero() {
               <div className="bg-white p-2 rounded-full w-fit mb-3">
                 <div className="text-2xl">💅</div>
               </div>
-              <div className="font-serif text-xl mb-1">Nail Artistry</div>
-              <div className="text-sm text-gray-600 mb-2">Manicure & Pedicure</div>
+              <div className="font-serif text-xl mb-1">Arte de Uñas</div>
+              <div className="text-sm text-gray-600 mb-2">Manicura y Pedicura</div>
               <div className="h-1 bg-teal-400 rounded-full w-3/4" />
             </div>
           </div>
@@ -186,47 +185,47 @@ function Hero() {
 }
 
 // ============================================================
-// SERVICES SECTION
+// SECCIÓN SERVICIOS
 // ============================================================
 function Services() {
   const services = [
     {
-      title: 'Color & Treatment',
-      description: 'Balayage, Ombre, Keratin & more.',
-      price: 'From $85',
+      title: 'Color y Tratamiento',
+      description: 'Balayage, Ombre, Keratina y más.',
+      price: 'Desde $85',
       color: 'bg-teal-50',
       icon: Droplet,
     },
     {
-      title: 'Nail Artistry',
-      description: 'Gel, Acrylic, & Custom Art.',
-      price: 'From $45',
+      title: 'Arte de Uñas',
+      description: 'Gel, Acrílico y Arte Personalizado.',
+      price: 'Desde $45',
       color: 'bg-purple-50',
       icon: Sparkles,
     },
     {
-      title: 'Signature Hair Styling',
-      description: 'Cuts, Blowouts, & Styling.',
-      price: 'From $65',
+      title: 'Peinado de Firma',
+      description: 'Cortes, Secado y Peinado.',
+      price: 'Desde $65',
       color: 'bg-rose-50',
       icon: ArrowRight,
     },
   ];
 
   const tickerItems = [
-    'CUT & STYLE',
-    'COLOR TREATMENT',
-    'NAIL ARTISTRY',
-    'BRIDAL PACKAGES',
-    'SPA PEDICURE',
-    'HAIR EXTENSIONS',
-    'CUT & STYLE',
-    'COLOR TREATMENT',
-    'NAIL ARTISTRY',
+    'CORTE Y PEINADO',
+    'TRATAMIENTO DE COLOR',
+    'ARTE DE UÑAS',
+    'PAQUETES NUPCIALES',
+    'PEDICURA SPA',
+    'EXTENSIONES DE CABELLO',
+    'CORTE Y PEINADO',
+    'TRATAMIENTO DE COLOR',
+    'ARTE DE UÑAS',
   ];
 
   return (
-    <section id="services" className="py-24 bg-white">
+    <section id="servicios" className="py-24 bg-white">
       <div className="overflow-hidden bg-black text-white py-4 mb-16">
         <div className="flex animate-scroll whitespace-nowrap">
           {tickerItems.map((item, index) => (
@@ -240,13 +239,13 @@ function Services() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex justify-between items-end mb-12">
           <div>
-            <h2 className="text-5xl md:text-6xl font-serif mb-4">Curated Services</h2>
+            <h2 className="text-5xl md:text-6xl font-serif mb-4">Servicios Seleccionados</h2>
             <p className="text-gray-600 max-w-md">
-              Select from our wide range of premium hair and nail treatments designed to make you shine.
+              Elige de nuestra amplia gama de tratamientos premium de cabello y uñas diseñados para que brilles.
             </p>
           </div>
           <button className="hidden md:flex items-center gap-2 text-sm hover:gap-4 transition-all font-medium">
-            View Full Menu
+            Ver Menú Completo
             <ArrowRight size={18} />
           </button>
         </div>
@@ -260,8 +259,8 @@ function Services() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-              <h3 className="text-2xl font-serif mb-2">Signature Hair Styling</h3>
-              <p className="text-sm text-gray-300 mb-3">Cuts, Blowouts, & Styling</p>
+              <h3 className="text-2xl font-serif mb-2">Peinado de Firma</h3>
+              <p className="text-sm text-gray-300 mb-3">Cortes, Secado y Peinado</p>
               <button className="bg-white text-black p-2 rounded-full hover:scale-110 transition-transform">
                 <ArrowRight size={18} />
               </button>
@@ -293,14 +292,14 @@ function Services() {
           <div className="relative z-10 grid md:grid-cols-2 gap-8 items-center">
             <div>
               <div className="bg-white text-black text-xs px-3 py-1 rounded-full w-fit mb-4 font-medium">
-                NEW CLIENT
+                CLIENTE NUEVO
               </div>
-              <h3 className="text-4xl font-serif mb-4">Get 20% Off Your First Visit</h3>
+              <h3 className="text-4xl font-serif mb-4">Obtén 20% de Descuento en Tu Primera Visita</h3>
               <p className="text-gray-300 mb-6">
-                Experience luxury for less. Book any hair or nail service today.
+                Experimenta lujo por menos. Reserva cualquier servicio de cabello o uñas hoy.
               </p>
               <button className="bg-white text-black px-8 py-3 rounded-full hover:bg-gray-100 transition-colors font-medium">
-                Claim Offer
+                Reclamar Oferta
               </button>
             </div>
             <div className="relative">
@@ -332,47 +331,47 @@ function Services() {
 }
 
 // ============================================================
-// STYLISTS SECTION
+// SECCIÓN ESTILISTAS
 // ============================================================
 function Stylists() {
   const stylists = [
     {
       name: 'Elena Rodriguez',
-      role: 'Master Stylist',
-      specialty: 'Specializes in balayage and precision cuts.',
+      role: 'Estilista Maestra',
+      specialty: 'Especializada en balayage y cortes de precisión.',
       image: 'https://images.pexels.com/photos/3065171/pexels-photo-3065171.jpeg?auto=compress&cs=tinysrgb&w=400',
       rating: 5,
     },
     {
       name: 'Marcus Chen',
-      role: 'Nail Technician',
-      specialty: 'Expert in intricate nail art and gel extensions.',
+      role: 'Técnico de Uñas',
+      specialty: 'Experto en arte de uñas complicado y extensiones de gel.',
       image: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400',
       rating: 5,
     },
     {
       name: 'Sarah James',
-      role: 'Colorist',
-      specialty: 'Vivid colors and corrective color specialist.',
+      role: 'Colorista',
+      specialty: 'Especialista en colores vividos y corrección de color.',
       image: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400',
       rating: 5,
     },
     {
       name: 'Amara Okafor',
-      role: 'Bridal Specialist',
-      specialty: 'Bridal hair and makeup expert.',
+      role: 'Especialista Nupcial',
+      specialty: 'Experta en cabello y maquillaje nupcial.',
       image: 'https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=400',
       rating: 5,
     },
   ];
 
   return (
-    <section id="stylists" className="py-24 bg-gray-50">
+    <section id="estilistas" className="py-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex justify-between items-end mb-12">
           <div>
-            <h2 className="text-5xl md:text-6xl font-serif mb-4">Our Artists</h2>
-            <p className="text-gray-600">Meet the experts behind the magic.</p>
+            <h2 className="text-5xl md:text-6xl font-serif mb-4">Nuestros Artistas</h2>
+            <p className="text-gray-600">Conoce a los expertos detrás de la magia.</p>
           </div>
           <div className="hidden md:flex gap-3">
             <button className="p-3 border-2 border-black rounded-full hover:bg-black hover:text-white transition-colors">
@@ -413,7 +412,7 @@ function Stylists() {
               <p className="text-sm text-gray-600 mb-4">{stylist.specialty}</p>
 
               <button className="text-sm border-2 border-black px-6 py-2 rounded-full hover:bg-black hover:text-white transition-colors w-full font-medium">
-                Book with {stylist.name.split(' ')[0]}
+                Reservar con {stylist.name.split(' ')[0]}
               </button>
             </div>
           ))}
@@ -424,26 +423,26 @@ function Stylists() {
 }
 
 // ============================================================
-// TESTIMONIALS SECTION
+// SECCIÓN TESTIMONIOS
 // ============================================================
 function Testimonials() {
   const testimonials = [
     {
-      text: "Absolutely the best salon experience I've ever had. The atmosphere is stunning and my hair has never looked better.",
+      text: "Absolutamente la mejor experiencia de salón que he tenido. La atmósfera es impresionante y mi cabello nunca se ha visto mejor.",
       author: 'Jessica M.',
-      role: 'Regular Client',
+      role: 'Cliente Regular',
       image: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=100',
     },
     {
-      text: "The nail art here is next level. Marcus is a true artist. I get compliments everywhere I go!",
+      text: "El arte de uñas aquí es de otro nivel. Marcus es un verdadero artista. ¡Recibo cumplidos dondequiera que voy!",
       author: 'Ashley T.',
-      role: 'Nail Enthusiast',
+      role: 'Amante de Uñas',
       image: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=100',
     },
     {
-      text: "From the moment you walk in, you feel pampered. The team is professional and the results are always flawless.",
+      text: "Desde el momento en que entras, te sientes consentida. El equipo es profesional y los resultados son siempre impecables.",
       author: 'David K.',
-      role: 'New Client',
+      role: 'Cliente Nuevo',
       image: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=100',
     },
   ];
@@ -452,9 +451,9 @@ function Testimonials() {
     <section className="py-24 bg-gradient-to-b from-gray-900 to-black text-white">
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-12">
-          <h2 className="text-5xl md:text-6xl font-serif mb-4">Client Love</h2>
+          <h2 className="text-5xl md:text-6xl font-serif mb-4">Amor de Los Clientes</h2>
           <p className="text-gray-400 max-w-2xl">
-            Don't just take our word for it. Here is what our community has to say about their experience.
+            No solo tomes nuestra palabra. Aquí está lo que nuestra comunidad tiene que decir sobre su experiencia.
           </p>
         </div>
 
@@ -503,7 +502,7 @@ function Testimonials() {
 }
 
 // ============================================================
-// GALLERY SECTION
+// SECCIÓN GALERÍA
 // ============================================================
 function Gallery() {
   const galleryImages = [
@@ -516,21 +515,21 @@ function Gallery() {
   ];
 
   return (
-    <section id="gallery" className="py-24 bg-white">
+    <section id="galeria" className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-12">
-          <h2 className="text-5xl md:text-6xl font-serif mb-4">Instagram Gallery</h2>
+          <h2 className="text-5xl md:text-6xl font-serif mb-4">Galería Instagram</h2>
           <p className="text-gray-600 mb-6">
-            Follow us for daily inspiration and exclusive behind-the-scenes content
+            Síguenos para inspiración diaria y contenido exclusivo detrás de cámaras
           </p>
           <a
-            href="https://instagram.com"
+            href="https://instagram.com/luma.ec"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-sm hover:opacity-60 transition-opacity font-medium"
           >
             <Instagram size={20} />
-            @lumiere.salon
+            @luma.ec
           </a>
         </div>
 
@@ -557,7 +556,7 @@ function Gallery() {
 }
 
 // ============================================================
-// BOOKING SECTION
+// SECCIÓN DE RESERVA
 // ============================================================
 function Booking() {
   const [formData, setFormData] = useState({
@@ -569,15 +568,15 @@ function Booking() {
   });
 
   return (
-    <section id="booking" className="py-24 bg-gradient-to-br from-rose-50 via-white to-teal-50">
+    <section id="reservar" className="py-24 bg-gradient-to-br from-rose-50 via-white to-teal-50">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="text-5xl md:text-6xl font-serif mb-6">
-              Ready for your transformation?
+              ¿Listo para tu transformación?
             </h2>
             <p className="text-gray-600 text-lg mb-8">
-              Book your appointment online in seconds. Choose your service, stylist, and preferred time.
+              Reserva tu cita en línea en segundos. Elige tu servicio, estilista y hora preferida.
             </p>
 
             <div className="bg-white rounded-3xl shadow-xl p-8">
@@ -586,7 +585,7 @@ function Booking() {
                   <User size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
                   <input
                     type="text"
-                    placeholder="Your Name"
+                    placeholder="Tu Nombre"
                     className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-black focus:outline-none transition-colors"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -596,7 +595,7 @@ function Booking() {
                   <Phone size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
                   <input
                     type="tel"
-                    placeholder="Phone Number"
+                    placeholder="Número de Teléfono"
                     className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-black focus:outline-none transition-colors"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
@@ -611,11 +610,11 @@ function Booking() {
                   value={formData.service}
                   onChange={(e) => setFormData({ ...formData, service: e.target.value })}
                 >
-                  <option>Select Service</option>
-                  <option>Hair Cut & Style</option>
-                  <option>Color Treatment</option>
-                  <option>Nail Artistry</option>
-                  <option>Bridal Package</option>
+                  <option>Seleccionar Servicio</option>
+                  <option>Corte y Peinado</option>
+                  <option>Tratamiento de Color</option>
+                  <option>Arte de Uñas</option>
+                  <option>Paquete Nupcial</option>
                 </select>
                 <div className="absolute right-4 top-1/2 -translate-y-1/2 text-green-500 text-xs font-semibold">
                   ✓
@@ -639,7 +638,7 @@ function Booking() {
                     value={formData.time}
                     onChange={(e) => setFormData({ ...formData, time: e.target.value })}
                   >
-                    <option>Time</option>
+                    <option>Hora</option>
                     <option>9:00 AM</option>
                     <option>10:00 AM</option>
                     <option>11:00 AM</option>
@@ -651,7 +650,7 @@ function Booking() {
               </div>
 
               <button className="w-full bg-black text-white py-4 rounded-xl hover:bg-gray-800 transition-colors text-lg font-medium">
-                Check Availability
+                Verificar Disponibilidad
               </button>
             </div>
           </div>
@@ -663,10 +662,10 @@ function Booking() {
                   L
                 </div>
                 <div>
-                  <div className="font-semibold">Lumière Salon</div>
+                  <div className="font-semibold">Luma</div>
                   <div className="text-sm text-green-500 flex items-center gap-1">
                     <span className="w-2 h-2 bg-green-500 rounded-full" />
-                    Open Now
+                    Abierto Ahora
                   </div>
                 </div>
                 <button className="ml-auto">
@@ -676,19 +675,19 @@ function Booking() {
 
               <div className="bg-gray-50 rounded-2xl p-4 mb-4">
                 <p className="text-sm mb-3">
-                  Hi there! 👋 How can we help you look your best today?
+                  ¡Hola! 👋 ¿Cómo podemos ayudarte a verte lo mejor posible hoy?
                 </p>
               </div>
 
               <div className="bg-black text-white rounded-2xl rounded-br-sm p-4 mb-4 ml-auto max-w-[85%]">
                 <p className="text-sm">
-                  I'd like to book a haircut for tomorrow.
+                  Me gustaría reservar un corte de cabello para mañana.
                 </p>
               </div>
 
               <div className="bg-gray-50 rounded-2xl p-4 mb-4">
                 <p className="text-sm mb-3">
-                  Great! We have an opening at 2:00 PM with Elena. Does that work?
+                  ¡Excelente! Tenemos una disponibilidad a las 2:00 PM con Elena. ¿Te funciona?
                 </p>
               </div>
 
@@ -700,8 +699,8 @@ function Booking() {
                     className="w-12 h-12 rounded-lg object-cover"
                   />
                   <div>
-                    <div className="text-sm font-semibold">Signature Cut</div>
-                    <div className="text-xs text-gray-500">with Elena</div>
+                    <div className="text-sm font-semibold">Corte de Firma</div>
+                    <div className="text-xs text-gray-500">con Elena</div>
                   </div>
                 </div>
               </div>
@@ -709,11 +708,11 @@ function Booking() {
               <div className="mt-6 flex gap-2">
                 <input
                   type="text"
-                  placeholder="Type a message..."
+                  placeholder="Escribe un mensaje..."
                   className="flex-1 px-4 py-2 border-2 border-gray-200 rounded-full focus:border-black focus:outline-none text-sm"
                 />
                 <button className="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800 transition-colors text-sm font-medium">
-                  Send
+                  Enviar
                 </button>
               </div>
             </div>
@@ -725,7 +724,7 @@ function Booking() {
 }
 
 // ============================================================
-// FOOTER SECTION
+// SECCIÓN PIE DE PÁGINA
 // ============================================================
 function Footer() {
   return (
@@ -734,55 +733,55 @@ function Footer() {
         <div className="grid md:grid-cols-4 gap-12 mb-12">
           <div>
             <div className="border-2 border-white px-3 py-1 w-fit mb-6">
-              <span className="font-serif text-xl tracking-wider">LUMIÈRE</span>
+              <span className="font-serif text-xl tracking-wider">LUMA</span>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
-              Where style meets substance. Experience the art of hair and nail care in modern elegance.
+              Donde el estilo se encuentra con la sustancia. Experimenta el arte del cuidado del cabello y uñas en elegancia moderna.
             </p>
           </div>
 
           <div>
-            <h3 className="font-semibold mb-4 text-white">Quick Links</h3>
+            <h3 className="font-semibold mb-4 text-white">Enlaces Rápidos</h3>
             <ul className="space-y-2 text-sm text-gray-400">
-              <li><a href="#services" className="hover:text-white transition-colors">Services</a></li>
-              <li><a href="#stylists" className="hover:text-white transition-colors">Our Team</a></li>
-              <li><a href="#gallery" className="hover:text-white transition-colors">Gallery</a></li>
-              <li><a href="#booking" className="hover:text-white transition-colors">Booking</a></li>
+              <li><a href="#servicios" className="hover:text-white transition-colors">Servicios</a></li>
+              <li><a href="#estilistas" className="hover:text-white transition-colors">Nuestro Equipo</a></li>
+              <li><a href="#galeria" className="hover:text-white transition-colors">Galería</a></li>
+              <li><a href="#reservar" className="hover:text-white transition-colors">Reservas</a></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="font-semibold mb-4 text-white">Contact</h3>
+            <h3 className="font-semibold mb-4 text-white">Contacto</h3>
             <ul className="space-y-3 text-sm text-gray-400">
               <li className="flex items-center gap-2">
                 <Phone size={16} />
-                <span>(555) 123-4567</span>
+                <span>(593) 2 123-4567</span>
               </li>
               <li className="flex items-center gap-2">
                 <Mail size={16} />
-                <span>hello@lumiere.salon</span>
+                <span>hola@luma.ec</span>
               </li>
               <li className="flex items-start gap-2">
                 <MapPin size={16} className="mt-1" />
-                <span>123 Beauty Lane<br />New York, NY 10001</span>
+                <span>Calle Belleza 123<br />Quito, Pichincha</span>
               </li>
             </ul>
           </div>
 
           <div>
-            <h3 className="font-semibold mb-4 text-white">Hours</h3>
+            <h3 className="font-semibold mb-4 text-white">Horarios</h3>
             <ul className="space-y-2 text-sm text-gray-400">
               <li className="flex justify-between">
-                <span>Mon - Fri</span>
+                <span>Lun - Vie</span>
                 <span>9AM - 8PM</span>
               </li>
               <li className="flex justify-between">
-                <span>Saturday</span>
+                <span>Sábado</span>
                 <span>10AM - 6PM</span>
               </li>
               <li className="flex justify-between">
-                <span>Sunday</span>
-                <span>Closed</span>
+                <span>Domingo</span>
+                <span>Cerrado</span>
               </li>
             </ul>
           </div>
@@ -790,7 +789,7 @@ function Footer() {
 
         <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-gray-400">
-            © 2024 Lumière Salon. All rights reserved.
+            © 2024 Luma. Todos los derechos reservados.
           </p>
           <div className="flex gap-4">
             <a href="#" className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-white hover:text-black transition-colors">

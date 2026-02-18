@@ -57,7 +57,7 @@ export const POST = withAuth(
         });
 
         if (!appointment) {
-          throw new PaymentError("Appointment not found", "NOT_FOUND", 404);
+          throw new PaymentError("Cita no encontrada", "NOT_FOUND", 404);
         }
 
         // 2. Check if already paid
@@ -85,7 +85,7 @@ export const POST = withAuth(
         );
 
         if (amount <= 0) {
-          throw new PaymentError("Invalid payment amount", "VALIDATION_ERROR", 400);
+          throw new PaymentError("Monto de pago inválido", "VALIDATION_ERROR", 400);
         }
 
         // 5. Create payment

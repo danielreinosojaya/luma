@@ -34,11 +34,11 @@ export async function POST(request: NextRequest) {
 
     const data = parsed.data;
 
-    // Check if user already exists
+    // Verificar si el usuario ya existe
     const existing = await getUserByEmail(data.email);
     if (existing) {
       return NextResponse.json(
-        apiError("Email already registered", "CONFLICT"),
+        apiError("Correo ya registrado", "CONFLICT"),
         { status: 409 }
       );
     }

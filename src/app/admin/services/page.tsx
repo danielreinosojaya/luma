@@ -58,11 +58,11 @@ export default function ServicesPage() {
         });
         const data = await res.json();
 
-        if (!data.success) throw new Error("Failed to fetch services");
+        if (!data.success) throw new Error("Error al obtener servicios");
 
         setServices(data.data || []);
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Error loading services");
+        setError(err instanceof Error ? err.message : "Error cargando servicios");
       } finally {
         setLoading(false);
       }
@@ -141,7 +141,7 @@ export default function ServicesPage() {
                       <Badge
                         variant={service.active ? "success" : "danger"}
                       >
-                        {service.active ? "Active" : "Inactive"}
+                        {service.active ? "Activo" : "Inactivo"}
                       </Badge>
                     </td>
                   </tr>

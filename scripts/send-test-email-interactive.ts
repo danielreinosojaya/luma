@@ -83,32 +83,32 @@ function getEmailTemplate(type: NotificationType) {
 
   const templates: Record<NotificationType, { subject: string; html: string }> = {
     appointment_confirmed: {
-      subject: "✅ Tu cita ha sido confirmada - Luma Beauty Studio",
-      html: `${baseStyle}<div class="container"><div class="header"><h1>¡Cita Confirmada!</h1></div><div class="content"><p>Tu cita ha sido confirmada:</p><div class="info-block"><div class="detail"><strong>📅 Fecha:</strong> 15 febrero, 2026</div><div class="detail"><strong>🕐 Hora:</strong> 10:30 AM</div><div class="detail"><strong>💇 Servicio:</strong> Blow & Glow ($15.99)</div><div class="detail"><strong>👩 Esteticiente:</strong> Valentina</div><div class="detail"><strong>📍 Ubicación:</strong> Quito, Ecuador</div></div><a href="https://luma.vercel.app" class="button">Ver Tu Reserva</a></div><div class="footer">Luma Beauty Studio | Quito, Ecuador</div></div>`,
+      subject: "✅ Tu cita ha sido confirmada - Luma",
+      html: `${baseStyle}<div class="container"><div class="header"><h1>¡Cita Confirmada!</h1></div><div class="content"><p>Tu cita ha sido confirmada:</p><div class="info-block"><div class="detail"><strong>📅 Fecha:</strong> 15 febrero, 2026</div><div class="detail"><strong>🕐 Hora:</strong> 10:30 AM</div><div class="detail"><strong>💇 Servicio:</strong> Blow & Glow ($15.99)</div><div class="detail"><strong>👩 Esteticiente:</strong> Valentina</div><div class="detail"><strong>📍 Ubicación:</strong> Quito, Ecuador</div></div><a href="https://luma.vercel.app" class="button">Ver Tu Reserva</a></div><div class="footer">Luma | Quito, Ecuador</div></div>`,
     },
     appointment_reminder: {
-      subject: "⏰ Recordatorio: Tu cita es mañana - Luma Beauty Studio",
-      html: `${baseStyle}<div class="container"><div class="header"><h1>⏰ ¡Tu cita es mañana!</h1></div><div class="content"><p>Tu cita es mañana 15 febrero a las 10:30 AM con Valentina.</p><div class="info-block"><div class="detail"><strong>💇 Servicio:</strong> Blow & Glow</div><div class="detail"><strong>⏰ Hora:</strong> 10:30 AM</div></div><p>Por favor, llega 5 minutos antes.</p><a href="https://luma.vercel.app" class="button">Confirmar Asistencia</a></div><div class="footer">Luma Beauty Studio | Quito, Ecuador</div></div>`,
+      subject: "⏰ Recordatorio: Tu cita es mañana - Luma",
+      html: `${baseStyle}<div class="container"><div class="header"><h1>⏰ ¡Tu cita es mañana!</h1></div><div class="content"><p>Tu cita es mañana 15 febrero a las 10:30 AM con Valentina.</p><div class="info-block"><div class="detail"><strong>💇 Servicio:</strong> Blow & Glow</div><div class="detail"><strong>⏰ Hora:</strong> 10:30 AM</div></div><p>Por favor, llega 5 minutos antes.</p><a href="https://luma.vercel.app" class="button">Confirmar Asistencia</a></div><div class="footer">Luma | Quito, Ecuador</div></div>`,
     },
     appointment_cancelled: {
-      subject: "❌ Tu cita ha sido cancelada - Luma Beauty Studio",
-      html: `${baseStyle}<div class="container"><div class="header"><h1>Cita Cancelada</h1></div><div class="content"><p>Tu cita del 15 febrero ha sido cancelada.</p><div class="info-block"><div class="detail"><strong>❌ Estado:</strong> Cancelada</div><div class="detail"><strong>🕐 Hora anterior:</strong> 10:30 AM</div></div><p>Puedes crear una nueva cita desde nuestra plataforma.</p><a href="https://luma.vercel.app" class="button">Crear Nueva Cita</a></div><div class="footer">Luma Beauty Studio | Quito, Ecuador</div></div>`,
+      subject: "❌ Tu cita ha sido cancelada - Luma",
+      html: `${baseStyle}<div class="container"><div class="header"><h1>Cita Cancelada</h1></div><div class="content"><p>Tu cita del 15 febrero ha sido cancelada.</p><div class="info-block"><div class="detail"><strong>❌ Estado:</strong> Cancelada</div><div class="detail"><strong>🕐 Hora anterior:</strong> 10:30 AM</div></div><p>Puedes crear una nueva cita desde nuestra plataforma.</p><a href="https://luma.vercel.app" class="button">Crear Nueva Cita</a></div><div class="footer">Luma | Quito, Ecuador</div></div>`,
     },
     appointment_rescheduled: {
-      subject: "📅 Tu cita ha sido reprogramada - Luma Beauty Studio",
-      html: `${baseStyle}<div class="container"><div class="header"><h1>📅 Cita Reprogramada</h1></div><div class="content"><p>Tu cita ha sido movida a una nueva fecha:</p><div class="info-block"><div class="detail"><strong>📅 Anterior:</strong> 15 febrero → <strong>18 febrero</strong></div><div class="detail"><strong>🕐 Hora:</strong> 2:00 PM (era 10:30 AM)</div></div><a href="https://luma.vercel.app" class="button">Confirmar Nueva Fecha</a></div><div class="footer">Luma Beauty Studio | Quito, Ecuador</div></div>`,
+      subject: "📅 Tu cita ha sido reprogramada - Luma",
+      html: `${baseStyle}<div class="container"><div class="header"><h1>📅 Cita Reprogramada</h1></div><div class="content"><p>Tu cita ha sido movida a una nueva fecha:</p><div class="info-block"><div class="detail"><strong>📅 Anterior:</strong> 15 febrero → <strong>18 febrero</strong></div><div class="detail"><strong>🕐 Hora:</strong> 2:00 PM (era 10:30 AM)</div></div><a href="https://luma.vercel.app" class="button">Confirmar Nueva Fecha</a></div><div class="footer">Luma | Quito, Ecuador</div></div>`,
     },
     staff_update: {
-      subject: "👩 Actualización: Cambios en nuestro equipo - Luma Beauty Studio",
-      html: `${baseStyle}<div class="container"><div class="header"><h1>Cambios en Nuestro Equipo</h1></div><div class="content"><p>¡Noticias emocionantes!</p><div class="info-block"><div class="detail"><strong>✨ Nuevo Servicio:</strong> Extensiones de Pestañas</div><div class="detail"><strong>👩 Nuevo Personal:</strong> Catalina, especialista en uñas</div><div class="detail"><strong>⏰ Nuevos Horarios:</strong> Ahora abierto sábados hasta las 5 PM</div></div><a href="https://luma.vercel.app" class="button">Ver Disponibilidad</a></div><div class="footer">Luma Beauty Studio | Quito, Ecuador</div></div>`,
+      subject: "👩 Actualización: Cambios en nuestro equipo - Luma",
+      html: `${baseStyle}<div class="container"><div class="header"><h1>Cambios en Nuestro Equipo</h1></div><div class="content"><p>¡Noticias emocionantes!</p><div class="info-block"><div class="detail"><strong>✨ Nuevo Servicio:</strong> Extensiones de Pestañas</div><div class="detail"><strong>👩 Nuevo Personal:</strong> Catalina, especialista en uñas</div><div class="detail"><strong>⏰ Nuevos Horarios:</strong> Ahora abierto sábados hasta las 5 PM</div></div><a href="https://luma.vercel.app" class="button">Ver Disponibilidad</a></div><div class="footer">Luma | Quito, Ecuador</div></div>`,
     },
     promotion: {
-      subject: "🎉 Oferta Especial: 20% Descuento - Luma Beauty Studio",
-      html: `${baseStyle}<div class="container"><div class="header"><h1>🎉 ¡Oferta Especial!</h1></div><div class="content"><p>20% de descuento en todos nuestros paquetes combo:</p><div class="info-block"><div class="detail">Luma Queen: $28 → $22.40</div><div class="detail">Iconic Nails: $18.99 → $15.19</div><div class="detail">Glam Reset: $18 → $14.40</div><div class="detail"><strong>⏰ Válido hasta:</strong> 21 de febrero</div></div><a href="https://luma.vercel.app" class="button">Ver Ofertas</a></div><div class="footer">Luma Beauty Studio | Quito, Ecuador</div></div>`,
+      subject: "🎉 Oferta Especial: 20% Descuento - Luma",
+      html: `${baseStyle}<div class="container"><div class="header"><h1>🎉 ¡Oferta Especial!</h1></div><div class="content"><p>20% de descuento en todos nuestros paquetes combo:</p><div class="info-block"><div class="detail">Luma Queen: $28 → $22.40</div><div class="detail">Iconic Nails: $18.99 → $15.19</div><div class="detail">Glam Reset: $18 → $14.40</div><div class="detail"><strong>⏰ Válido hasta:</strong> 21 de febrero</div></div><a href="https://luma.vercel.app" class="button">Ver Ofertas</a></div><div class="footer">Luma | Quito, Ecuador</div></div>`,
     },
     password_reset: {
-      subject: "🔐 Restablece tu contraseña - Luma Beauty Studio",
-      html: `${baseStyle}<div class="container"><div class="header"><h1>Restablecer Contraseña</h1></div><div class="content"><p>Haz clic en el botón para restablecer tu contraseña. Este enlace expira en 1 hora.</p><a href="https://luma.vercel.app/reset-password" class="button">Restablecer Contraseña</a></div><div class="footer">Luma Beauty Studio | Quito, Ecuador</div></div>`,
+      subject: "🔐 Restablece tu contraseña - Luma",
+      html: `${baseStyle}<div class="container"><div class="header"><h1>Restablecer Contraseña</h1></div><div class="content"><p>Haz clic en el botón para restablecer tu contraseña. Este enlace expira en 1 hora.</p><a href="https://luma.vercel.app/reset-password" class="button">Restablecer Contraseña</a></div><div class="footer">Luma | Quito, Ecuador</div></div>`,
     },
   };
 
@@ -118,7 +118,7 @@ function getEmailTemplate(type: NotificationType) {
 // Función principal interactiva
 async function main() {
   console.clear();
-  console.log("\n📧 === LUMA BEAUTY STUDIO - SISTEMA DE NOTIFICACIONES ===\n");
+  console.log("\n📧 === LUMA - SISTEMA DE NOTIFICACIONES ===\n");
 
   try {
     // 1. Seleccionar tipo de notificación
@@ -173,7 +173,7 @@ async function main() {
     const transporter = await getTransporter();
 
     const info = await transporter.sendMail({
-      from: `"Luma Beauty Studio" <noreply@luma-beauty.ec>`,
+      from: `"Luma" <noreply@luma-beauty.ec>`,
       to: recipientEmail,
       subject: template.subject,
       html: template.html,

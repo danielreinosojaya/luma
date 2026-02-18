@@ -51,7 +51,7 @@ function getEmailTemplate(type: NotificationType) {
 
   const templates: Record<NotificationType, { subject: string; html: string }> = {
     appointment_confirmed: {
-      subject: "✅ Tu cita ha sido confirmada - Luma Beauty Studio",
+      subject: "✅ Tu cita ha sido confirmada - Luma",
       html: `
         <!DOCTYPE html>
         <html lang="es">
@@ -65,7 +65,7 @@ function getEmailTemplate(type: NotificationType) {
           <div class="container">
             <div class="header">
               <h1>¡Cita Confirmada!</h1>
-              <p>Tu reserva en Luma Beauty Studio está lista</p>
+              <p>Tu reserva en Luma está lista</p>
             </div>
             <div class="content">
               <p>Hola <strong>María</strong>,</p>
@@ -80,10 +80,10 @@ function getEmailTemplate(type: NotificationType) {
               </div>
               <p>Por favor, llega 5 minutos antes de tu cita. Si necesitas cancelar o cambiar tu horario, notificanos con al menos 24 horas de anticipación.</p>
               <a href="https://luma-git-admin.vercel.app" class="button">Ver Tu Reserva</a>
-              <p style="color: #8B7862; margin-top: 30px;">¡Nos vemos pronto en Luma Beauty Studio!</p>
+              <p style="color: #8B7862; margin-top: 30px;">¡Nos vemos pronto en Luma!</p>
             </div>
             <div class="footer">
-              Luma Beauty Studio | Quito, Ecuador<br>
+              Luma | Quito, Ecuador<br>
               <a href="mailto:danielreinosojaya@gmail.com">Contáctanos</a>
             </div>
           </div>
@@ -93,7 +93,7 @@ function getEmailTemplate(type: NotificationType) {
     },
 
     appointment_reminder: {
-      subject: "⏰ Recordatorio: Tu cita es mañana - Luma Beauty Studio",
+      subject: "⏰ Recordatorio: Tu cita es mañana - Luma",
       html: `
         <!DOCTYPE html>
         <html lang="es">
@@ -122,7 +122,7 @@ function getEmailTemplate(type: NotificationType) {
               <a href="https://luma-git-admin.vercel.app" class="button">Confirmar Cita</a>
             </div>
             <div class="footer">
-              Luma Beauty Studio | Quito, Ecuador
+              Luma | Quito, Ecuador
             </div>
           </div>
         </body>
@@ -131,7 +131,7 @@ function getEmailTemplate(type: NotificationType) {
     },
 
     appointment_cancelled: {
-      subject: "❌ Tu cita ha sido cancelada - Luma Beauty Studio",
+      subject: "❌ Tu cita ha sido cancelada - Luma",
       html: `
         <!DOCTYPE html>
         <html lang="es">
@@ -160,7 +160,7 @@ function getEmailTemplate(type: NotificationType) {
               <a href="https://luma-git-admin.vercel.app" class="button">Crear Nueva Cita</a>
             </div>
             <div class="footer">
-              Luma Beauty Studio | Quito, Ecuador
+              Luma | Quito, Ecuador
             </div>
           </div>
         </body>
@@ -169,7 +169,7 @@ function getEmailTemplate(type: NotificationType) {
     },
 
     appointment_rescheduled: {
-      subject: "📅 Tu cita ha sido reprogramada - Luma Beauty Studio",
+      subject: "📅 Tu cita ha sido reprogramada - Luma",
       html: `
         <!DOCTYPE html>
         <html lang="es">
@@ -198,7 +198,7 @@ function getEmailTemplate(type: NotificationType) {
               <a href="https://luma-git-admin.vercel.app" class="button">Confirmar Nueva Fecha</a>
             </div>
             <div class="footer">
-              Luma Beauty Studio | Quito, Ecuador
+              Luma | Quito, Ecuador
             </div>
           </div>
         </body>
@@ -207,7 +207,7 @@ function getEmailTemplate(type: NotificationType) {
     },
 
     staff_update: {
-      subject: "👩 Actualización: Cambios en nuestro equipo - Luma Beauty Studio",
+      subject: "👩 Actualización: Cambios en nuestro equipo - Luma",
       html: `
         <!DOCTYPE html>
         <html lang="es">
@@ -225,7 +225,7 @@ function getEmailTemplate(type: NotificationType) {
             </div>
             <div class="content">
               <p>Hola,</p>
-              <p>¡Noticias emocionantes! Nuestro equipo en Luma Beauty Studio ha crecido:</p>
+              <p>¡Noticias emocionantes! Nuestro equipo en Luma ha crecido:</p>
               <div class="info-block">
                 <div class="detail"><strong>✨ Nuevo Servicio Disponible:</strong> Extensiones de Pestañas Premium</div>
                 <div class="detail"><strong>👩 Nuevo Personal:</strong> Catalina, especialista en uñas con 5 años de experiencia</div>
@@ -235,7 +235,7 @@ function getEmailTemplate(type: NotificationType) {
               <a href="https://luma-git-admin.vercel.app" class="button">Ver Disponibilidad</a>
             </div>
             <div class="footer">
-              Luma Beauty Studio | Quito, Ecuador
+              Luma | Quito, Ecuador
             </div>
           </div>
         </body>
@@ -244,7 +244,7 @@ function getEmailTemplate(type: NotificationType) {
     },
 
     promotion: {
-      subject: "🎉 Oferta Especial: 20% Descuento en Combos - Luma Beauty Studio",
+      subject: "🎉 Oferta Especial: 20% Descuento en Combos - Luma",
       html: `
         <!DOCTYPE html>
         <html lang="es">
@@ -277,7 +277,7 @@ function getEmailTemplate(type: NotificationType) {
               <a href="https://luma-git-admin.vercel.app" class="button">Ver Ofertas</a>
             </div>
             <div class="footer">
-              Luma Beauty Studio | Quito, Ecuador
+              Luma | Quito, Ecuador
             </div>
           </div>
         </body>
@@ -286,7 +286,7 @@ function getEmailTemplate(type: NotificationType) {
     },
 
     password_reset: {
-      subject: "🔐 Restablece tu contraseña - Luma Beauty Studio",
+      subject: "🔐 Restablece tu contraseña - Luma",
       html: `
         <!DOCTYPE html>
         <html lang="es">
@@ -314,7 +314,7 @@ function getEmailTemplate(type: NotificationType) {
               <p>Si no solicitaste esto, por favor contacta con nosotros de inmediato.</p>
             </div>
             <div class="footer">
-              Luma Beauty Studio | Quito, Ecuador<br>
+              Luma | Quito, Ecuador<br>
               <a href="mailto:danielreinosojaya@gmail.com">Soporte</a>
             </div>
           </div>
@@ -328,7 +328,7 @@ function getEmailTemplate(type: NotificationType) {
 }
 
 async function main() {
-  console.log("\n📧 === GENERADOR DE MUESTRAS DE CORREO LUMA BEAUTY STUDIO ===\n");
+  console.log("\n📧 === GENERADOR DE MUESTRAS DE CORREO LUMA ===");
 
   try {
     // Crear directorio para muestras

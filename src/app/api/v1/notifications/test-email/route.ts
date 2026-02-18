@@ -43,7 +43,7 @@ function getEmailTemplate(type: NotificationType) {
 
   const templates: Record<NotificationType, { subject: string; html: string }> = {
     appointment_confirmed: {
-      subject: "✅ Tu cita ha sido confirmada - Luma Beauty Studio",
+      subject: "✅ Tu cita ha sido confirmada - Luma",
       html: `
         ${baseStyle}
         <div class="container">
@@ -63,7 +63,7 @@ function getEmailTemplate(type: NotificationType) {
             <a href="https://luma.vercel.app" class="button">Ver Tu Reserva</a>
           </div>
           <div class="footer">
-            Luma Beauty Studio | Quito, Ecuador
+            Luma | Quito, Ecuador
           </div>
         </div>
       `,
@@ -81,7 +81,7 @@ function getEmailTemplate(type: NotificationType) {
             <a href="https://luma.vercel.app" class="button">Confirmar Asistencia</a>
           </div>
           <div class="footer">
-            Luma Beauty Studio | Quito, Ecuador
+            Luma | Quito, Ecuador
           </div>
         </div>
       `,
@@ -99,7 +99,7 @@ function getEmailTemplate(type: NotificationType) {
             <a href="https://luma.vercel.app" class="button">Crear Nueva Cita</a>
           </div>
           <div class="footer">
-            Luma Beauty Studio | Quito, Ecuador
+            Luma | Quito, Ecuador
           </div>
         </div>
       `,
@@ -117,7 +117,7 @@ function getEmailTemplate(type: NotificationType) {
             <a href="https://luma.vercel.app" class="button">Confirmar Nueva Fecha</a>
           </div>
           <div class="footer">
-            Luma Beauty Studio | Quito, Ecuador
+            Luma | Quito, Ecuador
           </div>
         </div>
       `,
@@ -136,7 +136,7 @@ function getEmailTemplate(type: NotificationType) {
             <a href="https://luma.vercel.app" class="button">Ver Disponibilidad</a>
           </div>
           <div class="footer">
-            Luma Beauty Studio | Quito, Ecuador
+            Luma | Quito, Ecuador
           </div>
         </div>
       `,
@@ -159,7 +159,7 @@ function getEmailTemplate(type: NotificationType) {
             <a href="https://luma.vercel.app" class="button">Ver Ofertas</a>
           </div>
           <div class="footer">
-            Luma Beauty Studio | Quito, Ecuador
+            Luma | Quito, Ecuador
           </div>
         </div>
       `,
@@ -177,7 +177,7 @@ function getEmailTemplate(type: NotificationType) {
             <a href="https://luma.vercel.app/reset" class="button">Restablecer Contraseña</a>
           </div>
           <div class="footer">
-            Luma Beauty Studio | Quito, Ecuador
+            Luma | Quito, Ecuador
           </div>
         </div>
       `,
@@ -197,7 +197,7 @@ export async function POST(request: NextRequest) {
 
     if (!notificationType || !recipientEmail) {
       return NextResponse.json(
-        { error: "Missing notificationType or recipientEmail" },
+        { error: "Falta notificationType o recipientEmail" },
         { status: 400 }
       );
     }
@@ -206,7 +206,7 @@ export async function POST(request: NextRequest) {
     const transporter = await getTransporter();
 
     const info = await transporter.sendMail({
-      from: `"Luma Beauty Studio" <noreply@luma-beauty.ec>`,
+      from: `"Luma" <noreply@luma.ec>`,
       to: recipientEmail,
       subject: template.subject,
       html: template.html,
@@ -224,7 +224,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Error sending email:", error);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Error sending email" },
+      { error: error instanceof Error ? error.message : "Error al enviar correo" },
       { status: 500 }
     );
   }

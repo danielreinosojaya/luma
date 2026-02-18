@@ -54,7 +54,7 @@ export default function AppointmentsPage() {
         });
         const data = await res.json();
 
-        if (!data.success) throw new Error("Failed to fetch appointments");
+        if (!data.success) throw new Error("Error al obtener citas");
 
         const rawAppointments: RawAppointment[] = data.data?.items || [];
         const transformed = rawAppointments.map((apt) => ({
@@ -79,7 +79,7 @@ export default function AppointmentsPage() {
 
         setAppointments(transformed);
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Error loading appointments");
+        setError(err instanceof Error ? err.message : "Error cargando citas");
       } finally {
         setLoading(false);
       }

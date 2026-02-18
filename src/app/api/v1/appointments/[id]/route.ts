@@ -108,7 +108,7 @@ export const POST = withAuth(
         .join(", ");
       sendEmail({
         to: updated.client.email,
-        subject: "Cita Cancelada - Luma Beauty Studio",
+        subject: "Cita Cancelada - Luma",
         html: emailTemplates.appointmentCancellation(
           updated.client.name,
           serviceNames,

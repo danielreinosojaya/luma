@@ -99,7 +99,7 @@ async function handleRequest(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json(
       {
         success: false,
-        error: "Too many requests",
+        error: "Demasiadas solicitudes",
         code: "RATE_LIMIT_EXCEEDED",
         retryAfter: reset,
       },
@@ -136,7 +136,7 @@ function validateOrigin(request: NextRequest): string | null {
 
   // At least one must be present for mutation requests
   if (!origin && !referer) {
-    return "Missing Origin/Referer header";
+    return "Falta encabezado Origin/Referer";
   }
 
   const requestOrigin = origin || new URL(referer!).origin;

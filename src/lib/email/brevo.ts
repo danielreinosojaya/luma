@@ -42,7 +42,7 @@ export const emailTemplates = {
   ) => `
     <h2>¡Cita Confirmada!</h2>
     <p>Hola ${clientName},</p>
-    <p>Tu cita en <strong>Luma Beauty Studio</strong> ha sido confirmada exitosamente.</p>
+    <p>Tu cita en <strong>Luma</strong> ha sido confirmada exitosamente.</p>
     <div style="background: #f5ede4; padding: 20px; border-radius: 8px; margin: 20px 0;">
       <p><strong>Servicio:</strong> ${serviceName}</p>
       <p><strong>Fecha:</strong> ${appointmentDate}</p>

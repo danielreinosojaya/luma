@@ -48,7 +48,7 @@ export default function AdminLoginPage() {
       // Redirect to admin dashboard
       router.push('/admin');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      setError(err instanceof Error ? err.message : 'Ocurrió un error');
       setLoading(false);
     }
   };
@@ -64,7 +64,7 @@ export default function AdminLoginPage() {
             </div>
           </div>
           <div>
-            <h1 className="font-serif text-4xl text-black tracking-tight">LUMIÈRE</h1>
+            <h1 className="font-serif text-4xl text-black tracking-tight">LUMA</h1>
             <p className="text-sm text-gray-500 mt-2 tracking-widest">PANEL ADMINISTRATIVO</p>
           </div>
         </div>

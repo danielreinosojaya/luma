@@ -1,4 +1,4 @@
-# 🚀 SETUP INICIAL PARA LUMA BEAUTY STUDIO
+# 🚀 SETUP INICIAL PARA LUMA
 
 ## ⚙️ Prerrequisitos
 
@@ -41,7 +41,7 @@ BREVO_SMTP_PORT="587"
 BREVO_SMTP_USER="your-brevo-email@example.com"
 BREVO_SMTP_PASS="your-api-key"
 BREVO_FROM_EMAIL="noreply@lumabeauty.com"
-BREVO_FROM_NAME="Luma Beauty Studio"
+BREVO_FROM_NAME="Luma"
 ```
 
 **Prueba:**
@@ -168,7 +168,7 @@ BREVO_SMTP_PORT="587"
 BREVO_SMTP_USER="..."
 BREVO_SMTP_PASS="..."
 BREVO_FROM_EMAIL="noreply@lumabeauty.com"
-BREVO_FROM_NAME="Luma Beauty Studio"
+BREVO_FROM_NAME="Luma"
 
 # REDIS
 UPSTASH_REDIS_REST_URL="..."
@@ -179,7 +179,7 @@ NEXTAUTH_SECRET="..." (generar con: openssl rand -base64 32)
 NEXTAUTH_URL="http://localhost:3000"
 
 # APP
-NEXT_PUBLIC_APP_NAME="Luma Beauty Studio"
+NEXT_PUBLIC_APP_NAME="Luma"
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
 ```
 

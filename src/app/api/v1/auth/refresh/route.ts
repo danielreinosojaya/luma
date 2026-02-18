@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     const { success: rlOk } = await checkRateLimit(`auth:refresh:${ip}`, "auth");
     if (!rlOk) {
       return NextResponse.json(
-        apiError("Too many requests", "RATE_LIMIT_EXCEEDED"),
+        apiError("Demasiadas solicitudes", "RATE_LIMIT_EXCEEDED"),
         { status: 429, headers: { "Retry-After": "60" } }
       );
     }
@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
 
     if (!refreshToken || typeof refreshToken !== "string") {
       return NextResponse.json(
-        apiError("Missing refresh token", "VALIDATION_ERROR"),
+        apiError("Falta el token de actualización", "VALIDATION_ERROR"),
         { status: 400 }
       );
     }
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
     const payload = await verifyRefreshToken(refreshToken);
     if (!payload) {
       return NextResponse.json(
-        apiError("Invalid or expired refresh token", "UNAUTHORIZED"),
+        apiError("Token de actualización inválido o expirado", "UNAUTHORIZED"),
         { status: 401 }
       );
     }
@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
 
     if (!user || !user.active) {
       return NextResponse.json(
-        apiError("Account deactivated", "UNAUTHORIZED"),
+        apiError("Cuenta desactivada", "UNAUTHORIZED"),
         { status: 401 }
       );
     }
@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("POST /api/v1/auth/refresh error:", error);
     return NextResponse.json(
-      apiError("An unexpected error occurred", "INTERNAL_ERROR"),
+      apiError("Ocurrió un error inesperado", "INTERNAL_ERROR"),
       { status: 500 }
     );
   }

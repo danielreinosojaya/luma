@@ -92,7 +92,7 @@ export default function AdminPage() {
       ]);
 
       if (!appointmentsRes.success || !staffRes.success) {
-        throw new Error('Failed to fetch data');
+        throw new Error('Error al obtener datos');
       }
 
       setStaff(staffRes.data || []);
@@ -204,7 +204,7 @@ export default function AdminPage() {
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div>
-            <h1 className="font-serif text-3xl text-black">LUMIÈRE</h1>
+            <h1 className="font-serif text-3xl text-black">LUMA</h1>
             <p className="text-xs text-gray-500 tracking-widest mt-1">PANEL ADMINISTRATIVO</p>
           </div>
           <div className="flex items-center gap-4">

@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
     const { success: rlOk } = await checkRateLimit(`auth:signin:${ip}`, "auth");
     if (!rlOk) {
       return NextResponse.json(
-        apiError("Too many login attempts. Try again later.", "RATE_LIMIT_EXCEEDED"),
+        apiError("Demasiados intentos de inicio de sesión. Intenta más tarde.", "RATE_LIMIT_EXCEEDED"),
         { status: 429, headers: { "Retry-After": "60" } }
       );
     }
@@ -37,14 +37,14 @@ export async function POST(request: NextRequest) {
     const user = await getUserByEmail(data.email);
     if (!user || !user.passwordHash) {
       return NextResponse.json(
-        apiError("Invalid email or password", "UNAUTHORIZED"),
+        apiError("Correo o contraseña inválidos", "UNAUTHORIZED"),
         { status: 401 }
       );
     }
 
     if (!user.active) {
       return NextResponse.json(
-        apiError("Account is deactivated", "UNAUTHORIZED"),
+        apiError("La cuenta ha sido desactivada", "UNAUTHORIZED"),
         { status: 401 }
       );
     }

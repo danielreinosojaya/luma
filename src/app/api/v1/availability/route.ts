@@ -24,7 +24,7 @@ export const GET = withAuth(async (request: AuthenticatedRequest) => {
     // Validate date format
     if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
       return NextResponse.json(
-        apiError("Invalid date format. Use YYYY-MM-DD", "VALIDATION_ERROR"),
+        apiError("Formato de fecha inválido. Usa YYYY-MM-DD", "VALIDATION_ERROR"),
         { status: 400 }
       );
     }
@@ -58,7 +58,7 @@ export const GET = withAuth(async (request: AuthenticatedRequest) => {
 
     if (!staff || !staff.user.active) {
       return NextResponse.json(
-        apiError("Staff member not found or inactive", "NOT_FOUND"),
+        apiError("Personal no encontrado o inactivo", "NOT_FOUND"),
         { status: 404 }
       );
     }
@@ -71,7 +71,7 @@ export const GET = withAuth(async (request: AuthenticatedRequest) => {
 
     if (!schedule || !schedule.isAvailable) {
       return NextResponse.json(
-        apiSuccess({ slots: [], message: "Staff not available on this day" })
+        apiSuccess({ slots: [], message: "Personal no disponible en este día" })
       );
     }
 

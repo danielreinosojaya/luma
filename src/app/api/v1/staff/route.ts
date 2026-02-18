@@ -58,7 +58,7 @@ export const GET = withAuth(async (request: AuthenticatedRequest) => {
   } catch (error) {
     console.error("GET /api/v1/staff error:", error);
     return NextResponse.json(
-      apiError("An unexpected error occurred", "INTERNAL_ERROR"),
+      apiError("Ocurrió un error inesperado", "INTERNAL_ERROR"),
       { status: 500 }
     );
   }

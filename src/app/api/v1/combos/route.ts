@@ -60,7 +60,7 @@ export const POST = withAuth(
 
       if (services.length !== data.serviceIds.length) {
         return NextResponse.json(
-          apiError("One or more services not found or inactive", "NOT_FOUND"),
+          apiError("Uno o más servicios no encontrados o inactivos", "NOT_FOUND"),
           { status: 404 }
         );
       }
