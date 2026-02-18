@@ -32,7 +32,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#1e1919" />
       </head>
-      <body className={`${spaceGrotesk.variable} ${cormorant.variable} antialiased`}>
+      <body className={`${spaceGrotesk.variable} ${cormorant.variable} antialiased`} suppressHydrationWarning>
         <AppThemeProvider>{children}</AppThemeProvider>
       </body>
     </html>

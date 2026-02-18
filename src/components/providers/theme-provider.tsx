@@ -102,7 +102,9 @@ const lumaTheme = createTheme({
 export function AppThemeProvider({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider theme={lumaTheme}>
-      <CssBaseline />
+      <div suppressHydrationWarning>
+        <CssBaseline />
+      </div>
       {children}
     </ThemeProvider>
   );

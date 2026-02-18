@@ -27,6 +27,7 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scroll-padding-top: 80px;
 }
 
 /* ---- Body Base ---- */
@@ -39,6 +40,8 @@ body {
   line-height: 1.6;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
+  will-change: scroll-position;
 }
 
 /* ---- Selection Color ---- */
@@ -612,4 +615,169 @@ body {
     padding: 1rem 0;
   }
 }
+
+/* ======================================================
+   MOBILE-FIRST OPTIMIZATIONS
+   ====================================================== */
+
+/* Smooth transitions and transforms */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Prevent horizontal scroll */
+main, section, article, div[class*="container"], div[class*="grid"] {
+  overflow-x: hidden;
+}
+
+/* Improve touch interactions */
+button, a, [role="button"] {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* Smooth hover effects with GPU acceleration */
+.card-hover {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Optimize animations for mobile */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Mobile touch-friendly sizes */
+@media (max-width: 640px) {
+  /* Ensure touch targets are at least 44x44px */
+  button, a, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Reduce animations on mobile for performance */
+  .btn-hover::before {
+    display: none;
+  }
+
+  /* Optimize form inputs */
+  input, select, textarea {
+    font-size: 16px;
+    min-height: 44px;
+    border-radius: 8px;
+  }
+
+  /* Better spacing for small screens */
+  section {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* Responsive typography */
+  h1 {
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-size: clamp(1.25rem, 4vw, 2rem);
+    line-height: 1.3;
+  }
+
+  h3 {
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    line-height: 1.4;
+  }
+
+  /* Improve flex layouts */
+  .flex {
+    flex-wrap: wrap;
+  }
+
+  /* Optimize grid on mobile */
+  .grid {
+    gap: 1rem;
+  }
+}
+
+/* Tablet optimizations */
+@media (min-width: 641px) and (max-width: 1024px) {
+  section {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  input, select, textarea {
+    font-size: 16px;
+  }
+}
+
+/* Desktop optimizations */
+@media (min-width: 1025px) {
+  /* Enable GPU acceleration for smooth scrolling */
+  body {
+    will-change: scroll-position;
+  }
+
+  /* Optimize hover effects */
+  .card-hover {
+    will-change: transform, box-shadow;
+  }
+
+  button:hover, a:hover, [role="button"]:hover {
+    will-change: inherit;
+  }
+}
+
+/* High DPI screen optimizations */
+@media (-webkit-min-device-pixel-ratio: 2) {
+  /* Reduce text rendering artifacts */
+  body {
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #1a1a1a;
+    color: #f5f5f5;
+  }
+}
+
+/* Improved focus states for accessibility */
+button:focus-visible,
+a:focus-visible,
+[role="button"]:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Smooth link transitions */
+a {
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+/* Image responsiveness */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Improve video responsiveness */
+video {
+  max-width: 100%;
+  height: auto;
+}
+
 
